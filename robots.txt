@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jwillumproducts.github.io/sitemap.xml
