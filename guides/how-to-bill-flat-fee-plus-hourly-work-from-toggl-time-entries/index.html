@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bill Flat-Fee Plus Hourly Work from Toggl | JWillum</title>
+<meta name="description" content="Bill a flat fee plus hourly prep from Toggl: tag prep and event time, total and round once, and build one hourly and one flat invoice line.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#F2F2F7">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/">
+<meta property="og:url" content="https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JWillum products">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Bill Flat-Fee Plus Hourly Work from Toggl | JWillum">
+<meta property="og:description" content="Bill a flat fee plus hourly prep from Toggl: tag prep and event time, total and round once, and build one hourly and one flat invoice line.">
+<meta property="og:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JWillum products: offline browser tools for messy CSV exports, $8 one-time">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bill Flat-Fee Plus Hourly Work from Toggl | JWillum">
+<meta name="twitter:description" content="Bill a flat fee plus hourly prep from Toggl: tag prep and event time, total and round once, and build one hourly and one flat invoice line.">
+<meta name="twitter:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta name="twitter:image:alt" content="JWillum products: offline browser tools for messy CSV exports, $8 one-time">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://jwillumproducts.github.io/#org",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://jwillumproducts.github.io/favicon.png",
+    "width": 256,
+    "height": 256
+   },
+   "email": "jwillum.products@gmail.com",
+   "sameAs": [
+    "https://willumsen4.gumroad.com/"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://jwillumproducts.github.io/#website",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "inLanguage": "en",
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://jwillumproducts.github.io/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://jwillumproducts.github.io/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Bill Flat-Fee Plus Hourly Work from Toggl",
+     "item": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "@id": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/#article",
+   "headline": "How to bill flat-fee plus hourly work from Toggl time entries",
+   "description": "Bill a flat fee plus hourly prep from Toggl: tag prep and event time, total and round once, and build one hourly and one flat invoice line.",
+   "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/",
+   "mainEntityOfPage": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "inLanguage": "en",
+   "author": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "image": "https://jwillumproducts.github.io/og-image.png",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "Toggl Clockify Harvest to Xero Wave Lines — Offline Invoice CSV",
+    "url": "https://willumsen4.gumroad.com/l/tracker-invoice-lines"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How do I separate prep time from event time in Toggl?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Create two tags, such as prep and event, keep both under the same client and project, and give every entry exactly one of them. Reports can then be filtered or grouped by tag."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Should the event hours appear on the invoice?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. The flat-fee line is quantity 1 at the agreed fee. Keep the event hours in Toggl anyway to see what the flat fee earned per hour."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where should I round when billing hourly prep?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Round the prep total once, not each entry. If you use Toggl report rounding, apply it to grouped entries so the subtotal is rounded."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can Tracker Invoice Lines add the flat-fee line?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. It builds the hourly lines from a time export; add the single flat-fee line yourself in Xero or Wave after importing."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/#howto",
+   "name": "How to bill flat-fee plus hourly work from Toggl time entries",
+   "description": "Bill a flat fee plus hourly prep from Toggl: tag prep and event time, total and round once, and build one hourly and one flat invoice line.",
+   "step": [
+    {
+     "@type": "HowToStep",
+     "name": "Tag the time as you track it",
+     "text": "Tags in Toggl add context to a time entry beyond its client and project, and reports can be filtered by tag (Toggl Track: Tags). Create two tags, for example: - prep: billable hourly (research, calls, rehearsal, travel if your contract bills it) - event: covered by the flat fee Keep both under the same client and project so the job stays together. Every entry should get exactly one of the two tags; an untagged entry is one you'll have to chase later.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Filter and check before exporting",
+     "text": "Open Reports, set the date range for the job and add a filter on the project. Report filters include Tag, and conditions can be combined with AND/OR (Toggl Track: Using filters in reports). Filter on entries with no tag, or scan the tag column, to make sure nothing is missing.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Export the detailed report",
+     "text": "Use the Detailed report, which shows each individual entry, and Export it as CSV or Excel. Toggl notes that CSV and Excel exports are a paid-plan feature (Toggl Track: Detailed report). Check that the export includes the tags column before you go further. If durations come out as 1:30:00 or text, convert them to decimal hours first (see How to convert Toggl or Clockify durations to decimal hours).",
+     "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Total the prep hours, then round once",
+     "text": "Build a pivot table with Tags as rows and sum of decimal hours as the value. You now have one total for prep and one for event. Round the prep total, not each entry. Rounding every short call up to a quarter hour inflates the bill and is hard to explain if a client asks. With the prep total in B2, =CEILING(B2,0.25) rounds it up to the next quarter hour (or use MROUND for nearest). If you use Toggl's own report rounding instead, apply it to grouped entries: Toggl then totals the group as is and r",
+     "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Build the two invoice lines",
+     "text": "| Description | Quantity | Unit price | Amount | |---|---|---|---| | Preparation (hourly), 1–14 May | 6.75 | 90.00 | 607.50 | | Event day: flat fee | 1 | 1,200.00 | 1,200.00 | - The hourly line uses the rounded prep hours as the quantity and your hourly rate as the unit price. - The flat line is always quantity 1 at the agreed fee. The event-tagged hours don't go on the invoice at all. Keep the event hours anyway. They tell you what the flat fee really earned per hour (1,200 ÷ 9 event hours = 13",
+     "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Watch the edges",
+     "text": "- Prep that ran into the event day: decide by contract, not by date. If the contract says the flat fee covers the day, tag it event. - Overtime beyond the flat scope: give it its own tag (for example extra) so it becomes a third, clearly labelled hourly line rather than disappearing into prep. - Non-billable entries: if you use Toggl's billable flag, filter to billable before building the hourly line.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>:root{--bg:#F2F2F7;--card:#fff;--text:#1C1C1E;--muted:#636366;--blue:#007AFF;--border:rgba(60,60,67,.12);--r:16px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 20px 56px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text)}
+.brand img{width:36px;height:36px;border-radius:9px}
+.links a{margin-left:16px;font-size:15px;font-weight:500}
+.hero{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 32px;text-align:center;margin-bottom:40px}
+.hero>img{width:72px;height:72px;border-radius:16px;margin-bottom:14px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.03em;margin:0 0 14px}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:36em;margin:0 auto 24px}
+.btn{display:inline-block;background:var(--blue);color:#fff!important;font-weight:600;padding:13px 22px;border-radius:12px;text-decoration:none!important;margin:4px}
+.btn.ghost{background:var(--bg);color:var(--blue)!important}
+.pills{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pills li{background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--muted);font-weight:500}
+h2{font-size:26px;letter-spacing:-.02em;margin:48px 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.group>h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column}
+.card .eyebrow{margin:0 0 4px;font-size:12px;font-weight:600;color:var(--blue);flex:0}
+.card h4{margin:0 0 8px;font-size:16px;line-height:1.3;letter-spacing:-.01em}
+.card p{margin:0 0 14px;color:var(--muted);font-size:15px;flex:1}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;font-weight:600;flex-wrap:wrap}
+.qa{padding:16px 0;border-bottom:1px solid var(--border)}.qa:last-child{border:0}
+.qa h3{margin:0 0 6px;font-size:17px;letter-spacing:-.01em}.qa p{margin:0;color:var(--muted)}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+figure img{width:100%;height:180px;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--border)}
+figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:4px 20px}
+.why{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.why div{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.why h3{margin:0 0 4px;font-size:16px}.why p{margin:0;color:var(--muted);font-size:15px}
+.guides{list-style:none;margin:0;padding:0}
+.guides li{padding:12px 0;border-bottom:1px solid var(--border)}.guides li:last-child{border:0}
+details{padding:14px 0;border-bottom:1px solid var(--border)}details:last-child{border:0}
+summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--muted)}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:14px;text-align:center}
+footer p{margin:6px 0}
+@media(max-width:640px){.hero{padding:32px 18px}.grid{grid-template-columns:1fr}}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 12px;border-radius:8px;z-index:9}.skip:focus{left:12px;top:12px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.links{display:flex;align-items:center;gap:16px}.links a{margin:0;font-size:15px;font-weight:500}
+.navbtn{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:10px}
+.hero.left{text-align:left}.hero.left .lede{margin-left:0}.hero.left .pills{justify-content:flex-start}
+.hero .eyebrow{color:var(--blue);font-weight:600;font-size:14px;margin:0 0 8px}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.crumbs li+li::before{content:"›";margin-right:6px}
+.prose{padding:6px 22px}.prose p,.prose li{color:#3A3A3C}.prose li{margin:6px 0}
+.prose h2{font-size:21px;margin:26px 0 8px}.prose h3{font-size:17px;margin:20px 0 6px}
+.prose code{background:var(--bg);padding:1px 5px;border-radius:5px;font-size:.92em;word-break:break-word}
+.prose table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto}.prose th,.prose td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+.prose blockquote{margin:12px 0;padding:4px 14px;border-left:3px solid var(--blue);background:var(--bg);border-radius:6px}
+.long{padding:10px 26px 18px}.long p,.long li{font-size:16.5px;line-height:1.65}
+.steps li{margin:10px 0}
+.dates{color:var(--muted);font-size:14px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--card);border:2px solid var(--blue);border-radius:var(--r);padding:18px 20px;margin:40px 0 0}
+.cta strong{display:block;font-size:17px}.cta span{color:var(--muted);font-size:14px}
+.ext li{margin:8px 0}
+.shots.big{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.shots.big figure img{height:220px}
+.card{position:relative}.card h4 a,.card h2.h4 a{color:var(--text)}.card .meta a,.card .meta{position:relative;z-index:2}
+.stretch::after{content:"";position:absolute;inset:0;z-index:1}
+h2.h4{margin:0 0 8px;font-size:16px;line-height:1.3}
+.group>h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.fnav{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:24px}
+.fnav h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;color:var(--text)}
+.fnav ul{list-style:none;padding:0;margin:0}.fnav li{margin:5px 0;font-size:14px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+@media(max-width:640px){.links a:not(.navbtn){display:none}.links{display:flex}.two,.fnav{grid-template-columns:1fr}.long{padding:6px 16px 14px}.cta{flex-direction:column;align-items:stretch;text-align:center}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top"><a class="brand" href="/"><img src="/favicon.png" alt="" width="36" height="36">JWillum products</a>
+<nav class="links" aria-label="Main"><a href="/tools/">Tools</a><a href="/guides/">Guides</a><a href="/#faq">FAQ</a><a class="navbtn" href="https://willumsen4.gumroad.com/">Gumroad</a></nav></header>
+<main id="main"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/guides/">Guides</a></li><li aria-current="page">Bill Flat-Fee Plus Hourly Work from Toggl</li></ol></nav>
+<article class="guide"><header class="hero left"><p class="eyebrow">Free guide · JWillum products</p><h1>How to bill flat-fee plus hourly work from Toggl time entries</h1><p class="lede">Bill a flat fee plus hourly prep from Toggl: tag prep and event time, total and round once, and build one hourly and one flat invoice line.</p>
+<p class="dates">Published <time datetime="2026-10-13">13 October 2026</time></p></header>
+<div class="panel prose long"><p>A common setup: a fixed fee for the event, workshop or shoot itself, plus hourly billing for the preparation around it. You track everything in Toggl, but the invoice should have exactly <strong>two lines</strong>: one hourly line for the prep and one flat line for the event. Not forty time entries, and not the event hours billed twice.</p>
+<p>This guide shows how to set that up with tags, export once and build both lines in a spreadsheet.</p>
+<h2>Step 1: Tag the time as you track it</h2>
+<p>Tags in Toggl add context to a time entry beyond its client and project, and reports can be filtered by tag (<a href="https://support.toggl.com/en-us/article/tags-2b1rse/">Toggl Track: Tags</a>). Create two tags, for example:</p>
+<ul>
+<li><code>prep</code>: billable hourly (research, calls, rehearsal, travel if your contract bills it)</li>
+<li><code>event</code>: covered by the flat fee</li>
+</ul>
+<p>Keep both under the same client and project so the job stays together. Every entry should get exactly one of the two tags; an untagged entry is one you'll have to chase later.</p>
+<h2>Step 2: Filter and check before exporting</h2>
+<p>Open <strong>Reports</strong>, set the date range for the job and add a filter on the project. Report filters include <strong>Tag</strong>, and conditions can be combined with AND/OR (<a href="https://support.toggl.com/en-us/article/using-filters-in-toggl-track-reports-18575d8/">Toggl Track: Using filters in reports</a>). Filter on entries with no tag, or scan the tag column, to make sure nothing is missing.</p>
+<h2>Step 3: Export the detailed report</h2>
+<p>Use the <strong>Detailed</strong> report, which shows each individual entry, and <strong>Export</strong> it as CSV or Excel. Toggl notes that CSV and Excel exports are a paid-plan feature (<a href="https://support.toggl.com/en-us/article/detailed-report-k9bzy2/">Toggl Track: Detailed report</a>). Check that the export includes the tags column before you go further.</p>
+<p>If durations come out as <code>1:30:00</code> or text, convert them to decimal hours first (see <a href="/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/">How to convert Toggl or Clockify durations to decimal hours</a>).</p>
+<h2>Step 4: Total the prep hours, then round once</h2>
+<p>Build a pivot table with <strong>Tags</strong> as rows and <strong>sum of decimal hours</strong> as the value. You now have one total for <code>prep</code> and one for <code>event</code>.</p>
+<p>Round the <strong>prep total</strong>, not each entry. Rounding every short call up to a quarter hour inflates the bill and is hard to explain if a client asks. With the prep total in B2, <code>=CEILING(B2,0.25)</code> rounds it up to the next quarter hour (or use <code>MROUND</code> for nearest). If you use Toggl's own report rounding instead, apply it to <strong>grouped</strong> entries: Toggl then totals the group as is and rounds the subtotal (<a href="https://support.toggl.com/en-us/article/rounding-46d8m9">Toggl Track: Rounding</a>). Don't round in both places.</p>
+<h2>Step 5: Build the two invoice lines</h2>
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Quantity</th>
+<th>Unit price</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Preparation (hourly), 1–14 May</td>
+<td>6.75</td>
+<td>90.00</td>
+<td>607.50</td>
+</tr>
+<tr>
+<td>Event day: flat fee</td>
+<td>1</td>
+<td>1,200.00</td>
+<td>1,200.00</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The <strong>hourly line</strong> uses the rounded prep hours as the quantity and your hourly rate as the unit price.</li>
+<li>The <strong>flat line</strong> is always quantity <strong>1</strong> at the agreed fee. The event-tagged hours don't go on the invoice at all.</li>
+</ul>
+<p>Keep the <code>event</code> hours anyway. They tell you what the flat fee really earned per hour (1,200 ÷ 9 event hours = 133 per hour). That's what you need to price the next job.</p>
+<h2>Step 6: Watch the edges</h2>
+<ul>
+<li><strong>Prep that ran into the event day:</strong> decide by contract, not by date. If the contract says the flat fee covers the day, tag it <code>event</code>.</li>
+<li><strong>Overtime beyond the flat scope:</strong> give it its own tag (for example <code>extra</code>) so it becomes a third, clearly labelled hourly line rather than disappearing into prep.</li>
+<li><strong>Non-billable entries:</strong> if you use Toggl's billable flag, filter to billable before building the hourly line.</li>
+</ul>
+<h2>Doing it faster</h2>
+<p><strong>Tracker Invoice Lines</strong> handles the hourly side. Drop in a detailed Toggl (or Clockify or Harvest) CSV and it groups billable time into invoice lines with your rate, ready for Xero, Wave or a generic Qty × Rate sheet. If prep and event are separate tasks, the Project+task grouping gives you separate lines for them. It doesn't add flat-fee lines, so add the one flat line yourself in Xero or Wave after importing. $8, paid once, runs offline.</p>
+<p>→ <strong><a href="/tools/tracker-invoice-lines/">Tracker Invoice Lines</a></strong></p>
+<h2>Related tools</h2>
+<ul>
+<li>Paid through Stripe? <strong><a href="/tools/stripeclear-journal/">StripeClear Journal</a></strong> turns Stripe balance exports into a balanced QuickBooks journal CSV.</li>
+</ul></div>
+<section aria-labelledby="h-faq"><h2 id="h-faq">FAQ</h2><div class="panel"><details open><summary>How do I separate prep time from event time in Toggl?</summary><p>Create two tags, such as prep and event, keep both under the same client and project, and give every entry exactly one of them. Reports can then be filtered or grouped by tag.</p></details><details><summary>Should the event hours appear on the invoice?</summary><p>No. The flat-fee line is quantity 1 at the agreed fee. Keep the event hours in Toggl anyway to see what the flat fee earned per hour.</p></details><details><summary>Where should I round when billing hourly prep?</summary><p>Round the prep total once, not each entry. If you use Toggl report rounding, apply it to grouped entries so the subtotal is rounded.</p></details><details><summary>Can Tracker Invoice Lines add the flat-fee line?</summary><p>No. It builds the hourly lines from a time export; add the single flat-fee line yourself in Xero or Wave after importing.</p></details></div></section>
+<div class="cta"><div><strong>Tracker Invoice Lines</strong><span>$8 one-time · runs offline in your browser · no account</span></div><a class="btn" href="https://willumsen4.gumroad.com/l/tracker-invoice-lines">Get it on Gumroad — $8</a></div>
+<section aria-labelledby="h-docs"><h2 id="h-docs">Official documentation</h2><div class="panel prose"><ul class="ext"><li><a href="https://support.toggl.com/en-us/article/tags-2b1rse/">Toggl Track: Tags</a></li><li><a href="https://support.toggl.com/en-us/article/using-filters-in-toggl-track-reports-18575d8/">Toggl Track: Using filters in reports</a></li><li><a href="https://support.toggl.com/en-us/article/detailed-report-k9bzy2/">Toggl: Detailed report</a></li><li><a href="https://support.toggl.com/en-us/article/rounding-46d8m9">Toggl Track: Rounding</a></li></ul></div></section>
+<section aria-labelledby="h-tool"><h2 id="h-tool">The tool for this job</h2><div class="grid"><article class="card"><p class="eyebrow">Tracker Invoice Lines</p><h4><a class="stretch" href="/tools/tracker-invoice-lines/">Toggl Clockify Harvest to Xero Wave Lines — Offline Invoice CSV</a></h4><p>Turn a Toggl, Clockify or Harvest detailed time CSV into Xero, Wave or generic Qty × Rate invoice line CSVs.</p><div class="meta"><span class="price">$8 · one-time</span><span><a href="/tools/tracker-invoice-lines/">Details</a> · <a href="https://willumsen4.gumroad.com/l/tracker-invoice-lines" aria-label="View Tracker Invoice Lines on Gumroad">View on Gumroad →</a></span></div></article></div></section>
+</article></main>
+<footer>
+<nav class="fnav" aria-label="Footer"><div><h2>Tools</h2><ul><li><a href="/tools/stripeclear-journal/">StripeClear Journal</a></li><li><a href="/tools/books-export-clean/">BooksExport Clean</a></li><li><a href="/tools/tracker-invoice-lines/">Tracker Invoice Lines</a></li><li><a href="/tools/bandcamp-sales-clean/">Bandcamp Sales Clean</a></li><li><a href="/tools/shopify-csv-densifier/">Shopify CSV Densifier</a></li><li><a href="/tools/shopify-customers-mailmerge/">Shopify Customers MailMerge</a></li><li><a href="/tools/etsy-listing-csv-fixer/">Etsy Listing CSV Fixer</a></li><li><a href="/tools/faire-profit-calculator/">Faire Wholesale Fee & Profit Calculator</a></li><li><a href="/tools/whatnot-profit-calculator/">Whatnot Seller Profit Calculator</a></li><li><a href="/tools/event-qr-badges/">Event QR Badges</a></li></ul></div>
+<div><h2>Guides</h2><ul><li><a href="/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/">Reconcile Stripe Payouts into a QuickBooks Journal</a></li><li><a href="/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/">Make QR Code Name Badges from a Spreadsheet</a></li><li><a href="/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/">Etsy Listing CSV Errors: How to Check and Clean</a></li><li><a href="/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/">Calculate Real Profit per Whatnot Sale After Fees</a></li><li><a href="/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/">Fill Blank Rows in a Shopify Orders CSV Export</a></li><li><a href="/guides/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant/">Clean a QuickBooks or Xero Export for Your Accountant</a></li><li><a href="/guides/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list/">Shopify Customer Export to a Mail Merge Address List</a></li><li><a href="/guides/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines/">Toggl, Clockify or Harvest Time to Xero or Wave Invoices</a></li><li><a href="/guides/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order/">Faire Wholesale Fees and Real Profit per Order</a></li><li><a href="/guides/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0/">Get Bandcamp Sales into Xero or Wave</a></li><li><a href="/guides/how-to-reconcile-shopify-payments-payouts-to-bank-deposits/">Reconcile Shopify Payments Payouts to Bank Deposits</a></li><li><a href="/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/">Convert Toggl or Clockify Time to Decimal Hours</a></li><li><a href="/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/">Bill Flat-Fee Plus Hourly Work from Toggl</a></li></ul></div>
+<div><h2>JWillum products</h2><ul><li><a href="/">Home</a></li><li><a href="/tools/">All tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="https://willumsen4.gumroad.com/">Store on Gumroad</a></li><li><a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></li></ul></div></nav>
+<p><strong>JWillum products</strong> · sold on <a href="https://willumsen4.gumroad.com/">Gumroad</a> · Contact: <a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></p>
+<p>Independent tools. Not affiliated with, endorsed by or sponsored by Stripe, Shopify, Intuit (QuickBooks), Xero, Wave, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify, Harvest or Avery. All trademarks belong to their respective owners.</p>
+</footer>
+</div>
+</body>
+</html>
