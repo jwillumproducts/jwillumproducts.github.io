@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fill Blank Rows in a Shopify Orders CSV Export | JWillum</title>
+<meta name="description" content="Why a Shopify orders CSV has blank rows for multi-item orders and how to fill them for pick lists, pack slips and 3PL files.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#F2F2F7">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/">
+<meta property="og:url" content="https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JWillum products">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Fill Blank Rows in a Shopify Orders CSV Export | JWillum">
+<meta property="og:description" content="Why a Shopify orders CSV has blank rows for multi-item orders and how to fill them for pick lists, pack slips and 3PL files.">
+<meta property="og:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JWillum products: offline browser tools for messy CSV exports, $8 one-time">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fill Blank Rows in a Shopify Orders CSV Export | JWillum">
+<meta name="twitter:description" content="Why a Shopify orders CSV has blank rows for multi-item orders and how to fill them for pick lists, pack slips and 3PL files.">
+<meta name="twitter:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta name="twitter:image:alt" content="JWillum products: offline browser tools for messy CSV exports, $8 one-time">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://jwillumproducts.github.io/#org",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://jwillumproducts.github.io/favicon.png",
+    "width": 256,
+    "height": 256
+   },
+   "email": "jwillum.products@gmail.com",
+   "sameAs": [
+    "https://willumsen4.gumroad.com/"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://jwillumproducts.github.io/#website",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "inLanguage": "en",
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://jwillumproducts.github.io/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://jwillumproducts.github.io/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Fill Blank Rows in a Shopify Orders CSV Export",
+     "item": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "@id": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/#article",
+   "headline": "How to fill the blank rows in a Shopify orders CSV export (for pick and pack lists)",
+   "description": "Why a Shopify orders CSV has blank rows for multi-item orders and how to fill them for pick lists, pack slips and 3PL files.",
+   "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/",
+   "mainEntityOfPage": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/",
+   "datePublished": "2026-09-28",
+   "dateModified": "2026-10-13",
+   "inLanguage": "en",
+   "author": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "image": "https://jwillumproducts.github.io/og-image.png",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "Shopify Orders CSV Densifier — Offline Pick, Pack & 3PL Presets",
+    "url": "https://willumsen4.gumroad.com/l/shopify-csv-densifier"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/#howto",
+   "name": "How to fill the blank rows in a Shopify orders CSV export (for pick and pack lists)",
+   "description": "Why a Shopify orders CSV has blank rows for multi-item orders and how to fill them for pick lists, pack slips and 3PL files.",
+   "step": [
+    {
+     "@type": "HowToStep",
+     "name": "Export and back up",
+     "text": "In Shopify Admin go to Orders → Export and pick your date range or the current filter. Save a copy of the untouched file before you edit anything. Don't sort the sheet yet: the fill depends on rows staying in their original order.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Sort your columns into two groups",
+     "text": "Look at the header row and split the columns into: - Order-level: Name (the order number), Email, Financial Status, Fulfillment Status, Shipping Method, every Shipping … address field, Notes, Currency, Created at, and so on. - Line-level: everything starting with Lineitem (name, SKU, quantity, fulfillment status…). Never fill these.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Make sure the order number is on every row",
+     "text": "In many exports the Name column (like 1001) repeats on each line item. If yours is blank on continuation rows, fill that first. Every blank Name row belongs to the order above it. Put a helper column next to it with =IF(A2=\"\",B1,A2) (where A is Name and B is the helper), copy it down, then paste the helper as values.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Fill order-level columns within each order",
+     "text": "For each order-level column, use a helper column that only copies from the row above if it's the same order. Say column A is the filled order number, column C is Email, and D is an empty helper column. In D2 enter: =IF(AND(C2=\"\",$A2=$A1),D1,C2) In plain English: if this cell is blank and the order number matches the row above, take the value from above. Otherwise keep what's there. Copy it down, paste as values, and repeat for each order-level column. It's slow, but it can't leak into the next o",
+     "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Trim to the columns your job needs",
+     "text": "A full export has dozens of columns. Keep only what each job needs: - Pick list: order number, SKU, item name, quantity, vendor, fulfillment status - Pack list: order number, shipping name and address fields, item name, quantity, SKU, notes, shipping method - 3PL handoff: order number, order ID, shipping fields, SKU, quantity, item name, email, currency, created date",
+     "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    },
+    {
+     "@type": "HowToStep",
+     "name": "Save and use it downstream only",
+     "text": "Save as CSV UTF-8. If Excel shows garbled characters, re-import through Excel's UTF-8 CSV import. Don't re-import this file into Shopify. It's for picking, packing and analysis.",
+     "url": "https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>:root{--bg:#F2F2F7;--card:#fff;--text:#1C1C1E;--muted:#636366;--blue:#007AFF;--border:rgba(60,60,67,.12);--r:16px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 20px 56px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text)}
+.brand img{width:36px;height:36px;border-radius:9px}
+.links a{margin-left:16px;font-size:15px;font-weight:500}
+.hero{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 32px;text-align:center;margin-bottom:40px}
+.hero>img{width:72px;height:72px;border-radius:16px;margin-bottom:14px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.03em;margin:0 0 14px}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:36em;margin:0 auto 24px}
+.btn{display:inline-block;background:var(--blue);color:#fff!important;font-weight:600;padding:13px 22px;border-radius:12px;text-decoration:none!important;margin:4px}
+.btn.ghost{background:var(--bg);color:var(--blue)!important}
+.pills{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pills li{background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--muted);font-weight:500}
+h2{font-size:26px;letter-spacing:-.02em;margin:48px 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.group>h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column}
+.card .eyebrow{margin:0 0 4px;font-size:12px;font-weight:600;color:var(--blue);flex:0}
+.card h4{margin:0 0 8px;font-size:16px;line-height:1.3;letter-spacing:-.01em}
+.card p{margin:0 0 14px;color:var(--muted);font-size:15px;flex:1}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;font-weight:600;flex-wrap:wrap}
+.qa{padding:16px 0;border-bottom:1px solid var(--border)}.qa:last-child{border:0}
+.qa h3{margin:0 0 6px;font-size:17px;letter-spacing:-.01em}.qa p{margin:0;color:var(--muted)}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+figure img{width:100%;height:180px;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--border)}
+figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:4px 20px}
+.why{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.why div{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.why h3{margin:0 0 4px;font-size:16px}.why p{margin:0;color:var(--muted);font-size:15px}
+.guides{list-style:none;margin:0;padding:0}
+.guides li{padding:12px 0;border-bottom:1px solid var(--border)}.guides li:last-child{border:0}
+details{padding:14px 0;border-bottom:1px solid var(--border)}details:last-child{border:0}
+summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--muted)}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:14px;text-align:center}
+footer p{margin:6px 0}
+@media(max-width:640px){.hero{padding:32px 18px}.grid{grid-template-columns:1fr}}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 12px;border-radius:8px;z-index:9}.skip:focus{left:12px;top:12px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.links{display:flex;align-items:center;gap:16px}.links a{margin:0;font-size:15px;font-weight:500}
+.navbtn{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:10px}
+.hero.left{text-align:left}.hero.left .lede{margin-left:0}.hero.left .pills{justify-content:flex-start}
+.hero .eyebrow{color:var(--blue);font-weight:600;font-size:14px;margin:0 0 8px}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.crumbs li+li::before{content:"›";margin-right:6px}
+.prose{padding:6px 22px}.prose p,.prose li{color:#3A3A3C}.prose li{margin:6px 0}
+.prose h2{font-size:21px;margin:26px 0 8px}.prose h3{font-size:17px;margin:20px 0 6px}
+.prose code{background:var(--bg);padding:1px 5px;border-radius:5px;font-size:.92em;word-break:break-word}
+.prose table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto}.prose th,.prose td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+.prose blockquote{margin:12px 0;padding:4px 14px;border-left:3px solid var(--blue);background:var(--bg);border-radius:6px}
+.long{padding:10px 26px 18px}.long p,.long li{font-size:16.5px;line-height:1.65}
+.steps li{margin:10px 0}
+.dates{color:var(--muted);font-size:14px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--card);border:2px solid var(--blue);border-radius:var(--r);padding:18px 20px;margin:40px 0 0}
+.cta strong{display:block;font-size:17px}.cta span{color:var(--muted);font-size:14px}
+.ext li{margin:8px 0}
+.shots.big{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.shots.big figure img{height:220px}
+.card{position:relative}.card h4 a,.card h2.h4 a{color:var(--text)}.card .meta a,.card .meta{position:relative;z-index:2}
+.stretch::after{content:"";position:absolute;inset:0;z-index:1}
+h2.h4{margin:0 0 8px;font-size:16px;line-height:1.3}
+.group>h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.fnav{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:24px}
+.fnav h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;color:var(--text)}
+.fnav ul{list-style:none;padding:0;margin:0}.fnav li{margin:5px 0;font-size:14px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+@media(max-width:640px){.links a:not(.navbtn){display:none}.links{display:flex}.two,.fnav{grid-template-columns:1fr}.long{padding:6px 16px 14px}.cta{flex-direction:column;align-items:stretch;text-align:center}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top"><a class="brand" href="/"><img src="/favicon.png" alt="" width="36" height="36">JWillum products</a>
+<nav class="links" aria-label="Main"><a href="/tools/">Tools</a><a href="/guides/">Guides</a><a href="/#faq">FAQ</a><a class="navbtn" href="https://willumsen4.gumroad.com/">Gumroad</a></nav></header>
+<main id="main"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/guides/">Guides</a></li><li aria-current="page">Fill Blank Rows in a Shopify Orders CSV Export</li></ol></nav>
+<article class="guide"><header class="hero left"><p class="eyebrow">Free guide · JWillum products</p><h1>How to fill the blank rows in a Shopify orders CSV export (for pick and pack lists)</h1><p class="lede">Why a Shopify orders CSV has blank rows for multi-item orders and how to fill them for pick lists, pack slips and 3PL files.</p>
+<p class="dates">Published <time datetime="2026-09-28">28 September 2026</time> · Updated <time datetime="2026-10-13">13 October 2026</time></p></header>
+<div class="panel prose long"><p>Export your orders from Shopify Admin and open the CSV, and something looks off. An order with three items takes up three rows, but only the first row has the customer email, shipping address, payment status and shipping method. Rows two and three hold just the line item. That layout is fine for Shopify, but it breaks pick lists, pack slips, pivot tables and anything you send to a warehouse or 3PL, because every row needs to stand on its own.</p>
+<p>Here's how to fill those rows in safely by hand, and the mistakes that quietly mix one customer's address into another order.</p>
+<h2>Why "fill down" in Excel is risky</h2>
+<p>The obvious fix is Excel's Go To Special → Blanks, then <code>=cell above</code>. It fills every blank with the value above it, but it has two problems:</p>
+<ul>
+<li><strong>It fills line-item columns too.</strong> A blank <code>Lineitem</code> cell can be intentional (a discount field, a missing SKU). Filling it copies the previous product's data onto the wrong item.</li>
+<li><strong>It bleeds across orders.</strong> If order #1002 has a blank shipping phone, fill-down copies #1001's phone into it. Now a stranger's details sit on the wrong packing slip.</li>
+</ul>
+<p>The safe rule: <strong>fill order-level columns only, and only within the same order.</strong></p>
+<h2>Step 1: Export and back up</h2>
+<p>In Shopify Admin go to <strong>Orders → Export</strong> and pick your date range or the current filter. Save a copy of the untouched file before you edit anything. Don't sort the sheet yet: the fill depends on rows staying in their original order.</p>
+<h2>Step 2: Sort your columns into two groups</h2>
+<p>Look at the header row and split the columns into:</p>
+<ul>
+<li><strong>Order-level:</strong> <code>Name</code> (the order number), <code>Email</code>, <code>Financial Status</code>, <code>Fulfillment Status</code>, <code>Shipping Method</code>, every <code>Shipping …</code> address field, <code>Notes</code>, <code>Currency</code>, <code>Created at</code>, and so on.</li>
+<li><strong>Line-level:</strong> everything starting with <code>Lineitem</code> (name, SKU, quantity, fulfillment status…). <strong>Never fill these.</strong></li>
+</ul>
+<h2>Step 3: Make sure the order number is on every row</h2>
+<p>In many exports the <code>Name</code> column (like <code>#1001</code>) repeats on each line item. If yours is blank on continuation rows, fill that first. Every blank Name row belongs to the order above it. Put a helper column next to it with <code>=IF(A2="",B1,A2)</code> (where A is Name and B is the helper), copy it down, then paste the helper as values.</p>
+<h2>Step 4: Fill order-level columns within each order</h2>
+<p>For each order-level column, use a helper column that only copies from the row above <strong>if it's the same order</strong>. Say column A is the filled order number, column C is <code>Email</code>, and D is an empty helper column. In D2 enter:</p>
+<p><code>=IF(AND(C2="",$A2=$A1),D1,C2)</code></p>
+<p>In plain English: if this cell is blank and the order number matches the row above, take the value from above. Otherwise keep what's there. Copy it down, paste as values, and repeat for each order-level column. It's slow, but it can't leak into the next order.</p>
+<h2>Step 5: Trim to the columns your job needs</h2>
+<p>A full export has dozens of columns. Keep only what each job needs:</p>
+<ul>
+<li><strong>Pick list:</strong> order number, SKU, item name, quantity, vendor, fulfillment status</li>
+<li><strong>Pack list:</strong> order number, shipping name and address fields, item name, quantity, SKU, notes, shipping method</li>
+<li><strong>3PL handoff:</strong> order number, order ID, shipping fields, SKU, quantity, item name, email, currency, created date</li>
+</ul>
+<h2>Step 6: Save and use it downstream only</h2>
+<p>Save as CSV UTF-8. If Excel shows garbled characters, re-import through Excel's UTF-8 CSV import. <strong>Don't re-import this file into Shopify.</strong> It's for picking, packing and analysis.</p>
+<h2>Doing it faster: Shopify CSV Densifier</h2>
+<p><strong>Shopify CSV Densifier</strong> is a single offline HTML file that applies exactly these rules. Drop in a native Shopify Admin Orders export and it:</p>
+<ul>
+<li>fills blank <strong>order-level</strong> cells only</li>
+<li><strong>never</strong> fills <code>Lineitem*</code> columns</li>
+<li>resets whenever the order <code>Name</code> changes, so nothing bleeds between orders</li>
+</ul>
+<p>Then pick a preset: <strong>Pick</strong>, <strong>Pack</strong>, <strong>3PL</strong>, <strong>All</strong>, or <strong>Custom</strong> if your 3PL renamed headers. A <strong>Before | After</strong> preview highlights every filled cell, there's an optional Excel UTF-8 BOM, and you download the trimmed CSV. It also has a Products mode for analysis, with a clear banner saying not to re-import the result.</p>
+<p>It doesn't upload to Shopify, print packing slips, or replace export apps like Matrixify. It post-processes the native Admin CSV, offline, and your order data stays on your computer.</p>
+<p>→ <strong><a href="/tools/shopify-csv-densifier/">Shopify CSV Densifier</a></strong></p>
+<h2>Related tools</h2>
+<ul>
+<li>Need a mailing list rather than a pack list? <strong><a href="/tools/shopify-customers-mailmerge/">Shopify Customers MailMerge</a></strong> turns a Customers export into US/UK/CA/AU mail-merge address columns.</li>
+<li>Tidying a messy Etsy listings export too? <strong><a href="/tools/etsy-listing-csv-fixer/">Etsy Listing CSV Fixer</a></strong> checks titles, tags, prices and images offline.</li>
+</ul></div>
+<div class="cta"><div><strong>Shopify CSV Densifier</strong><span>$8 one-time · runs offline in your browser · no account</span></div><a class="btn" href="https://willumsen4.gumroad.com/l/shopify-csv-densifier">Get it on Gumroad — $8</a></div>
+<section aria-labelledby="h-docs"><h2 id="h-docs">Official documentation</h2><div class="panel prose"><ul class="ext"><li><a href="https://help.shopify.com/en/manual/fulfillment/managing-orders/exporting-orders">Shopify Help Center: Exporting orders</a></li></ul></div></section>
+<section aria-labelledby="h-tool"><h2 id="h-tool">The tool for this job</h2><div class="grid"><article class="card"><p class="eyebrow">Shopify CSV Densifier</p><h4><a class="stretch" href="/tools/shopify-csv-densifier/">Shopify Orders CSV Densifier — Offline Pick, Pack & 3PL Presets</a></h4><p>Fill the blank order-level cells in a Shopify Orders CSV, then trim it to Pick, Pack or 3PL column presets.</p><div class="meta"><span class="price">$8 · one-time</span><span><a href="/tools/shopify-csv-densifier/">Details</a> · <a href="https://willumsen4.gumroad.com/l/shopify-csv-densifier" aria-label="View Shopify CSV Densifier on Gumroad">View on Gumroad →</a></span></div></article></div><p class="sub" style="margin-top:12px">This guide is also published on <a href="https://willumsen4.gumroad.com/p/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists">Gumroad</a>.</p></section>
+</article></main>
+<footer>
+<nav class="fnav" aria-label="Footer"><div><h2>Tools</h2><ul><li><a href="/tools/stripeclear-journal/">StripeClear Journal</a></li><li><a href="/tools/books-export-clean/">BooksExport Clean</a></li><li><a href="/tools/tracker-invoice-lines/">Tracker Invoice Lines</a></li><li><a href="/tools/bandcamp-sales-clean/">Bandcamp Sales Clean</a></li><li><a href="/tools/shopify-csv-densifier/">Shopify CSV Densifier</a></li><li><a href="/tools/shopify-customers-mailmerge/">Shopify Customers MailMerge</a></li><li><a href="/tools/etsy-listing-csv-fixer/">Etsy Listing CSV Fixer</a></li><li><a href="/tools/faire-profit-calculator/">Faire Wholesale Fee & Profit Calculator</a></li><li><a href="/tools/whatnot-profit-calculator/">Whatnot Seller Profit Calculator</a></li><li><a href="/tools/event-qr-badges/">Event QR Badges</a></li></ul></div>
+<div><h2>Guides</h2><ul><li><a href="/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/">Reconcile Stripe Payouts into a QuickBooks Journal</a></li><li><a href="/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/">Make QR Code Name Badges from a Spreadsheet</a></li><li><a href="/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/">Etsy Listing CSV Errors: How to Check and Clean</a></li><li><a href="/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/">Calculate Real Profit per Whatnot Sale After Fees</a></li><li><a href="/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/">Fill Blank Rows in a Shopify Orders CSV Export</a></li><li><a href="/guides/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant/">Clean a QuickBooks or Xero Export for Your Accountant</a></li><li><a href="/guides/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list/">Shopify Customer Export to a Mail Merge Address List</a></li><li><a href="/guides/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines/">Toggl, Clockify or Harvest Time to Xero or Wave Invoices</a></li><li><a href="/guides/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order/">Faire Wholesale Fees and Real Profit per Order</a></li><li><a href="/guides/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0/">Get Bandcamp Sales into Xero or Wave</a></li></ul></div>
+<div><h2>JWillum products</h2><ul><li><a href="/">Home</a></li><li><a href="/tools/">All tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="https://willumsen4.gumroad.com/">Store on Gumroad</a></li><li><a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></li></ul></div></nav>
+<p><strong>JWillum products</strong> · sold on <a href="https://willumsen4.gumroad.com/">Gumroad</a> · Contact: <a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></p>
+<p>Independent tools. Not affiliated with, endorsed by or sponsored by Stripe, Shopify, Intuit (QuickBooks), Xero, Wave, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify, Harvest or Avery. All trademarks belong to their respective owners.</p>
+</footer>
+</div>
+</body>
+</html>
