@@ -747,3 +747,231 @@ There's no Bandcamp, Xero or Wave login, and it's not tax advice. Fan emails in 
 
 - Handing books to an accountant? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** tidies QuickBooks Online and Xero exports into one clean CSV.
 - Also selling merch on Shopify? **[Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/)** turns an Orders export into Pick, Pack or 3PL-ready rows.
+
+---
+
+# How to reconcile Shopify Payments payouts to bank deposits
+
+URL: https://jwillumproducts.github.io/guides/how-to-reconcile-shopify-payments-payouts-to-bank-deposits/
+
+Your bank statement shows one deposit from Shopify. Your orders page shows dozens of sales. The two never match, because each payout is charges minus fees, minus refunds, plus or minus adjustments and reserves. Reconciling means proving, payout by payout, that the deposit equals the sum of the transactions Shopify says it contains, and explaining any difference.
+
+This guide does it in a spreadsheet using the transaction export from your Shopify admin. Menu names below are taken from the Shopify Help Center; Shopify notes that a new payouts view is rolling out, so your screens may look slightly different.
+
+## Step 1: Export the transactions
+
+You have two options, and both give the same CSV columns ([Shopify Help Center: Viewing and exporting your Shopify Payments payout details](https://help.shopify.com/en/manual/payments/shopify-payments/payouts/view-details)):
+
+- **One payout:** go to **Finance > Payouts**, click the payout date (and the specific payout if there were several that day), then **Export > Export payout transactions**. Use this when you are checking a single deposit.
+- **A date range:** go to **Settings > Payments**, click **View payouts**, then **View Transactions**, click **Export**, choose the range and click **Export balance transactions**. Use this for a month-end close.
+
+The CSV is emailed to you and the store owner rather than downloaded straight away. Keep an untouched copy.
+
+## Step 2: Know the columns
+
+The export has these columns: **Transaction Date**, **Type**, **Order**, **Card Brand**, **Card Source**, **Payout Status**, **Payout Date**, **Available On**, **Amount**, **Fee** and **Net** (Net is Amount minus Fee). **Type** tells you what each row is, for example a charge, a refund or an adjustment.
+
+Rows with **Payout Status** = pending haven't been paid out yet. Filter them out of a month-end reconciliation, or you will be looking for money that hasn't left Shopify.
+
+## Step 3: Pivot per payout
+
+Insert a pivot table on the export:
+
+- **Rows:** Payout Date (then Type, if you want the breakdown)
+- **Values:** Sum of Amount, Sum of Fee, Sum of Net
+
+Each Payout Date row is now one expected deposit, with gross, fees and net side by side. If you had more than one payout on the same date, the pivot merges them; export those payouts one at a time instead (Step 1, first option).
+
+## Step 4: Add the bank deposits and a Difference column
+
+Next to the pivot, list the matching deposits from your bank statement. Then add:
+
+`Difference = Bank deposit − Sum of Net`
+
+A zero means the payout is reconciled. Shopify's Payouts page also shows each payout's total and status, so you can check the pivot against it too. Note that a payout marked **Deposited** has been sent to your bank, but Shopify says your bank may still take 1 to 3 business days to show it. A deposit missing from the statement isn't necessarily a problem yet.
+
+## Step 5: Explain any difference
+
+Shopify lists the common reasons a payout is lower than expected ([Shopify Help Center: lower or missing payouts](https://help.shopify.com/en/manual/payments/shopify-payments/payouts/lower-or-missing-payouts)):
+
+- **Adjustments**, which can increase or decrease a payout. Shopify's examples include chargeback_fee, chargeback_protection, shopify_collective_debit, shopify_collective_credit, seller_protection and tax_adjustment.
+- **Chargebacks**, where the payment amount and any dispute fees are deducted.
+- **Refunds** processed since the last payout.
+- **Reserves** held against possible disputes, and **payout holds**.
+- A **negative balance** from earlier fees or refunds being recovered.
+- **Currency conversion**, if you get paid in a different currency from the one you sell in.
+- **Taxes on fees** in some regions.
+
+Most of these are already rows in your export, so they're inside Sum of Net. If a difference remains, open that payout in the admin: the overview breaks it down into charges, refunds, adjustments and reserves.
+
+For a whole period, Shopify also offers the **Shopify Payments activity report** under **Finance > Documents**. It shows gross activity, fees, payouts and your ending balance for a date range and currency ([Shopify Help Center: Shopify Payments activity report](https://help.shopify.com/en/manual/payments/shopify-payments/payouts/payouts-activity-report)).
+
+## Step 6: Shopify Capital repayments
+
+If you have a Shopify Capital loan, where the repayment shows up depends on your country and when you accepted the loan. Check your country's page in the Shopify Help Center. For the United States, Shopify says ([Shopify Help Center: Shopify Capital in the United States](https://help.shopify.com/en/manual/finance/shopify-capital/united-states)):
+
+- Repayments are a percentage of your daily sales.
+- For loans accepted **on or after March 9, 2026**, repayments are collected **from your Shopify Payments balance**, so they reduce your payouts. (For merchants in Texas, this applies to loans accepted on or after September 1, 2025.)
+- For loans accepted **before March 9, 2026**, repayments are still collected as **automatic debits from your bank account**. They appear as separate withdrawals on your bank statement, not inside the payout.
+
+Either way, a Capital repayment is not a sales fee. Bookkeepers normally post the repayment against the loan in the books (a liability account), with the cost of borrowing handled as your accountant decides. Book it as an expense and you overstate costs and leave the loan balance wrong. Ask your accountant how to split the loan fee.
+
+## Step 7: Book the payout
+
+A common pattern is a **Shopify clearing account**: post sales, fees, refunds and adjustments into it from the export, and record each bank deposit as a transfer out of it. When every payout reconciles, the clearing balance equals what's still pending in Shopify. Booking each deposit as a single sales figure hides your fees and refunds.
+
+## Doing it faster
+
+There isn't a JWillum tool built for the Shopify Payments export yet, so the spreadsheet above is the way to do it. If you also take card payments directly through **Stripe**, **StripeClear Journal** does the same job for Stripe: it turns a Stripe Balance Transactions CSV into a balanced QuickBooks Online journal, with a clearing-account proof. It expects Stripe's export format, not Shopify's.
+
+→ **[StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/)**
+
+## Related tools
+
+- Need complete rows for each order from the Shopify orders export? **[Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/)** fills in the blank order-level cells.
+- Handing the books over? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** tidies QuickBooks Online and Xero exports for your accountant.
+
+---
+
+# How to convert Toggl or Clockify durations to decimal hours for invoicing
+
+URL: https://jwillumproducts.github.io/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/
+
+An invoice needs **1.5 hours**, not `1:30:00`, `90:00 min` or `1h 30m`. Excel won't multiply a text duration by your hourly rate, and multiplying a real time value gives you a fraction of a day. This guide shows how to get decimal hours, either straight from the tracker or with a formula, and how to round them for billing.
+
+## Step 1: Try the tracker's own decimal setting first
+
+The cleanest fix is to have the tracker show decimal hours to begin with.
+
+- **Toggl:** in **Profile settings**, **Duration display format** offers **Classic** (`47m 6s`), **Improved** (`0:47:06`) or **Decimal** (`0.79 h`) ([Toggl: Your Profile Settings](https://docs.toggl.com/your-profile-settings-in-toggl)). Toggl Track says the duration format applies across the app and in your reports ([Toggl Track: Your account](https://support.toggl.com/en-us/article/your-toggl-track-account-1a6l1gx/)). It's a personal setting, so a teammate's export can look different from yours.
+- **Clockify:** the duration format is a **workspace** setting (Workspace settings > Time tracking > Duration format): **Full** (`hh:mm:ss`), **Compact** (`h:mm`) or **Decimal** (`h.hh`). Decimal is a paid-plan feature and rounds to two decimals ([Clockify Help: Duration format](https://clockify.me/help/track-time-and-expenses/duration-format)).
+
+Change the setting, export a small **detailed** report and check the Duration column before you rely on it. If you can't change the setting, or you've been sent a file someone else exported, use the formulas below.
+
+## Step 2: Find out what the cell actually contains
+
+Click a duration cell and look at the formula bar.
+
+- **A real time value** (Excel right-aligns it, and changing the format to General shows something like `0.0625`). This is the usual result when Excel opens `1:30:00` from a CSV.
+- **Text** (left-aligned, and General changes nothing). Durations over 24 hours, like `125:30:00`, and anything with letters, like `90:00 min`, often stay as text.
+
+The formulas are different for each, so check before you convert a whole column.
+
+## Step 3: Convert hh:mm:ss to decimal hours
+
+If A2 holds a **real time value**:
+
+`=A2*24`
+
+Format the result as a number with 2 decimals, not as a time. Excel stores times as fractions of a day, so ×24 gives hours (`1:30:00` → `1.5`).
+
+If A2 holds **text** such as `1:30:00` or `125:30:00`, split it at the colons:
+
+`=LEFT(A2,FIND(":",A2)-1) + MID(A2,FIND(":",A2)+1,2)/60 + RIGHT(A2,2)/3600`
+
+This works for any number of hours as long as minutes and seconds are two digits each.
+
+## Step 4: Convert minutes:seconds text such as "125:30 min"
+
+Some files give total minutes and seconds with a unit after them. For `125:30 min` in A2:
+
+`=LEFT(A2,FIND(":",A2)-1)/60 + MID(A2,FIND(":",A2)+1,2)/3600`
+
+That's 125 minutes = 2.0833 h plus 30 seconds = 0.0083 h, or **2.0917** hours. The text after the seconds is ignored, so it doesn't matter whether it says `min` or nothing at all. Check one row by hand before you fill down.
+
+If the tracker gives you `47m 6s` (Toggl's Classic format), switching to Improved or Decimal in Step 1 is far easier than parsing it.
+
+## Step 5: Round for billing
+
+Decide whether you round **each entry** or the **total**. They give different invoices:
+
+- Five 7-minute entries rounded up to quarter hours each: 5 × 0.25 = **1.25 h**
+- The same entries totalled first (35 min = 0.583 h), then rounded up: **0.75 h**
+
+Write down which rule your contract uses, then pick the formula. With decimal hours in B2:
+
+- Round **up** to the quarter hour: `=CEILING(B2,0.25)`
+- Round to the **nearest** quarter hour: `=MROUND(B2,0.25)`
+- Round **down**: `=FLOOR(B2,0.25)`
+
+For 6-minute (tenth-of-an-hour) billing, use `0.1` instead of `0.25`.
+
+The trackers can also round for you. Toggl's report **Rounding** (a paid feature) can round up, to nearest or down, at intervals including 6, 15 and 30 minutes, and can apply to individual entries or to grouped subtotals ([Toggl Track: Rounding](https://support.toggl.com/en-us/article/rounding-46d8m9)). Clockify has a **Round time in reports** workspace setting ([Clockify Help: Workspace settings](https://clockify.me/help/getting-started/workspace-settings)). Use either the tracker's rounding or your spreadsheet's, not both.
+
+## Step 6: Total, multiply, check
+
+Sum the rounded hours per client and project (a pivot table does this), then work out `amount = hours × rate`. Before you send anything, check that the total hours roughly match the tracker's report total for the same date range and filters. A big gap usually means a text cell that didn't convert, or a duration over 24 hours that Excel read wrongly.
+
+## Doing it faster
+
+**Tracker Invoice Lines** reads a detailed Toggl, Clockify or Harvest CSV in your browser, converts the durations, groups them into one line per client and project (or task), applies your rates and gives you a Xero, Wave or generic Qty × Rate CSV. It's $8, paid once. It doesn't create PDF invoices or connect to your accounting software.
+
+→ **[Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/)**
+
+## Related tools
+
+- Billing a flat fee plus hours? See [How to bill flat-fee plus hourly work from Toggl time entries](/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/).
+- Getting an export ready for your accountant? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** tidies QuickBooks Online and Xero exports.
+
+---
+
+# How to bill flat-fee plus hourly work from Toggl time entries
+
+URL: https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/
+
+A common setup: a fixed fee for the event, workshop or shoot itself, plus hourly billing for the preparation around it. You track everything in Toggl, but the invoice should have exactly **two lines**: one hourly line for the prep and one flat line for the event. Not forty time entries, and not the event hours billed twice.
+
+This guide shows how to set that up with tags, export once and build both lines in a spreadsheet.
+
+## Step 1: Tag the time as you track it
+
+Tags in Toggl add context to a time entry beyond its client and project, and reports can be filtered by tag ([Toggl Track: Tags](https://support.toggl.com/en-us/article/tags-2b1rse/)). Create two tags, for example:
+
+- `prep`: billable hourly (research, calls, rehearsal, travel if your contract bills it)
+- `event`: covered by the flat fee
+
+Keep both under the same client and project so the job stays together. Every entry should get exactly one of the two tags; an untagged entry is one you'll have to chase later.
+
+## Step 2: Filter and check before exporting
+
+Open **Reports**, set the date range for the job and add a filter on the project. Report filters include **Tag**, and conditions can be combined with AND/OR ([Toggl Track: Using filters in reports](https://support.toggl.com/en-us/article/using-filters-in-toggl-track-reports-18575d8/)). Filter on entries with no tag, or scan the tag column, to make sure nothing is missing.
+
+## Step 3: Export the detailed report
+
+Use the **Detailed** report, which shows each individual entry, and **Export** it as CSV or Excel. Toggl notes that CSV and Excel exports are a paid-plan feature ([Toggl Track: Detailed report](https://support.toggl.com/en-us/article/detailed-report-k9bzy2/)). Check that the export includes the tags column before you go further.
+
+If durations come out as `1:30:00` or text, convert them to decimal hours first (see [How to convert Toggl or Clockify durations to decimal hours](/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/)).
+
+## Step 4: Total the prep hours, then round once
+
+Build a pivot table with **Tags** as rows and **sum of decimal hours** as the value. You now have one total for `prep` and one for `event`.
+
+Round the **prep total**, not each entry. Rounding every short call up to a quarter hour inflates the bill and is hard to explain if a client asks. With the prep total in B2, `=CEILING(B2,0.25)` rounds it up to the next quarter hour (or use `MROUND` for nearest). If you use Toggl's own report rounding instead, apply it to **grouped** entries: Toggl then totals the group as is and rounds the subtotal ([Toggl Track: Rounding](https://support.toggl.com/en-us/article/rounding-46d8m9)). Don't round in both places.
+
+## Step 5: Build the two invoice lines
+
+| Description | Quantity | Unit price | Amount |
+|---|---|---|---|
+| Preparation (hourly), 1–14 May | 6.75 | 90.00 | 607.50 |
+| Event day: flat fee | 1 | 1,200.00 | 1,200.00 |
+
+- The **hourly line** uses the rounded prep hours as the quantity and your hourly rate as the unit price.
+- The **flat line** is always quantity **1** at the agreed fee. The event-tagged hours don't go on the invoice at all.
+
+Keep the `event` hours anyway. They tell you what the flat fee really earned per hour (1,200 ÷ 9 event hours = 133 per hour). That's what you need to price the next job.
+
+## Step 6: Watch the edges
+
+- **Prep that ran into the event day:** decide by contract, not by date. If the contract says the flat fee covers the day, tag it `event`.
+- **Overtime beyond the flat scope:** give it its own tag (for example `extra`) so it becomes a third, clearly labelled hourly line rather than disappearing into prep.
+- **Non-billable entries:** if you use Toggl's billable flag, filter to billable before building the hourly line.
+
+## Doing it faster
+
+**Tracker Invoice Lines** handles the hourly side. Drop in a detailed Toggl (or Clockify or Harvest) CSV and it groups billable time into invoice lines with your rate, ready for Xero, Wave or a generic Qty × Rate sheet. If prep and event are separate tasks, the Project+task grouping gives you separate lines for them. It doesn't add flat-fee lines, so add the one flat line yourself in Xero or Wave after importing. $8, paid once, runs offline.
+
+→ **[Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/)**
+
+## Related tools
+
+- Paid through Stripe? **[StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/)** turns Stripe balance exports into a balanced QuickBooks journal CSV.
