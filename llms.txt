@@ -3,43 +3,46 @@
 > Small offline browser tools that turn CSV exports from Stripe, QuickBooks, Xero, Shopify, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify and Harvest into clean files. Every tool is $8 one-time on Gumroad, runs locally in the browser, and needs no account, no subscription and no upload.
 
 - Website: https://jwillumproducts.github.io/
+- All tools: https://jwillumproducts.github.io/tools/
+- All guides: https://jwillumproducts.github.io/guides/
 - Store: https://willumsen4.gumroad.com/
 - Contact: jwillum.products@gmail.com
 - The tools do not sync with Shopify, QuickBooks or Xero; they create files you import yourself.
-- Independent; not affiliated with Stripe, Shopify, Intuit, Xero, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify or Harvest.
+- Independent; not affiliated with Stripe, Shopify, Intuit, Xero, Wave, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify, Harvest or Avery.
 - Refunds: see each product page on Gumroad for its refund policy.
+- Full guide text: https://jwillumproducts.github.io/llms-full.txt
 
 ## Payments & bookkeeping
 
-- [StripeClear Journal](https://willumsen4.gumroad.com/l/stripeclear-journal): Turn a Stripe Balance Transactions CSV into a balanced QuickBooks Online journal CSV, plus a payout summary and an audit file. $8 one-time.
-- [BooksExport Clean](https://willumsen4.gumroad.com/l/books-export-clean): Clean QuickBooks Online or Xero export CSVs for accountant handoff: junk rows stripped, ISO dates and normalized amounts. Not tax advice. $8 one-time.
-- [Tracker Invoice Lines](https://willumsen4.gumroad.com/l/tracker-invoice-lines): Turn a Toggl, Clockify or Harvest detailed time CSV into Xero, Wave or generic Qty × Rate invoice line CSVs. $8 one-time.
-- [Bandcamp Sales Clean](https://willumsen4.gumroad.com/l/bandcamp-sales-clean): Turn your Bandcamp raw sales report CSV into Wave, Xero Bank Statement and generic P&L line CSVs, with optional artist splits. $8 one-time.
+- [StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/): Turn a Stripe Balance Transactions CSV into a balanced QuickBooks Online journal CSV, plus a payout summary and an audit file. $8 one-time. Buy: https://willumsen4.gumroad.com/l/stripeclear-journal (Gumroad name: Stripe Balance Transactions CSV to QuickBooks Journal — Offline)
+- [BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/): Clean QuickBooks Online or Xero export CSVs for accountant handoff: junk rows stripped, ISO dates and normalized amounts. Not tax advice. $8 one-time. Buy: https://willumsen4.gumroad.com/l/books-export-clean (Gumroad name: QuickBooks Xero Export CSV Cleaner — Offline Accountant Handoff)
+- [Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/): Turn a Toggl, Clockify or Harvest detailed time CSV into Xero, Wave or generic Qty × Rate invoice line CSVs. $8 one-time. Buy: https://willumsen4.gumroad.com/l/tracker-invoice-lines (Gumroad name: Toggl Clockify Harvest to Xero Wave Lines — Offline Invoice CSV)
+- [Bandcamp Sales Clean](https://jwillumproducts.github.io/tools/bandcamp-sales-clean/): Turn your Bandcamp raw sales report CSV into Wave, Xero Bank Statement and generic P&L line CSVs, with optional artist splits. $8 one-time. Buy: https://willumsen4.gumroad.com/l/bandcamp-sales-clean (Gumroad name: Bandcamp Raw Sales to Wave Xero CSV — Offline Line Cleaner)
 
 ## Shopify & Etsy
 
-- [Shopify CSV Densifier](https://willumsen4.gumroad.com/l/shopify-csv-densifier): Fill the blank order-level cells in a Shopify Orders CSV, then trim it to Pick, Pack or 3PL column presets. $8 one-time.
-- [Shopify Customers MailMerge](https://willumsen4.gumroad.com/l/shopify-customers-mailmerge): Turn a Shopify Customers CSV into clean US, UK, CA, AU or generic mail-merge address columns. $8 one-time.
-- [Etsy Listing CSV Fixer](https://willumsen4.gumroad.com/l/etsy-listing-csv-fixer): Validate and safely clean Etsy listing export CSVs, then download a cleaned file and an issue report. $8 one-time.
+- [Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/): Fill the blank order-level cells in a Shopify Orders CSV, then trim it to Pick, Pack or 3PL column presets. $8 one-time. Buy: https://willumsen4.gumroad.com/l/shopify-csv-densifier (Gumroad name: Shopify Orders CSV Densifier — Offline Pick, Pack & 3PL Presets)
+- [Shopify Customers MailMerge](https://jwillumproducts.github.io/tools/shopify-customers-mailmerge/): Turn a Shopify Customers CSV into clean US, UK, CA, AU or generic mail-merge address columns. $8 one-time. Buy: https://willumsen4.gumroad.com/l/shopify-customers-mailmerge (Gumroad name: Shopify Customers CSV Mail Merge — Offline US UK CA AU Packs)
+- [Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/): Validate and safely clean Etsy listing export CSVs, then download a cleaned file and an issue report. $8 one-time. Buy: https://willumsen4.gumroad.com/l/etsy-listing-csv-fixer (Gumroad name: Etsy Listing Export CSV Cleaner — Offline Validate & Fix)
 
 ## Marketplace fees & profit
 
-- [Faire Wholesale Fee & Profit Calculator](https://willumsen4.gumroad.com/l/faire-profit-calculator): See what you keep on Faire: compare Marketplace and Direct orders, the new-retailer fee and payout speed, with bulk CSV and break-even pricing. $8 one-time.
-- [Whatnot Seller Profit Calculator](https://willumsen4.gumroad.com/l/whatnot-profit-calculator): See what you keep on Whatnot after category commission and payment processing, with bulk CSV and a show-night print sheet. $8 one-time.
+- [Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/): See what you keep on Faire: compare Marketplace and Direct orders, the new-retailer fee and payout speed, with bulk CSV and break-even pricing. $8 one-time. Buy: https://willumsen4.gumroad.com/l/faire-profit-calculator (Gumroad name: Faire Wholesale Fee & Profit Calculator — Offline Net After Fees)
+- [Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/): See what you keep on Whatnot after category commission and payment processing, with bulk CSV and a show-night print sheet. $8 one-time. Buy: https://willumsen4.gumroad.com/l/whatnot-profit-calculator (Gumroad name: Whatnot Seller Profit Calculator — Offline Net After Fees (Cliff + CSV + Show Print))
 
 ## Events
 
-- [Event QR Badges](https://willumsen4.gumroad.com/l/event-qr-badges): Turn an attendee CSV into printable Avery 5395-compatible name badges and fold-up table tents with vCard QR codes. $8 one-time.
+- [Event QR Badges](https://jwillumproducts.github.io/tools/event-qr-badges/): Turn an attendee CSV into printable Avery 5395-compatible name badges and fold-up table tents with vCard QR codes. $8 one-time. Buy: https://willumsen4.gumroad.com/l/event-qr-badges (Gumroad name: Avery 5395-Compatible Name Badges & QR Table Tents from CSV — Offline)
 
 ## Free guides
 
-- [How to reconcile Stripe payouts into a bookkeeping journal (QuickBooks-ready)](https://willumsen4.gumroad.com/p/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready)
-- [How to make QR code name badges for an event from a spreadsheet](https://willumsen4.gumroad.com/p/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet)
-- [Etsy listing CSV errors: how to check and clean your listings export](https://willumsen4.gumroad.com/p/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export)
-- [How to calculate your real profit per Whatnot sale after fees](https://willumsen4.gumroad.com/p/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees)
-- [How to fill the blank rows in a Shopify orders CSV export (for pick and pack lists)](https://willumsen4.gumroad.com/p/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists)
-- [How to clean a QuickBooks Online or Xero export before sending it to your accountant](https://willumsen4.gumroad.com/p/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant)
-- [How to turn a Shopify customer export into a mail merge address list](https://willumsen4.gumroad.com/p/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list)
-- [How to turn Toggl, Clockify or Harvest time entries into Xero or Wave invoice lines](https://willumsen4.gumroad.com/p/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines)
-- [How to calculate your Faire wholesale fees and real profit per order](https://willumsen4.gumroad.com/p/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order)
-- [How to get Bandcamp sales into Xero or Wave (and why "amount you received" shows 0)](https://willumsen4.gumroad.com/p/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0)
+- [How to reconcile Stripe payouts into a bookkeeping journal (QuickBooks-ready)](https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/)
+- [How to make QR code name badges for an event from a spreadsheet](https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/)
+- [Etsy listing CSV errors: how to check and clean your listings export](https://jwillumproducts.github.io/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/)
+- [How to calculate your real profit per Whatnot sale after fees](https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/)
+- [How to fill the blank rows in a Shopify orders CSV export (for pick and pack lists)](https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/)
+- [How to clean a QuickBooks Online or Xero export before sending it to your accountant](https://jwillumproducts.github.io/guides/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant/)
+- [How to turn a Shopify customer export into a mail merge address list](https://jwillumproducts.github.io/guides/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list/)
+- [How to turn Toggl, Clockify or Harvest time entries into Xero or Wave invoice lines](https://jwillumproducts.github.io/guides/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines/)
+- [How to calculate your Faire wholesale fees and real profit per order](https://jwillumproducts.github.io/guides/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order/)
+- [How to get Bandcamp sales into Xero or Wave (and why "amount you received" shows 0)](https://jwillumproducts.github.io/guides/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0/)

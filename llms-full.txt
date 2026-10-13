@@ -1,0 +1,749 @@
+# JWillum products: full guide text
+
+Source: https://jwillumproducts.github.io/ · Every tool is $8 one-time on Gumroad (https://willumsen4.gumroad.com/), runs offline in the browser, no account, no upload.
+
+---
+
+# How to reconcile Stripe payouts into a bookkeeping journal (QuickBooks-ready)
+
+URL: https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/
+
+Stripe deposits one lump sum into your bank, but that payout is really many charges, minus fees, minus refunds, sometimes minus a dispute. If you book the deposit as "sales", your income is understated, your fees disappear, and refunds get tangled in. Most bookkeepers fix this with a **clearing account** and a journal entry. This guide shows how to do it by hand from a Stripe export.
+
+## Why a clearing account works
+
+Picture a holding account, usually called **Stripe Clearing**, that stands for "money Stripe is holding for me":
+
+- When a customer pays, gross sales go **into** clearing (debit clearing, credit sales).
+- Stripe's fee comes **out** of clearing (debit fees expense, credit clearing).
+- A refund comes **out** of clearing (debit refunds, credit clearing).
+- A payout moves money from clearing **to your bank** (debit bank, credit clearing).
+
+If everything is recorded, clearing goes back toward zero each time a payout lands. Anything left over tells you what still needs a closer look.
+
+## Step 1: Set up five accounts once
+
+In QuickBooks Online (or your ledger), create these accounts or map to ones you already have:
+
+1. **Stripe Clearing**: Other Current Asset (or a clearing/bank-type account)
+2. **Stripe Sales**: Income
+3. **Stripe Fees**: Expense
+4. **Stripe Refunds**: contra-income or expense (pick one policy and stick to it)
+5. **Bank Account**: the real account that receives Stripe payouts
+
+Write the names down exactly as they appear. Journal CSV imports usually fail on spelling or capitalization mismatches.
+
+## Step 2: Export the right Stripe file
+
+In the Stripe Dashboard, go to **Balances**, open the transactions view and **Export**. Choose the itemized **balance transactions** export, not the payments list. You want columns like `created`, `amount`, `fee`, `net`, `type` or `reporting_category`, `description` and `payout` (or `automatic_payout_id`).
+
+Export the date range for the month you're closing. Check whether amounts are in major units (`100.00`) or cents (`10000`). Mixing the two is the classic "everything is 100× too big" mistake.
+
+## Step 3: Categorize each row
+
+Sort or filter by `reporting_category` (or `type` if that column is missing) and group rows:
+
+| Category | Journal lines |
+|---|---|
+| charge / payment | Dr Clearing (gross), Cr Sales (gross); then Dr Fees, Cr Clearing (fee) |
+| refund | Dr Refunds, Cr Clearing |
+| stripe fee | Dr Fees, Cr Clearing |
+| payout | Dr Bank, Cr Clearing |
+| payout reversal | the reverse of a payout |
+| dispute | treat like a refund, and note it as a dispute |
+
+Rows such as internal transfers or adjustments don't fit these buckets. Set them aside and decide on each one with your bookkeeper rather than forcing them in.
+
+## Step 4: Build one journal per day
+
+Use a pivot table or SUMIFS to total each category per calendar day. Then write a journal entry for each day with the columns most CSV importers expect:
+
+`Journal No., Journal Date, Account Name, Description, Debits, Credits`
+
+A readable numbering scheme like `SC-2026-03-15` makes entries easy to find later. **Check that total debits equal total credits for every journal before you import.** One unbalanced day blocks the whole import.
+
+## Step 5: Tie out the clearing account
+
+After import, look at the Stripe Clearing balance for the period. If it isn't zero (or equal to charges that haven't been paid out yet), the usual suspects are:
+
+- date-range cutoffs (charges at month-end paid out next month)
+- rows you set aside (transfers, adjustments)
+- mixed currencies
+- a cents vs. major units mix-up
+
+Compare your category totals to the Stripe Dashboard for the same range and you'll usually find the gap within minutes.
+
+## Doing it faster: StripeClear Journal
+
+Doing this by hand every month takes a while and it's easy to make mistakes. **StripeClear Journal** is a single offline HTML file that does Steps 3 and 4 for you and shows the Step 5 tie-out. Drop in your Stripe balance transactions CSV, rename the five accounts to match your chart of accounts, and it builds one balanced journal per day (`SC-YYYY-MM-DD`). A tie-out panel shows charges, fees, refunds, payouts and the clearing residual.
+
+You download three files: a **QBO Journal CSV**, a **Payout Summary** (one row per payout) and a **Detail Audit** listing every source row and whether it was journaled. Unrecognized types are left out of the journal and flagged in the audit rather than guessed. Amount units auto-detect, with a manual override, and European comma decimals are supported. There's no Stripe API, no login and no upload: the file never leaves your computer.
+
+It's a reconciliation helper, not accounting advice. Check totals against Stripe and your bank before importing.
+
+→ **[StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/)**
+
+## Related tools
+
+- Handing a QuickBooks Online or Xero export to your accountant? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** strips report titles, totals and payee noise into one clean CSV, offline.
+- Billing hours from Toggl, Clockify or Harvest? **[Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/)** turns detailed time exports into invoice-line CSVs for Xero or Wave.
+
+---
+
+# How to make QR code name badges for an event from a spreadsheet
+
+URL: https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/
+
+You have an attendee list in Excel or Google Sheets and a box of sticker name badges. You want each badge to show a name, an organization and a QR code that shares contact details when scanned. Here's how to do it with free tools, plus the printing mistakes that ruin whole sheets.
+
+## Step 1: Clean up the attendee list
+
+Export your registration list as a **UTF-8 CSV**, then tidy it:
+
+- One row per attendee, with a header row.
+- A **name** column (required). Add **org/company**, **email** and a ticket or attendee **ID** if you have them.
+- Remove blank rows and fix names in all caps or all lowercase. What's in the cell is what gets printed.
+- Keep organization names short. Long ones wrap badly on an 85 mm-wide badge.
+
+## Step 2: Decide what the QR code should contain
+
+This choice matters more than the design:
+
+- **vCard (contact card):** text starting with `BEGIN:VCARD` that holds name, org and email. Most phone cameras offer "Add contact" when they scan it. Best for networking events.
+- **URL:** a full `https://…` link, such as a speaker page or LinkedIn profile.
+- **ID:** just the ticket or attendee ID. Useful for check-in, but a phone will only show the raw string.
+
+Keep vCard payloads short (roughly under 180 characters). Longer content means a denser QR code, and dense codes are harder to scan at small sizes.
+
+## Step 3: Generate the codes and lay out the badges
+
+The manual route in a word processor:
+
+1. Generate one QR image per attendee with a free QR generator or a spreadsheet add-on, and name each file after the attendee ID.
+2. Use your word processor's **mail merge** with the label template for your sticker sheet (for example the 8-up US Letter name badge layout used by Avery 5395).
+3. Merge the name and org fields and insert each QR image into its label. Most mail-merge tools need a workaround or add-on for per-row images, which is where this usually gets fiddly.
+
+For **table tents**, set up a half-letter layout, rotate the back face 180° so it reads the right way up once folded, and print on cardstock.
+
+## Step 4: Print a test sheet first (the step people skip)
+
+Most badge disasters come from the print dialog, not the design:
+
+- Set scale to **Actual size / 100%**. Never use "Fit to page" or "Shrink to fit". They shrink the grid a little and every row drifts off the labels.
+- Match the paper size to the sheet (US Letter for 5395-style sheets).
+- Print one sheet on plain paper, hold it against a label sheet up to the light, and check alignment.
+- If everything is shifted by a millimeter or two, adjust the page margins or offset and test again.
+- **Scan a few QR codes with a real phone** before you print 300 badges. Print dark on white, and test before laminating.
+
+## Step 5: Handle partial sheets
+
+Leftover sheets from your last event with a few labels already used? Add blank rows at the top of your merge list so printing starts at the first free label, or you'll waste the rest of the sheet.
+
+## Doing it faster: Event QR Badges
+
+Mail-merging per-row QR images is the slowest part of this whole job. **Event QR Badges** is a single offline HTML file built for exactly this. Drop in an attendee CSV and it maps common column names (`full_name`, `organization`, `company`, …). You choose the QR payload (**vCard**, **URL** or **ID**) and preview every badge on screen before printing.
+
+It prints on **Avery 5395-compatible** 8-up Letter name badge sheets (compatible with 8395 / 25395 / WorldLabel WL-5030) or **DIY fold-up table tents** on plain cardstock, with the back face pre-rotated. There's a **Skip first N slots** option for partial sheets and **X/Y nudge** sliders (±3 mm, remembered on that laptop) to correct printer drift. It runs offline with no account and no upload, so your attendee list stays on the venue laptop.
+
+Scope is deliberately narrow: US Letter, 5395-style badges and DIY tents only. No A4, thermal printers or check-in sync. Avery-compatible; not affiliated with Avery Dennison.
+
+→ **[Event QR Badges](https://jwillumproducts.github.io/tools/event-qr-badges/)**
+
+## Related tools
+
+- Mailing to customers instead of badging attendees? **[Shopify Customers MailMerge](https://jwillumproducts.github.io/tools/shopify-customers-mailmerge/)** turns a Shopify Customers export into a clean mail-merge / label CSV, offline.
+- Selling merch or tickets through Shopify? **[Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/)** fills in the blank order-level cells in an Orders export for pick and pack lists.
+
+---
+
+# Etsy listing CSV errors: how to check and clean your listings export
+
+URL: https://jwillumproducts.github.io/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/
+
+Many Etsy sellers download their listings as a CSV, hand it to a VA or open it in Excel for bulk edits, and then use it to update listings by hand or with a third-party tool. Somewhere along the way the file picks up problems: titles over the limit, prices like `$1,299.00`, SKUs turned into `1.23E+15`, Google Drive links where image URLs should be.
+
+**One thing to know first:** Etsy's own help says there's **no bulk listing creation by CSV upload** on Etsy itself. The CSV is an export you work from. The goal is a clean, trustworthy sheet before anyone copies from it.
+
+Here's a checklist you can run in any spreadsheet.
+
+## 1. Open the file safely
+
+Excel mangles CSVs when it guesses column types. Instead of double-clicking, use **Data → From Text/CSV** and set the **SKU** column (and any ID columns) to **Text**. That stops long numbers turning into scientific notation. Once a SKU shows as `1.23E+15`, the original digits are gone, so fix it in the source sheet rather than guessing.
+
+If characters show up as `Ã©` or similar, the file was saved in the wrong encoding. Re-save as **CSV UTF-8**.
+
+## 2. Titles
+
+- Etsy titles have a **140-character** limit. Add a helper column with `=LEN(A2)` and filter for anything over 140.
+- Look for titles in ALL CAPS and promo phrases like "FREE SHIPPING". Tone it down and keep the words shoppers actually search for.
+- Trim leading and trailing spaces (`=TRIM()`).
+
+## 3. Tags and materials
+
+- Up to **13 tags**, each **20 characters** max. Materials: up to 13, each up to 45 characters.
+- Pick one separator and use it throughout. A file with both commas and pipes is a common VA mistake.
+- Remove empty tokens and duplicates, and rewrite any tag that's really a sentence.
+
+## 4. Price, currency and quantity
+
+- Price should be a plain positive decimal with a dot: `24.50`, not `$24,50` or `1,299.00 USD`. Strip currency symbols and thousands separators.
+- Currency codes should be three uppercase letters (`USD`, `EUR`, `GBP`).
+- Quantity should be a whole number of 1 or more. A `0` usually means someone forgot to restock.
+
+## 5. Images
+
+- The export usually has **IMAGE1–IMAGE10** columns. Make sure IMAGE1 is filled and that there are no gaps (IMAGE3 filled but IMAGE2 empty).
+- **Google Drive and Dropbox share links aren't direct image URLs.** Replace them with publicly fetchable `https://` image links in your own workflow.
+
+## 6. Descriptions and variations
+
+- Look for HTML tags or off-platform links pasted into descriptions.
+- Variations: at most two axes, and Variation 2 shouldn't be filled if Variation 1 is empty.
+- Check for duplicate SKUs and duplicate titles. They usually mean a row was copied and never edited.
+
+## 7. Save correctly
+
+Save as **CSV UTF-8** and keep the original export untouched next to your edited copy, so you can always compare the two.
+
+## Doing it faster: Etsy Listing CSV Fixer
+
+Running that checklist by hand on a few hundred rows takes a whole afternoon. **Etsy Listing CSV Fixer** is a single offline HTML file that runs these checks on an Etsy-style listings export in one go. Drop in the CSV (UTF-8, BOM or Excel `sep=` line are all fine) and you get a summary of errors, warnings and auto-fixes. You can filter rows and expand them for field-level notes.
+
+Safe fixes always run: trimming whitespace, stripping currency symbols from prices, normalizing tag and material separators and removing duplicates, uppercasing currency codes, and fixing quoting and encoding on download. **Truncating titles to 140 characters, or tags and materials to their limits, is opt-in and off by default.** Everything else is flagged as a warning rather than changed silently: ALL CAPS or promo titles, scientific-notation SKUs, image gaps and share links, variation problems, duplicates, and HTML in descriptions. You download a **cleaned CSV** and an **issue report**.
+
+To be clear about what it isn't: it doesn't upload, create or publish anything on Etsy, it isn't an official Etsy importer, and it doesn't fetch images (it checks URL shape only). It runs locally with no account and no upload.
+
+→ **[Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/)**
+
+## Related tools
+
+- Also selling wholesale? **[Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/)** shows what you keep after Faire fees, offline.
+- Also running live shows? **[Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** works out net profit per lot after commission and processing.
+
+---
+
+# How to calculate your real profit per Whatnot sale after fees
+
+URL: https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/
+
+A card sells for $50 on a Whatnot stream and it feels like a $50 night. It isn't. Commission, payment processing, the cost of the item, shipping supplies and your own label all come out before you see profit. This guide walks through the math by hand so you can price lots with confidence.
+
+*Fee figures below are the defaults from Whatnot's published seller fee schedule as checked on 2026-09-13 (US/Canada/Australia unless noted). Rates change and promos vary, so always confirm against the Whatnot Help Center and your Seller Hub, which is the source of truth for payouts. This guide is not affiliated with Whatnot.*
+
+## The key point: two fees, two different bases
+
+This is where most spreadsheets go wrong:
+
+- **Commission** is a percentage of the **item's final sale price only**. It doesn't include buyer-paid shipping or tax.
+- **Payment processing** is a percentage of the **total order value** (item + buyer shipping, plus buyer tax where applicable) **plus a fixed fee per order**.
+
+So when buyer shipping goes up, your processing fee goes up too, but your commission doesn't.
+
+## Step 1: Find your commission rate
+
+Published US/CA/AU defaults at the time of writing:
+
+| Category type | Commission |
+|---|---|
+| Most categories ("all other") | 8% |
+| Coins & Money | 4% (up to the threshold, 0% above) |
+| Pallets / wholesale | 4% flat |
+| Eligible high-value collectibles | 8% up to $1,500, **0% above** |
+
+In the UK and EU the default is 6.67% commission, and **VAT is charged on fees** (commonly 20%). In Japan, 8% plus JCT on fees applies, with a ¥225,000 threshold.
+
+## Step 2: Find your processing fee
+
+US/CA/AU: **2.9% of order value + $0.30** per order. UK/EU: 2.42% + £/€0.25, plus VAT.
+
+## Step 3: Do the math for one lot
+
+**Example (US, standard 8% category):** $50 sale, buyer pays $8.70 shipping, so the order value is $58.70.
+
+- Commission: 8% × $50 = **$4.00**
+- Processing: 2.9% × $58.70 + $0.30 = **$2.00**
+- Total fees: **$6.00**, so net payout from the sale is **$44.00**
+
+Now take off your own costs to get profit:
+
+- Cost of goods (what you paid for the card), e.g. $25
+- Supplies (top loader, team bag, mailer), e.g. $1
+- Any shipping cost you pay above what the buyer paid
+
+`Profit = sale − commission − processing − COGS − supplies − your shipping cost`
+`Margin = profit ÷ sale`
+
+With $25 COGS and $1 supplies, that $50 sale is $18 profit, a 36% margin, not $25.
+
+## Step 4: Understand the high-value "cliff"
+
+On eligible categories, commission applies only to the part of the sale **up to** the threshold ($1,500 / £/€1,500 / ¥225,000). The part above it is charged 0%. Processing still applies to the whole order value.
+
+**Example:** a $2,000 cliff-eligible sale.
+- Commission: 8% × $1,500 = **$120** (not $160, so you save $40)
+- Processing: 2.9% × $2,000 + $0.30 = **$58.30**
+- Net payout: **$1,821.70**
+
+Watch out: at the time of writing, the high-value promo applies to **Sports Singles** only. **Sports breaks and Surprise Products are excluded**, so don't count on the cliff for those.
+
+## Step 5: Work out break-even before you list
+
+Start from the margin you want and work backwards. Roughly: `minimum price ≈ (COGS + supplies + fixed fee) ÷ (1 − commission % − processing % − target margin)`. Remember that buyer shipping also adds to processing. Run your cheap lots through this. Low starting bids on low-cost items are where fixed fees quietly eat the margin.
+
+## Step 6: Review the whole show
+
+After a stream, put every lot in a sheet with sale, shipping, COGS and supplies, and flag anything under your target margin. A handful of losing lots can cancel out a good night.
+
+## Doing it faster: Whatnot Seller Profit Calculator
+
+**Whatnot Seller Profit Calculator** is a single offline HTML file that does this math for you. Pick a region (US, Canada, Australia, UK, EU, Japan) and a category preset (cliff collectibles, coins, pallets, standard, or a custom %). Enter the sale, shipping and costs, and it shows live commission, processing, VAT/JCT on fees, net payout, profit, margin, ROI and break-even price. It handles the cliff automatically and warns you about sports breaks.
+
+For whole shows, **bulk CSV** mode takes a template with one lot per row and marks each one ok / thin / loss. A **show-night print** sheet summarizes gross, fees, net and losing lots on one page. All fee constants are editable if Whatnot changes its rates. Your costs never leave your device. It's an independent estimate, not a replacement for Seller Hub receipts, and not tax advice.
+
+→ **[Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)**
+
+## Related tools
+
+- Also wholesaling? **[Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/)** does the same kind of math for Faire orders.
+- Also selling on Etsy? **[Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/)** checks and cleans your listings export offline.
+
+---
+
+# How to fill the blank rows in a Shopify orders CSV export (for pick and pack lists)
+
+URL: https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/
+
+Export your orders from Shopify Admin and open the CSV, and something looks off. An order with three items takes up three rows, but only the first row has the customer email, shipping address, payment status and shipping method. Rows two and three hold just the line item. That layout is fine for Shopify, but it breaks pick lists, pack slips, pivot tables and anything you send to a warehouse or 3PL, because every row needs to stand on its own.
+
+Here's how to fill those rows in safely by hand, and the mistakes that quietly mix one customer's address into another order.
+
+## Why "fill down" in Excel is risky
+
+The obvious fix is Excel's Go To Special → Blanks, then `=cell above`. It fills every blank with the value above it, but it has two problems:
+
+- **It fills line-item columns too.** A blank `Lineitem` cell can be intentional (a discount field, a missing SKU). Filling it copies the previous product's data onto the wrong item.
+- **It bleeds across orders.** If order #1002 has a blank shipping phone, fill-down copies #1001's phone into it. Now a stranger's details sit on the wrong packing slip.
+
+The safe rule: **fill order-level columns only, and only within the same order.**
+
+## Step 1: Export and back up
+
+In Shopify Admin go to **Orders → Export** and pick your date range or the current filter. Save a copy of the untouched file before you edit anything. Don't sort the sheet yet: the fill depends on rows staying in their original order.
+
+## Step 2: Sort your columns into two groups
+
+Look at the header row and split the columns into:
+
+- **Order-level:** `Name` (the order number), `Email`, `Financial Status`, `Fulfillment Status`, `Shipping Method`, every `Shipping …` address field, `Notes`, `Currency`, `Created at`, and so on.
+- **Line-level:** everything starting with `Lineitem` (name, SKU, quantity, fulfillment status…). **Never fill these.**
+
+## Step 3: Make sure the order number is on every row
+
+In many exports the `Name` column (like `#1001`) repeats on each line item. If yours is blank on continuation rows, fill that first. Every blank Name row belongs to the order above it. Put a helper column next to it with `=IF(A2="",B1,A2)` (where A is Name and B is the helper), copy it down, then paste the helper as values.
+
+## Step 4: Fill order-level columns within each order
+
+For each order-level column, use a helper column that only copies from the row above **if it's the same order**. Say column A is the filled order number, column C is `Email`, and D is an empty helper column. In D2 enter:
+
+`=IF(AND(C2="",$A2=$A1),D1,C2)`
+
+In plain English: if this cell is blank and the order number matches the row above, take the value from above. Otherwise keep what's there. Copy it down, paste as values, and repeat for each order-level column. It's slow, but it can't leak into the next order.
+
+## Step 5: Trim to the columns your job needs
+
+A full export has dozens of columns. Keep only what each job needs:
+
+- **Pick list:** order number, SKU, item name, quantity, vendor, fulfillment status
+- **Pack list:** order number, shipping name and address fields, item name, quantity, SKU, notes, shipping method
+- **3PL handoff:** order number, order ID, shipping fields, SKU, quantity, item name, email, currency, created date
+
+## Step 6: Save and use it downstream only
+
+Save as CSV UTF-8. If Excel shows garbled characters, re-import through Excel's UTF-8 CSV import. **Don't re-import this file into Shopify.** It's for picking, packing and analysis.
+
+## Doing it faster: Shopify CSV Densifier
+
+**Shopify CSV Densifier** is a single offline HTML file that applies exactly these rules. Drop in a native Shopify Admin Orders export and it:
+
+- fills blank **order-level** cells only
+- **never** fills `Lineitem*` columns
+- resets whenever the order `Name` changes, so nothing bleeds between orders
+
+Then pick a preset: **Pick**, **Pack**, **3PL**, **All**, or **Custom** if your 3PL renamed headers. A **Before | After** preview highlights every filled cell, there's an optional Excel UTF-8 BOM, and you download the trimmed CSV. It also has a Products mode for analysis, with a clear banner saying not to re-import the result.
+
+It doesn't upload to Shopify, print packing slips, or replace export apps like Matrixify. It post-processes the native Admin CSV, offline, and your order data stays on your computer.
+
+→ **[Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/)**
+
+## Related tools
+
+- Need a mailing list rather than a pack list? **[Shopify Customers MailMerge](https://jwillumproducts.github.io/tools/shopify-customers-mailmerge/)** turns a Customers export into US/UK/CA/AU mail-merge address columns.
+- Tidying a messy Etsy listings export too? **[Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/)** checks titles, tags, prices and images offline.
+
+---
+
+# How to clean a QuickBooks Online or Xero export before sending it to your accountant
+
+URL: https://jwillumproducts.github.io/guides/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant/
+
+Your accountant asks for "a CSV of all transactions for the year". You export a Transaction List from QuickBooks Online or Account Transactions from Xero, open it, and it's messy: a report title and date range across the top, totals and opening balances mixed in with real rows, `-Split-` where an account should be, payee names like `ACH DEBIT STORE 0421 ACME`, and debits and credits in separate columns. Your accountant will either clean it up (and bill for the time) or send it back.
+
+Here's how to turn it into one tidy sheet by hand.
+
+## Step 1: Export the right report
+
+- **QuickBooks Online:** the **Transaction List** report (Date, Transaction Type, Num, Name, Memo/Description, Account, Split, Amount) or the **Journal** report (with Debit and Credit columns).
+- **Xero:** **Account Transactions** (Date, Source, Description, Reference, Currency, Debit, Credit) or **Bank Transactions** (Date, Amount, Payee, Description, Reference, Account Code, Tax Type, Currency).
+
+Export as CSV, not PDF or Excel-formatted, and keep an untouched copy.
+
+## Step 2: Remove everything that isn't a transaction
+
+Delete these rows:
+
+- the report title, company name and date-range lines above the header
+- subtotal and total rows
+- opening and closing balance rows
+- blank spacer rows
+
+You should end up with one header row and one row per transaction.
+
+## Step 3: Fix the dates
+
+Convert all dates to `YYYY-MM-DD`. Be careful with slash dates: `03/04/2025` is 4 March in the US format and 3 April in the UK format. **Check which format your file uses before converting**, for example by finding a date with a day over 12. Guessing wrong silently moves transactions into the wrong month.
+
+## Step 4: Use one signed amount column
+
+If the export has separate Debit and Credit columns, add a single `amount` column (for example debit as positive and credit as negative, or whatever your accountant prefers) and keep the originals next to it. Make sure every amount uses a `.` decimal with no currency symbols or thousands separators.
+
+## Step 5: Deal with -Split-
+
+In a QBO Transaction List, `-Split-` in the Split column means the transaction hits more than one account. Don't guess the other side. Clear the placeholder, add a column like `split_unresolved` set to TRUE, and let your accountant check those in QBO.
+
+## Step 6: Clean payee names (but keep the original)
+
+Bank-fed payees carry noise like `ACH DEBIT`, `ACH CREDIT`, `INCOMING WIRE` or `STORE 1234`. Make a cleaned payee column, but **keep the raw text in its own column** so nothing is lost.
+
+## Step 7: Flag, don't fix, the tricky stuff
+
+Add a `warnings` column and note these rather than changing numbers:
+
+- journal entries where debits don't equal credits
+- rows with an empty account
+- amounts that won't parse
+- rows in a different currency with no exchange rate (don't invent one)
+
+Finally, remove exact duplicate rows and save as CSV UTF-8.
+
+## Doing it faster: BooksExport Clean
+
+**BooksExport Clean** is a single offline HTML file that does Steps 2–7 for you. Drop in a QBO Transaction List or Journal export, or a Xero Account or Bank Transactions export, and it detects the report type. It then:
+
+- removes preamble, total and balance rows
+- converts dates to ISO format, and makes you pick US or UK when dates are ambiguous (download stays blocked until you do; it never guesses)
+- normalizes amounts and turns Debit/Credit into one signed `amount`
+- clears `-Split-` and flags `split_unresolved`
+- strips common payee noise while keeping `raw_payee`
+- removes exact duplicate rows
+
+It **warns** about unbalanced journals, empty accounts, unparsed amounts and multicurrency gaps without changing numbers or inventing accounts or exchange rates. You get a unified UTF-8 CSV plus a **changelog** of every automatic fix.
+
+There's no QuickBooks or Xero login: you export the CSV yourself and the data stays on your device. It's for books exports only; plain bank statement CSVs are refused with a clear message. It's a formatting aid, not tax or accounting advice.
+
+→ **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)**
+
+## Related tools
+
+- Stripe payouts muddying your books? **[StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/)** turns a Stripe balance export into a balanced QuickBooks journal CSV.
+- Billing hours? **[Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/)** turns Toggl, Clockify or Harvest exports into Xero or Wave invoice-line CSVs.
+
+---
+
+# How to turn a Shopify customer export into a mail merge address list
+
+URL: https://jwillumproducts.github.io/guides/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list/
+
+Want to send postcards, thank-you notes or catalogs to your Shopify customers? The customer list is already in Shopify Admin, but the export isn't shaped for a mail merge. There's no single "Full Name" field, the region is a code (`CA`, `NSW`) rather than a label your template expects, the column names don't match UK or Australian address conventions, and the file is full of emails, phone numbers, tags and marketing flags you don't want on a printed label.
+
+Here's how to turn it into a clean address list by hand, ready for Word, Google Docs or your label software.
+
+## Step 1: Export customers with addresses
+
+In Shopify Admin go to **Customers → Export** and include the default address fields. Keep an untouched copy. Note that the native export includes **one address per customer** (the default address), and names are in **First Name** and **Last Name** only. There's no separate "address first name" column.
+
+## Step 2: Build a Full Name column
+
+Add a `Full Name` column. Assuming B is First Name, C is Last Name and D is Company, start with `=TRIM(B2&" "&C2)`. For business customers with no personal name, use the **Company** value instead:
+
+`=IF(TRIM(B2&C2)="", D2, TRIM(B2&" "&C2))`
+
+## Step 3: Rename columns to match the country
+
+Mail-merge templates read better with local labels. Map the Shopify address columns like this:
+
+- **US:** Full Name, Company, Address1, Address2, City, State, ZIP, Country
+- **UK:** Full Name, Company, Address1, Address2, City, County, Postcode, Country
+- **Canada:** Full Name, Company, Address1, Address2, City, Province, Postal Code, Country
+- **Australia:** Full Name, Company, Address1, Address2, Suburb, State, Postcode, Country
+
+Shopify's export gives **codes** for province and country, so expect `NY` and `US`, not full names. UK rows often have a blank province, which is fine: county is optional there.
+
+## Step 4: Remove incomplete rows
+
+Filter out rows missing **Address1**, **City** or **ZIP/postcode**, and rows with no first name, last name **or** company. Put them on a separate sheet so you can fix them later instead of printing half an address.
+
+## Step 5: Remove private data you won't print
+
+Delete Email, Phone, Default Address Phone, tags, notes, spend totals and marketing-consent columns. A mailing list you pass to a print shop or a helper should contain only what goes on the envelope.
+
+## Step 6: Remove duplicate addresses
+
+The same household often appears twice (a guest checkout and an account, or two family members). To find them, build a comparison key: lowercase the name, company and address lines, strip punctuation, collapse spaces, uppercase the postcode and country, then join it all together. Sort by that key and keep the first row of each group.
+
+## Step 7: Filter by country and save
+
+If you're mailing only within one country, filter to that country code (US, GB, CA or AU). Save as CSV UTF-8. If Excel garbles accented names, re-import through its UTF-8 CSV import.
+
+A reminder: this cleans up the layout. It doesn't **check** that addresses can actually be delivered. Use your postal service's tools for that.
+
+## Doing it faster: Shopify Customers MailMerge
+
+**Shopify Customers MailMerge** is a single offline HTML file that does Steps 2–7 in one pass. Drop in a Shopify Admin Customers export and it detects the file. You pick a column pack (**US**, **UK**, **CA**, **AU**, **Generic** or **Custom**) and it builds `Full Name` (falling back to Company). By default it:
+
+- **drops incomplete rows** (with an optional report of what was dropped)
+- **strips email and phone**
+- **removes duplicate addresses** using a normalized address key
+- filters to the pack's country (you can switch this off)
+
+You preview the stats and download a clean mail-merge CSV.
+
+It doesn't validate deliverability, print labels, or produce a file you can re-import into Shopify, and it refuses Orders exports. Your customer data never leaves your device.
+
+→ **[Shopify Customers MailMerge](https://jwillumproducts.github.io/tools/shopify-customers-mailmerge/)**
+
+## Related tools
+
+- Packing the orders too? **[Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/)** fills the blank order rows in an Orders export and trims it to Pick, Pack or 3PL columns.
+- Printing name badges for an event instead? **[Event QR Badges](https://jwillumproducts.github.io/tools/event-qr-badges/)** prints name + QR badges on Avery 5395-compatible sheets from a CSV.
+
+---
+
+# How to turn Toggl, Clockify or Harvest time entries into Xero or Wave invoice lines
+
+URL: https://jwillumproducts.github.io/guides/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines/
+
+At the end of the month you have a few hundred time entries in Toggl Track, Clockify or Harvest and need to bill them in Xero or Wave. Typing invoice lines by hand is slow and error-prone. Dumping every entry onto an invoice gives the client 200 lines of "Meeting, 0.25h". What you usually want is **one line per client and project** (or per task), with total hours × rate, imported as a **draft** invoice you can check before sending.
+
+Here's how to do it with a spreadsheet.
+
+## Step 1: Export the detailed report
+
+- **Toggl Track:** Reports → Detailed → export CSV.
+- **Clockify:** Reports → Detailed → export CSV.
+- **Harvest:** the detailed time report → export CSV.
+
+Use the **detailed** export (one row per time entry), not a summary PDF. Keep an untouched copy.
+
+## Step 2: Keep only billable time
+
+If there's a Billable column, filter to billable entries. Then check the date range: an entry from the last day of the previous month is easy to bill twice.
+
+## Step 3: Convert durations to decimal hours
+
+Trackers often show `1:30:00`. Invoices need `1.5`. In Excel or Sheets, a duration in cell D2 converts with `=D2*24` (format the result as a number). If the export already has decimal hours, use that column.
+
+## Step 4: Group and total
+
+Build a pivot table with **Client** and **Project** as rows (add **Task** if you bill per task) and **sum of hours** as the value. Each row of the pivot becomes one invoice line.
+
+## Step 5: Apply rates
+
+Add a rate for each line, from the tracker's rate column if it has one, or from your own rate card. **Watch for mixed rates:** if one project has entries at 100 and 90, a single total will be wrong. Split those into separate lines per rate. Then calculate `amount = hours × rate`.
+
+## Step 6: Lay it out for your accounting software
+
+**Xero** (Invoices → Import) expects its own Sales Invoice CSV template:
+
+- Download the template from Xero and keep its columns (leave unused ones blank rather than deleting them).
+- Repeat **ContactName** and **InvoiceNumber** (and the dates) on **every line** of the same invoice.
+- Use one date format consistently, amounts with a `.` decimal and no currency symbols, and fill in AccountCode and TaxType to match codes that already exist in Xero.
+
+**Wave** (via Wave Connect) has no fixed public template. The headings come from your own **Prepare Input Sheet** (Extensions → Wave Connect → Upload → Invoices), where yellow means required. Match those headings exactly. Consecutive rows with the same Customer become one invoice; a blank row starts a new invoice for the same customer.
+
+## Step 7: Set up, import as drafts, review
+
+Before importing, create the contacts/customers, products, tax rates and account codes the file refers to. Import, then **review every draft** (hours, rates, tax, invoice numbers) before approving.
+
+## Doing it faster: Tracker Invoice Lines
+
+**Tracker Invoice Lines** is a single offline HTML file that does Steps 2–6. Drop in a detailed Toggl, Clockify or Harvest CSV and it recognizes the tracker from the headers, asking you to map columns if it isn't sure. It then:
+
+- groups by **Project**, **Project+task** or **Client only**, with **Billable only** on by default
+- applies the CSV rate or your saved rate card
+- warns about mixed rates, with an optional **Split mixed rates** setting
+- marks missing rates or clients as ERROR in the preview
+
+Choose **Xero** (full Sales Invoice import template), **Wave**-ready, or a **Generic** quantity × rate sheet, set your invoice prefix, dates, due days and codes, and download the CSV.
+
+It doesn't create or email PDF invoices, connect to Xero or Wave, or set up contacts or tax rates for you. For Wave, rename headings if validation asks you to. Timesheet data never leaves your device.
+
+→ **[Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/)**
+
+## Related tools
+
+- Getting an export ready for your accountant? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** tidies QuickBooks Online and Xero exports into one clean CSV.
+- Paid through Stripe? **[StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/)** turns Stripe balance exports into a balanced QuickBooks journal CSV.
+
+---
+
+# How to calculate your Faire wholesale fees and real profit per order
+
+URL: https://jwillumproducts.github.io/guides/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order/
+
+A $200 wholesale order on Faire doesn't mean $200 in your pocket. What you keep depends on whether it's a retailer's first order, a reorder or a Faire Direct order, how fast you want to be paid, and where your business is based. Then come your own costs. This guide walks through the calculation by hand so you can set wholesale prices that still work after fees.
+
+*Fee figures below are the defaults from Faire's Help Center as checked on 2026-09-13. Rates and terms change, so always confirm against the Faire Help Center and your Brand Portal Payout Summary, which is the source of truth. This guide is not affiliated with Faire.*
+
+## Step 1: Know which order type you're pricing
+
+At the time of writing, for **North American (US/Canada) brands**:
+
+- **Marketplace, first order from a new retailer:** 15% commission on the order subtotal **plus a one-time $10** new-retailer fee
+- **Marketplace, reorder:** 15% commission
+- **Faire Direct** (orders through your own Faire Direct link): **0% commission**, but payment processing still applies
+
+For brands **outside North America**, a first Marketplace order is 25% (15% + a 10% one-time referral) and reorders are 15%. Faire Direct is again 0% commission.
+
+## Step 2: Add the payment processing fee
+
+North America uses tiers based on how fast you're paid:
+
+- **Next day:** 3.5% + $0.30
+- **30-day:** 2.4% + $0.30
+- **60-day:** 1.9% + $0.30
+
+Outside North America, ACH Next Day is 3% of (subtotal + shipping reimbursement), and Net 30 is 0%.
+
+For North America, processing applies to the **item subtotal**. Some calculators also include shipping reimbursement; choose one method and stick to it.
+
+## Step 3: Calculate the payout
+
+Faire's North America payout formula is:
+
+`Payout = subtotal + shipping reimbursement − commission − processing fee`
+
+**Worked example (NA, 30-day payout):** $200 wholesale subtotal, $18 shipping reimbursement.
+
+- **First order from a new retailer:** commission $30 + new-retailer fee $10 + processing (2.4% × $200 + $0.30 = $5.10) = **$45.10 in fees**, so payout is $200 + $18 − $45.10 = **$172.90**
+- **Reorder:** fees $35.10, payout **$182.90**
+- **Faire Direct:** fees $5.10, payout **$212.90**
+
+## Step 4: Subtract your own costs
+
+Payout isn't profit. Take off the cost of goods and what you actually paid to ship:
+
+`Profit = payout − COGS − your shipping cost`
+`Margin = profit ÷ subtotal`
+
+With $80 COGS and $18 actual shipping, the example above gives **$74.90** profit on a first order, **$84.90** on a reorder and **$114.90** through Faire Direct. That's the same products, with very different results.
+
+## Step 5: Find your break-even wholesale price
+
+Work backwards from the margin you need. For a new-retailer order, the $10 flat fee hits small orders hardest, so test your minimum order value. Roughly:
+
+`Price ≈ (COGS + own shipping − shipping reimbursement + fixed fees) ÷ (1 − commission % − processing % − target margin %)`
+
+## Step 6: Check your whole catalog
+
+Put every SKU in a sheet (wholesale price, COGS, shipping) and run the formula for new, reorder and Direct orders. Flag anything with a thin or negative margin before a retailer orders it.
+
+## Doing it faster: Faire Wholesale Fee & Profit Calculator
+
+**Faire Wholesale Fee & Profit Calculator** is a single offline HTML file that does this math live. Choose **North America** or **Outside North America**, enter wholesale price, COGS, shipping reimbursement and your own shipping cost (plus an optional brand discount), then pick the order type and payout speed. It shows:
+
+- commission, new-retailer/referral fee and processing
+- total fees, effective fee % and payout
+- net profit, margin and ROI
+
+**Scenario compare** puts three setups side by side and highlights the best margin. **Break-even** finds the wholesale price for a target margin or dollar profit. **Bulk CSV** runs a whole SKU list from a template and flags loss rows. Fee constants are editable if Faire changes rates, and your prices and costs never leave your device.
+
+It's an independent estimate, not a replacement for your Payout Summary, and it doesn't model ads, currency conversion or tax.
+
+→ **[Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/)**
+
+## Related tools
+
+- Selling live too? **[Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** shows net profit per lot after commission and processing.
+- Listing on Etsy as well? **[Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/)** checks and cleans your listings export offline.
+
+---
+
+# How to get Bandcamp sales into Xero or Wave (and why "amount you received" shows 0)
+
+URL: https://jwillumproducts.github.io/guides/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0/
+
+Bandcamp gives you a detailed raw sales report, but it isn't in a shape your accounting software understands. Many artists and labels open it and hit the same puzzle: since Bandcamp's **Enhanced Payments** change in mid-2024, sale rows often show **`amount you received` = 0**. The money hasn't disappeared. It shows up on separate **payout** rows. Once you understand that, reconciling Bandcamp in Xero or Wave gets much easier.
+
+Here's how to do it by hand.
+
+## Step 1: Download the raw data sales report
+
+In Bandcamp go to **Tools** and download the **raw data sales report** as CSV, for the period you're closing. Keep an untouched copy. The Bandcamp Help article "Reading your raw data sales report" explains each column.
+
+## Step 2: Sort rows by what they are
+
+Filter on the **item type** column and group rows into:
+
+- **Sales:** album, track, package (merch) rows
+- **Payouts:** money sent to your PayPal or bank
+- **Refunds and reversals**
+- **Other:** anything else, which you review by hand
+
+## Step 3: Choose your view (bank vs. accrual)
+
+This is the key decision, and it's where most spreadsheets get double-counted:
+
+- **Bank view:** book **one line per payout**, because that's what actually lands in your bank or PayPal. Skip individual sale rows; they're already included in the payout. This is what you match against bank feeds in Xero or Wave.
+- **Accrual view:** book **one line per sale** using the **`net amount`** column, with refunds and reversals as negative amounts. This shows revenue per release and fee detail, which is useful for a P&L or for paying collaborators.
+
+Don't import both into the same bank account, or your income will be counted twice.
+
+## Step 4: Build the lines
+
+**Bank view:** for each payout row record the date, the amount (`amount you received`, or `net amount` if that's empty), a payee such as "Bandcamp", a description like "Bandcamp payout 2026-09-01", and the transaction ID as a reference. If transfer fees appear, add them as separate negative expense lines.
+
+**Accrual view:** for each sale record the date, artist, item type and name, currency, gross, fees, revenue share and `net amount`. If the transaction fee shows as `*`, it hadn't settled when you exported. Leave it blank and note it rather than guessing.
+
+## Step 5: Watch the currency
+
+If fans paid in more than one currency, split the sheet by currency before importing into a bank account. Don't mix USD and EUR rows in one statement.
+
+## Step 6: Format for your software
+
+- **Xero:** use the **bank statement import** layout (date, amount, payee, description, reference) for the bank view.
+- **Wave:** match the headings on your **Wave Connect** input sheet.
+- **Accountant:** a plain P&L sheet from the accrual view is usually enough.
+
+Import as drafts or unreconciled lines and review before approving.
+
+## Step 7: Artist splits (labels and collectives)
+
+If you share income, take each sale's `net amount` × the artist's percentage. Split **sales**, not payouts. Make sure every artist on a sale row has a percentage; otherwise a lookup can quietly give them 0%.
+
+## Doing it faster: Bandcamp Sales Clean
+
+**Bandcamp Sales Clean** is a single offline HTML file that does Steps 2–7. Drop in the raw sales report and it checks the official Bandcamp columns (and refuses files that don't match rather than guessing). It sorts rows into sale, payout, reversal, refund or other, and lets you choose:
+
+- **Bank view:** one line per payout, with optional transfer-fee lines
+- **Accrual view:** sale, refund and reversal lines by `net amount`
+
+Download **Xero Bank Statement**, **Wave Connect-ready** or **Generic P&L** CSVs. There are date, item-type and currency filters. It warns about multiple currencies and pending `*` fees (fee left blank). Add an `artist,share_pct` map to get a **splits** CSV; an unmatched artist is flagged as an error and blocks the splits download instead of defaulting to 0%.
+
+There's no Bandcamp, Xero or Wave login, and it's not tax advice. Fan emails in the report never leave your laptop.
+
+→ **[Bandcamp Sales Clean](https://jwillumproducts.github.io/tools/bandcamp-sales-clean/)**
+
+## Related tools
+
+- Handing books to an accountant? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** tidies QuickBooks Online and Xero exports into one clean CSV.
+- Also selling merch on Shopify? **[Shopify CSV Densifier](https://jwillumproducts.github.io/tools/shopify-csv-densifier/)** turns an Orders export into Pick, Pack or 3PL-ready rows.
