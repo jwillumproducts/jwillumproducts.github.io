@@ -98,10 +98,17 @@
    "alternateName": "Shopify CSV Densifier",
    "description": "Fill the blank order-level cells in a Shopify Orders CSV, then trim it to Pick, Pack or 3PL column presets.",
    "url": "https://willumsen4.gumroad.com/l/shopify-csv-densifier",
+   "image": [
+    "https://jwillumproducts.github.io/img/proof/densifier-01-sparse-before.jpg",
+    "https://jwillumproducts.github.io/img/proof/densifier-02-densified-after.jpg",
+    "https://jwillumproducts.github.io/img/proof/densifier-04-preset-pack.jpg"
+   ],
    "applicationCategory": "BusinessApplication",
    "operatingSystem": "Any (web browser, offline)",
    "brand": {
-    "@id": "https://jwillumproducts.github.io/#org"
+    "@type": "Brand",
+    "name": "JWillum products",
+    "url": "https://jwillumproducts.github.io/"
    },
    "publisher": {
     "@id": "https://jwillumproducts.github.io/#org"
@@ -111,14 +118,44 @@
     "price": "8",
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock",
-    "url": "https://willumsen4.gumroad.com/l/shopify-csv-densifier"
+    "url": "https://willumsen4.gumroad.com/l/shopify-csv-densifier",
+    "priceValidUntil": "2027-12-31",
+    "itemCondition": "https://schema.org/NewCondition",
+    "shippingDetails": {
+     "@type": "OfferShippingDetails",
+     "shippingRate": {
+      "@type": "MonetaryAmount",
+      "value": "0",
+      "currency": "USD"
+     },
+     "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": "US"
+     },
+     "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "handlingTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 0,
+       "maxValue": 0,
+       "unitCode": "DAY"
+      },
+      "transitTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 0,
+       "maxValue": 0,
+       "unitCode": "DAY"
+      }
+     }
+    },
+    "hasMerchantReturnPolicy": {
+     "@type": "MerchantReturnPolicy",
+     "applicableCountry": "US",
+     "returnPolicyCategory": "https://schema.org/MerchantReturnUnspecified",
+     "merchantReturnLink": "https://willumsen4.gumroad.com/"
+    }
    },
-   "@id": "https://jwillumproducts.github.io/tools/shopify-csv-densifier/#app",
-   "image": [
-    "https://jwillumproducts.github.io/img/proof/densifier-01-sparse-before.jpg",
-    "https://jwillumproducts.github.io/img/proof/densifier-02-densified-after.jpg",
-    "https://jwillumproducts.github.io/img/proof/densifier-04-preset-pack.jpg"
-   ]
+   "@id": "https://jwillumproducts.github.io/tools/shopify-csv-densifier/#app"
   },
   {
    "@type": "FAQPage",
