@@ -98,10 +98,16 @@
    "alternateName": "BooksExport Clean",
    "description": "Clean QuickBooks Online or Xero export CSVs for accountant handoff: junk rows stripped, ISO dates and normalized amounts. Not tax advice.",
    "url": "https://willumsen4.gumroad.com/l/books-export-clean",
+   "image": [
+    "https://jwillumproducts.github.io/img/proof/books-02-loaded-preview.jpg",
+    "https://jwillumproducts.github.io/img/proof/books-03-result-download.jpg"
+   ],
    "applicationCategory": "FinanceApplication",
    "operatingSystem": "Any (web browser, offline)",
    "brand": {
-    "@id": "https://jwillumproducts.github.io/#org"
+    "@type": "Brand",
+    "name": "JWillum products",
+    "url": "https://jwillumproducts.github.io/"
    },
    "publisher": {
     "@id": "https://jwillumproducts.github.io/#org"
@@ -111,13 +117,44 @@
     "price": "8",
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock",
-    "url": "https://willumsen4.gumroad.com/l/books-export-clean"
+    "url": "https://willumsen4.gumroad.com/l/books-export-clean",
+    "priceValidUntil": "2027-12-31",
+    "itemCondition": "https://schema.org/NewCondition",
+    "shippingDetails": {
+     "@type": "OfferShippingDetails",
+     "shippingRate": {
+      "@type": "MonetaryAmount",
+      "value": "0",
+      "currency": "USD"
+     },
+     "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": "US"
+     },
+     "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "handlingTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 0,
+       "maxValue": 0,
+       "unitCode": "DAY"
+      },
+      "transitTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 0,
+       "maxValue": 0,
+       "unitCode": "DAY"
+      }
+     }
+    },
+    "hasMerchantReturnPolicy": {
+     "@type": "MerchantReturnPolicy",
+     "applicableCountry": "US",
+     "returnPolicyCategory": "https://schema.org/MerchantReturnUnspecified",
+     "merchantReturnLink": "https://willumsen4.gumroad.com/"
+    }
    },
-   "@id": "https://jwillumproducts.github.io/tools/books-export-clean/#app",
-   "image": [
-    "https://jwillumproducts.github.io/img/proof/books-02-loaded-preview.jpg",
-    "https://jwillumproducts.github.io/img/proof/books-03-result-download.jpg"
-   ]
+   "@id": "https://jwillumproducts.github.io/tools/books-export-clean/#app"
   },
   {
    "@type": "FAQPage",
