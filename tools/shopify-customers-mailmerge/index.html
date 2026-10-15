@@ -98,10 +98,16 @@
    "alternateName": "Shopify Customers MailMerge",
    "description": "Turn a Shopify Customers CSV into clean US, UK, CA, AU or generic mail-merge address columns.",
    "url": "https://willumsen4.gumroad.com/l/shopify-customers-mailmerge",
+   "image": [
+    "https://jwillumproducts.github.io/img/proof/mailmerge-02-loaded-preview.jpg",
+    "https://jwillumproducts.github.io/img/proof/mailmerge-03-result-download.jpg"
+   ],
    "applicationCategory": "BusinessApplication",
    "operatingSystem": "Any (web browser, offline)",
    "brand": {
-    "@id": "https://jwillumproducts.github.io/#org"
+    "@type": "Brand",
+    "name": "JWillum products",
+    "url": "https://jwillumproducts.github.io/"
    },
    "publisher": {
     "@id": "https://jwillumproducts.github.io/#org"
@@ -111,13 +117,44 @@
     "price": "8",
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock",
-    "url": "https://willumsen4.gumroad.com/l/shopify-customers-mailmerge"
+    "url": "https://willumsen4.gumroad.com/l/shopify-customers-mailmerge",
+    "priceValidUntil": "2027-12-31",
+    "itemCondition": "https://schema.org/NewCondition",
+    "shippingDetails": {
+     "@type": "OfferShippingDetails",
+     "shippingRate": {
+      "@type": "MonetaryAmount",
+      "value": "0",
+      "currency": "USD"
+     },
+     "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": "US"
+     },
+     "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "handlingTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 0,
+       "maxValue": 0,
+       "unitCode": "DAY"
+      },
+      "transitTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 0,
+       "maxValue": 0,
+       "unitCode": "DAY"
+      }
+     }
+    },
+    "hasMerchantReturnPolicy": {
+     "@type": "MerchantReturnPolicy",
+     "applicableCountry": "US",
+     "returnPolicyCategory": "https://schema.org/MerchantReturnUnspecified",
+     "merchantReturnLink": "https://willumsen4.gumroad.com/"
+    }
    },
-   "@id": "https://jwillumproducts.github.io/tools/shopify-customers-mailmerge/#app",
-   "image": [
-    "https://jwillumproducts.github.io/img/proof/mailmerge-02-loaded-preview.jpg",
-    "https://jwillumproducts.github.io/img/proof/mailmerge-03-result-download.jpg"
-   ]
+   "@id": "https://jwillumproducts.github.io/tools/shopify-customers-mailmerge/#app"
   },
   {
    "@type": "FAQPage",
