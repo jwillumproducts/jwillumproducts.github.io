@@ -1,6 +1,6 @@
 # JWillum products
 
-> Small offline browser tools that turn CSV exports from Stripe, QuickBooks, Xero, Shopify, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify and Harvest into clean files. Every tool is $8 one-time on Gumroad, runs locally in the browser, and needs no account, no subscription and no upload.
+> Small offline browser tools that turn CSV exports from Stripe, QuickBooks, Xero, Shopify, Etsy, Faire, Whatnot, Toggl, Clockify and Harvest into clean files. Every tool is $8 one-time on Gumroad, runs locally in the browser, and needs no account, no subscription and no upload.
 
 - Website: https://jwillumproducts.github.io/
 - All tools: https://jwillumproducts.github.io/tools/
@@ -8,7 +8,7 @@
 - Store: https://willumsen4.gumroad.com/
 - Contact: jwillum.products@gmail.com
 - The tools do not sync with Shopify, QuickBooks or Xero; they create files you import yourself.
-- Independent; not affiliated with Stripe, Shopify, Intuit, Xero, Wave, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify, Harvest or Avery.
+- Independent; not affiliated with Stripe, Shopify, Intuit, Xero, Wave, Etsy, Faire, Whatnot, Toggl, Clockify, Harvest or Avery.
 - Refunds: see each product page on Gumroad for its refund policy.
 - Full guide text: https://jwillumproducts.github.io/llms-full.txt
 
@@ -17,7 +17,6 @@
 - [StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/): Turn a Stripe Balance Transactions CSV into a balanced QuickBooks Online journal CSV, plus a payout summary and an audit file. $8 one-time. Buy: https://willumsen4.gumroad.com/l/stripeclear-journal (Gumroad name: Stripe Balance Transactions CSV to QuickBooks Journal — Offline)
 - [BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/): Clean QuickBooks Online or Xero export CSVs for accountant handoff: junk rows stripped, ISO dates and normalized amounts. Not tax advice. $8 one-time. Buy: https://willumsen4.gumroad.com/l/books-export-clean (Gumroad name: QuickBooks Xero Export CSV Cleaner — Offline Accountant Handoff)
 - [Tracker Invoice Lines](https://jwillumproducts.github.io/tools/tracker-invoice-lines/): Turn a Toggl, Clockify or Harvest detailed time CSV into Xero, Wave or generic Qty × Rate invoice line CSVs. $8 one-time. Buy: https://willumsen4.gumroad.com/l/tracker-invoice-lines (Gumroad name: Toggl Clockify Harvest to Xero Wave Lines — Offline Invoice CSV)
-- [Bandcamp Sales Clean](https://jwillumproducts.github.io/tools/bandcamp-sales-clean/): Turn your Bandcamp raw sales report CSV into Wave, Xero Bank Statement and generic P&L line CSVs, with optional artist splits. $8 one-time. Buy: https://willumsen4.gumroad.com/l/bandcamp-sales-clean (Gumroad name: Bandcamp Raw Sales to Wave Xero CSV — Offline Line Cleaner)
 
 ## Shopify & Etsy
 

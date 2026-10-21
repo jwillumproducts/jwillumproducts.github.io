@@ -730,19 +730,6 @@ Import as drafts or unreconciled lines and review before approving.
 
 If you share income, take each sale's `net amount` × the artist's percentage. Split **sales**, not payouts. Make sure every artist on a sale row has a percentage; otherwise a lookup can quietly give them 0%.
 
-## Doing it faster: Bandcamp Sales Clean
-
-**Bandcamp Sales Clean** is a single offline HTML file that does Steps 2–7. Drop in the raw sales report and it checks the official Bandcamp columns (and refuses files that don't match rather than guessing). It sorts rows into sale, payout, reversal, refund or other, and lets you choose:
-
-- **Bank view:** one line per payout, with optional transfer-fee lines
-- **Accrual view:** sale, refund and reversal lines by `net amount`
-
-Download **Xero Bank Statement**, **Wave Connect-ready** or **Generic P&L** CSVs. There are date, item-type and currency filters. It warns about multiple currencies and pending `*` fees (fee left blank). Add an `artist,share_pct` map to get a **splits** CSV; an unmatched artist is flagged as an error and blocks the splits download instead of defaulting to 0%.
-
-There's no Bandcamp, Xero or Wave login, and it's not tax advice. Fan emails in the report never leave your laptop.
-
-→ **[Bandcamp Sales Clean](https://jwillumproducts.github.io/tools/bandcamp-sales-clean/)**
-
 ## Related tools
 
 - Handing books to an accountant? **[BooksExport Clean](https://jwillumproducts.github.io/tools/books-export-clean/)** tidies QuickBooks Online and Xero exports into one clean CSV.
