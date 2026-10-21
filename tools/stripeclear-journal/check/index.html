@@ -271,28 +271,49 @@ var SAMPLE="balance_transaction_id,created,available_on,currency,gross,fee,net,r
 "txn_6,2026-10-04 00:00:00,2026-10-04 00:00:00,usd,-300.00,0.00,-300.00,payout,STRIPE PAYOUT\n"+
 "txn_7,2026-10-05 11:00:00,2026-10-07 00:00:00,usd,80.00,2.62,77.38,charge,Order 1004\n"+
 "txn_8,2026-10-06 00:00:00,2026-10-06 00:00:00,usd,-15.00,0.00,-15.00,dispute,Dispute 1001\n";
-function parse(t){var rows=[],r=[],c='',q=false;for(var i=0;i<t.length;i++){var ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch==','){r.push(c);c=''}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;r.push(c);c='';if(r.some(function(x){return x!==''}))rows.push(r);r=[]}else c+=ch}r.push(c);if(r.some(function(x){return x!==''}))rows.push(r);return rows}
-function num(s){s=String(s==null?'':s).trim();if(!s)return 0;var neg=/^\(.*\)$/.test(s)||/^-/.test(s);s=s.replace(/[^0-9.,]/g,'');
+function delim(t){var l=t.slice(0,t.search(/\r|\n|$/));var c=(l.match(/,/g)||[]).length,sc=(l.match(/;/g)||[]).length,tb=(l.match(/\t/g)||[]).length;return tb>c&&tb>sc?'\t':sc>c?';':','}
+function parse(t,d){d=d||delim(t);var rows=[],r=[],c='',q=false;for(var i=0;i<t.length;i++){var ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch==d){r.push(c);c=''}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;r.push(c);c='';if(r.some(function(x){return x.trim()!==''}))rows.push(r);r=[]}else c+=ch}r.push(c);if(r.some(function(x){return x.trim()!==''}))rows.push(r);rows.unclosed=q;return rows}
+// returns integer cents, or NaN when the cell is not a number
+function num(s){s=String(s==null?'':s).trim().replace(/[\u2212\u2012\u2013]/g,'-').replace(/[\s\u00a0\u202f']/g,'');if(!s)return 0;
+ var neg=/^\(.*\)$/.test(s)||/-/.test(s.replace(/^[^0-9-]*e[0-9]/i,''));s=s.replace(/^\((.*)\)$/,'$1').replace(/^-?[A-Za-z$\u20ac\u00a3\u00a5]*-?|[A-Za-z$\u20ac\u00a3\u00a5]*-?$/g,'');
+ if(!/^[0-9.,]+$/.test(s)||!/[0-9]/.test(s))return NaN;
  // decimal comma ("1.234,56" or "12,5"): Stripe reports allow decimal_separator=","
  if(/,\d{1,2}$/.test(s)&&!/\.\d{1,2}$/.test(s)){s=s.replace(/\./g,'').replace(',','.')}else{s=s.replace(/,/g,'')}
- var v=Math.round(parseFloat(s)*100);if(!isFinite(v))v=0;return neg?-v:v}
+ if((s.match(/\./g)||[]).length>1)return NaN;var v=Math.round(parseFloat(s)*100);if(!isFinite(v))return NaN;return neg?-v:v}
 function f(c){var n=c<0;c=Math.abs(c);return (n?'-':'')+Math.floor(c/100)+'.'+String(c%100).padStart(2,'0')}
 function esc(s){return String(s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
 function col(h,names){for(var k=0;k<names.length;k++){var i=h.indexOf(names[k]);if(i>=0)return i}
  for(var k=0;k<names.length;k++){for(var j=0;j<h.length;j++)if(h[j].indexOf(names[k]+' ')===0||h[j].indexOf(names[k]+' (')===0)return j}return -1}
+var KNOWN={};('charge payment refund payment_refund refund_failure partial_capture_reversal dispute dispute_reversal fee stripe_fee application_fee application_fee_refund network_cost tax adjustment other_adjustment payout payout_reversal payout_failure payout_cancel transfer transfer_reversal transfer_refund transfer_cancel transfer_failure topup topup_reversal connect_reserved_funds risk_reserved_funds unreconciled_customer_funds climate_order_purchase climate_order_refund contribution issuing_authorization_hold issuing_authorization_release issuing_transaction issuing_dispute anticipation_repayment obligation reserve_transaction reserved_funds advance advance_funding').split(' ').forEach(function(k){KNOWN[k]=1});
 var PAYOUT={payout:1,payout_reversal:1,payout_failure:1,payout_cancel:1};
-function analyze(text){var rows=parse(String(text).replace(/^\uFEFF/,''));if(rows.length<2)throw Error('No rows found in this file.');
+function analyze(text){text=String(text==null?'':text).replace(/^\uFEFF/,'');
+ if(/\u0000/.test(text.slice(0,2000))||/^PK\u0003\u0004/.test(text)||/^%PDF/.test(text))throw Error('This is not a CSV file (it looks like an Excel, PDF or other binary file). In Stripe, download the report as CSV.');
+ var rows=parse(text);if(rows.length<1)throw Error('This file is empty.');if(rows.length<2)throw Error('The file has a header row but no transactions.');
  var h=rows[0].map(function(x){return x.trim().toLowerCase()});
- var iT=col(h,['reporting_category','type']),iA=col(h,['gross','amount']),iF=col(h,['fee']),iN=col(h,['net']),iC=col(h,['currency']);
- if(iT<0||iA<0||iN<0)throw Error("This doesn't look like a Stripe balance export. It needs reporting_category (or Type), gross (or Amount) and net columns.");
- var by={},cur={},tot={a:0,fee:0,n:0},pay=0,bad=0,body=rows.slice(1);
- body.forEach(function(r){var t=(r[iT]||'').trim().toLowerCase()||'(blank)',a=num(r[iA]),fe=iF<0?0:num(r[iF]),n=num(r[iN]);if(iC>=0&&(r[iC]||'').trim())cur[(r[iC]||'').trim().toLowerCase()]=1;
-  var b=by[t]||(by[t]={k:0,a:0,fee:0,n:0});b.k++;b.a+=a;b.fee+=fe;b.n+=n;tot.a+=a;tot.fee+=fe;tot.n+=n;if(PAYOUT[t])pay+=n;if(a-fe!==n)bad++});
- return {by:by,tot:tot,pay:pay,cur:Object.keys(cur),count:body.length,bad:bad,typeCol:h[iT],amountCol:h[iA]}}
+ var iT=col(h,['reporting_category','type']),iA=col(h,['gross','amount']),iF=col(h,['fee']),iN=col(h,['net']),iC=col(h,['currency']),iD=col(h,['created_utc','created','created (utc)','date']);
+ if(iT<0||iA<0||iN<0){var miss=[];if(iT<0)miss.push('reporting_category (or Type)');if(iA<0)miss.push('gross (or Amount)');if(iN<0)miss.push('net');
+  throw Error("This doesn't look like a Stripe balance export. Missing column(s): "+miss.join(', ')+'. Found: '+h.slice(0,12).join(', ')+(h.length>12?', …':'')+'.')}
+ var by={},cur={},tot={a:0,fee:0,n:0},pay=0,bad=0,badRows=[],invalid=0,invRows=[],shortR=0,unknown={},dmin=null,dmax=null,badDate=0,body=rows.slice(1);
+ body.forEach(function(r,ix){var line=ix+2,t=(r[iT]||'').trim().toLowerCase()||'(blank)',a=num(r[iA]),fe=iF<0?0:num(r[iF]),n=num(r[iN]);
+  if(r.length<h.length)shortR++;
+  if(isNaN(a)||isNaN(fe)||isNaN(n)){invalid++;if(invRows.length<10)invRows.push(line);return}
+  if(iC>=0&&(r[iC]||'').trim())cur[(r[iC]||'').trim().toLowerCase()]=1;
+  if(!KNOWN[t])unknown[t]=(unknown[t]||0)+1;
+  if(iD>=0){var ds=(r[iD]||'').trim(),dm=/^(\d{4})-(\d{2})-(\d{2})/.exec(ds),ok=false;if(dm){var dt=new Date(Date.UTC(+dm[1],dm[2]-1,+dm[3]));ok=dt.getUTCMonth()==dm[2]-1&&dt.getUTCDate()==+dm[3]}else if(/^\d{9,10}$/.test(ds)){ok=true;ds=new Date(ds*1000).toISOString()}else if(ds){var p=Date.parse(ds);if(!isNaN(p)){ok=true;ds=new Date(p).toISOString()}}
+   if(ok){ds=ds.slice(0,10);if(!dmin||ds<dmin)dmin=ds;if(!dmax||ds>dmax)dmax=ds}else badDate++}
+  var b=by[t]||(by[t]={k:0,a:0,fee:0,n:0});b.k++;b.a+=a;b.fee+=fe;b.n+=n;tot.a+=a;tot.fee+=fe;tot.n+=n;if(PAYOUT[t])pay+=n;if(a-fe!==n){bad++;if(badRows.length<10)badRows.push(line)}});
+ if(invalid===body.length)throw Error('None of the '+body.length+' rows have readable amounts in the '+h[iA]+'/'+h[iN]+' columns.');
+ return {by:by,tot:tot,pay:pay,cur:Object.keys(cur),count:body.length-invalid,rows:body.length,bad:bad,badRows:badRows,invalid:invalid,invRows:invRows,shortRows:shortR,unclosed:!!rows.unclosed,unknown:unknown,dateFrom:dmin,dateTo:dmax,badDates:badDate,typeCol:h[iT],amountCol:h[iA]}}
 function render(R,buy){var s='<h2>Summary</h2><p class="sub">'+R.count+' transactions · grouped by <code>'+esc(R.typeCol)+'</code>'+(R.cur.length>1?' · <span class="bad">Multiple currencies ('+esc(R.cur.join(', '))+'): totals mix currencies, so check each currency separately.</span>':'')+'</p><div class="tbl"><table><thead><tr><th>Type</th><th>Count</th><th>Gross</th><th>Fees</th><th>Net</th></tr></thead><tbody>';
  Object.keys(R.by).forEach(function(k){var v=R.by[k];s+='<tr><td>'+esc(k)+'</td><td>'+v.k+'</td><td>'+f(v.a)+'</td><td>'+f(v.fee)+'</td><td>'+f(v.n)+'</td></tr>'});
  var act=R.tot.n-R.pay;s+='</tbody><tfoot><tr><th>Total</th><th>'+R.count+'</th><th>'+f(R.tot.a)+'</th><th>'+f(R.tot.fee)+'</th><th>'+f(R.tot.n)+'</th></tr></tfoot></table></div>';
- s+='<h2>Proof</h2><div class="panel prose"><p>Activity (everything except payouts) <b>'+f(act)+'</b> + payouts <b>'+f(R.pay)+'</b> = balance change in this file <b>'+f(R.tot.n)+'</b>.</p><p>'+(R.bad?'<span class="bad">'+R.bad+' row(s) where gross − fee ≠ net. Check these rows.</span>':'<span class="ok">Every row: gross − fee = net ✓</span>')+'</p></div>';
+ var w=[];if(R.invalid)w.push(R.invalid+' row(s) skipped because an amount is not a number (lines '+R.invRows.join(', ')+(R.invalid>R.invRows.length?', …':'')+').');
+ if(R.unclosed)w.push('The file ends inside a quoted field, so it may be cut off or damaged.');if(R.shortRows)w.push(R.shortRows+' row(s) have fewer columns than the header.');
+ var uk=Object.keys(R.unknown);if(uk.length)w.push('Unrecognised categories (still totalled): '+uk.slice(0,8).map(function(k){return k+' ×'+R.unknown[k]}).join(', ')+(uk.length>8?', …':'')+'.');
+ if(R.badDates)w.push(R.badDates+' row(s) have a date that could not be read.');
+ if(R.dateFrom)s+='<p class="sub">Dates in file: '+esc(R.dateFrom)+' to '+esc(R.dateTo)+'</p>';
+ if(w.length)s+='<div class="panel prose"><ul>'+w.map(function(x){return '<li class="bad">'+esc(x)+'</li>'}).join('')+'</ul></div>';
+ s+='<h2>Proof</h2><div class="panel prose"><p>Activity (everything except payouts) <b>'+f(act)+'</b> + payouts <b>'+f(R.pay)+'</b> = balance change in this file <b>'+f(R.tot.n)+'</b>.</p><p>'+(R.bad?'<span class="bad">'+R.bad+' row(s) where gross − fee ≠ net. Check lines '+R.badRows.join(', ')+(R.bad>R.badRows.length?', …':'')+'.</span>':'<span class="ok">Every row: gross − fee = net ✓</span>')+'</p></div>';
  s+='<h2>Journal entry preview</h2><div class="tbl"><table><thead><tr><th>Account</th><th>Debit</th><th>Credit</th></tr></thead><tbody><tr><td>Bank (payouts received)</td><td>'+f(Math.max(0,-R.pay))+'</td><td></td></tr><tr class="lock" aria-hidden="true"><td>Sales income</td><td></td><td>•••.••</td></tr><tr class="lock" aria-hidden="true"><td>Merchant fees</td><td>•••.••</td><td></td></tr><tr class="lock" aria-hidden="true"><td>Refunds &amp; disputes</td><td>•••.••</td><td></td></tr></tbody></table></div>'+
  '<p class="sub">The free check shows totals only. StripeClear Journal maps every category to your accounts and exports a balanced QuickBooks Online journal CSV.</p><p><a class="btn" href="'+buy+'">Get StripeClear Journal on Gumroad — $8</a></p>';
  return s}
