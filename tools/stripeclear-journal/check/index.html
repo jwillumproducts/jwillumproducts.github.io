@@ -320,7 +320,7 @@ function render(R,buy){var s='<h2>Summary</h2><p class="sub">'+R.count+' transac
 var api={analyze:analyze,parse:parse,num:num,render:render,SAMPLE:SAMPLE};
 if(typeof module!=='undefined'&&module.exports){module.exports=api;return}
 var out=document.getElementById('pc-out'),buy=out.getAttribute('data-buy');
-function go(t,n){if(window.jwDemo)window.jwDemo(n);try{out.innerHTML=render(analyze(t),buy)}catch(e){out.innerHTML='<p class="bad">'+esc(e.message)+'</p>'}}
+function go(t,n){if(window.jwDemo)window.jwDemo(n);try{out.innerHTML=render(analyze(t),buy);if(window.jwDemo)window.jwDemo('payout-check-done')}catch(e){out.innerHTML='<p class="bad">'+esc(e.message)+'</p>'}}
 document.getElementById('pc-sample').onclick=function(){go(SAMPLE,'payout-check-sample')};
 document.getElementById('pc-file').onchange=function(e){var fl=e.target.files[0];if(fl)fl.text().then(function(t){go(t,'payout-check-file')})};
 })();
@@ -337,9 +337,9 @@ document.getElementById('pc-file').onchange=function(e){var fl=e.target.files[0]
 <script data-goatcounter="https://jwillum.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
 (function(){
-function ev(p){if(window.goatcounter&&goatcounter.count)goatcounter.count({path:p,title:p,event:true})}
+var seen={},q=[],tries=0;function flush(){if(window.goatcounter&&goatcounter.count){while(q.length){var p=q.shift();goatcounter.count({path:p,title:p,event:true})}}else if(q.length&&tries++<40)setTimeout(flush,250)}function ev(p){if(seen[p])return;seen[p]=1;q.push(p);flush()}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="gumroad.com"]');if(a)ev('gumroad-check')},true);
-var seen={};window.jwDemo=function(n){if(seen[n])return;seen[n]=1;ev('demo-'+n)};
+window.jwDemo=function(n){ev('demo-'+n)};
 })();
 </script>
 </body>
