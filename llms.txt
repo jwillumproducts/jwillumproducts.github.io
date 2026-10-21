@@ -33,6 +33,11 @@
 
 - [Event QR Badges](https://jwillumproducts.github.io/tools/event-qr-badges/): Turn an attendee CSV into printable Avery 5395-compatible name badges and fold-up table tents with vCard QR codes. $8 one-time. Buy: https://willumsen4.gumroad.com/l/event-qr-badges (Gumroad name: Avery 5395-Compatible Name Badges & QR Table Tents from CSV — Offline)
 
+## Free tools
+
+- [Marketplace Fee Calculator](https://jwillumproducts.github.io/tools/marketplace-fee-calculator/): A free spreadsheet that compares fees, profit and margin on Etsy, Whatnot and Faire side by side, with US default rates you can edit. $0+ (pay what you want). Get it: https://willumsen4.gumroad.com/l/marketplace-fee-calculator
+- [Stripe Payout Check](https://jwillumproducts.github.io/tools/stripeclear-journal/check/): free in-browser check that a Stripe balance CSV reconciles (per-category totals, gross − fee = net row check, payout total). No upload, no export.
+
 ## Free guides
 
 - [How to reconcile Stripe payouts into a bookkeeping journal (QuickBooks-ready)](https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/)
