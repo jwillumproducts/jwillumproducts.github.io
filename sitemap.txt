@@ -25,3 +25,7 @@ https://jwillumproducts.github.io/guides/how-to-get-bandcamp-sales-into-xero-or-
 https://jwillumproducts.github.io/guides/how-to-reconcile-shopify-payments-payouts-to-bank-deposits/
 https://jwillumproducts.github.io/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/
 https://jwillumproducts.github.io/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/
+https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/
+https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/
+https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/
+https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/

@@ -962,3 +962,227 @@ Keep the `event` hours anyway. They tell you what the flat fee really earned per
 ## Related tools
 
 - Paid through Stripe? **[StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/)** turns Stripe balance exports into a balanced QuickBooks journal CSV.
+
+---
+
+# Why doesn't my Stripe payout match my bank deposit?
+
+URL: https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/
+
+**Short answer:** a Stripe payout is a *net* number. Stripe adds up the charges in that payout, subtracts its fees, refunds, disputes and any adjustments, and sends what is left. It can also include charges from more than one day. So the bank deposit almost never equals your sales figure for a day. To reconcile it, break the payout into its parts (gross charges, fees, refunds, other) and book those parts through a Stripe clearing account.
+
+## The usual reasons the numbers differ
+
+- **Fees are taken out before the payout.** Your bank sees the net amount; your sales report shows gross.
+
+- **Refunds and disputes reduce the payout.** A refund for an old sale can be deducted from today's payout.
+
+- **Timing.** A payout usually covers charges from earlier days, and Stripe reports may use a different time zone than your bank or your ledger. Sales near midnight or month-end often fall in the "wrong" period.
+
+- **Double counting.** If your invoices, POS or a connector already post the sale, and you also book the deposit as income, the sale is counted twice.
+
+- **Other balance items.** Adjustments, reserves, currency conversion or instant-payout fees can also change the amount.
+
+## Worked example (illustrative numbers only)
+
+*Example:* one payout contains three charges and one refund. The fee figures are made up for the example; your real fees are in the Stripe export.
+
+Row | Gross | Fee | Net | 
+
+Charge A | 100.00 | −3.20 | 96.80 | 
+
+Charge B | 50.00 | −1.75 | 48.25 | 
+
+Charge C | 25.00 | −1.03 | 23.97 | 
+
+Refund of an earlier sale | −20.00 | 0.00 | −20.00 | 
+
+**Payout to bank** |  |  | **149.02** | 
+
+Sales were 175.00, but the bank received 149.02. The 25.98 gap is 5.98 of fees plus the 20.00 refund. Booked through clearing: Dr Clearing 175.00 / Cr Sales 175.00; Dr Fees 5.98 / Cr Clearing 5.98; Dr Refunds 20.00 / Cr Clearing 20.00; Dr Bank 149.02 / Cr Clearing 149.02. Clearing ends at zero.
+
+## How to reconcile it, step by step
+
+- In Stripe, export the itemized balance transactions (or the payout reconciliation report) for the payout or period.
+
+- Filter the rows by payout ID so you only see what is inside the deposit you are matching.
+
+- Total gross, fee and net per category (charge, refund, dispute, other). The net total should equal the bank deposit.
+
+- Book each category through a Stripe clearing account, not straight to income. See [how to record Stripe fees in a journal entry](https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/).
+
+- Match the bank deposit to the payout line (Dr Bank / Cr Clearing). If clearing does not return to zero, look for timing cutoffs or rows you skipped.
+
+The full method is in the main guide: [How to reconcile Stripe payouts into a bookkeeping journal](https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/).
+
+## FAQ
+
+**Why is my Stripe payout less than my sales?** Stripe deducts its processing fees, plus any refunds, disputes and adjustments, before it pays out. The payout is the net amount.
+
+**Why does one payout include sales from several days?** Payouts follow a payout schedule, so one deposit can contain charges from more than one day. Filter your export by payout ID to see exactly which rows are in it.
+
+**Should I record the bank deposit as income?** Not directly. Record gross sales as income, fees as an expense and refunds separately, all through a clearing account. Then the deposit only moves money from clearing to the bank. If your invoices or POS already record the sale, do not book it again from the deposit.
+
+**Can I check a payout without software?** Yes. The free Stripe Payout Check on this site reads a balance CSV in your browser and shows per-category totals and whether gross minus fee equals net for every row. Nothing is uploaded.
+
+
+---
+
+# How do I record Stripe fees in a QuickBooks journal entry?
+
+URL: https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/
+
+**Short answer:** debit a **Stripe Fees** expense account and credit a **Stripe Clearing** account for the total fees in the period (or per payout or per day). Record the gross sale separately (Dr Clearing / Cr Sales), and the payout as Dr Bank / Cr Clearing. That way income shows the full sale, fees show as an expense, and the bank deposit matches.
+
+## Accounts you need
+
+- **Stripe Clearing**: other current asset (or a bank-type account)
+- **Stripe Fees**: expense
+- **Sales**: income
+- Your real **bank account**
+
+## Worked example (illustrative numbers only)
+
+*Example:* on one day you had 175.00 in gross charges and 5.98 in Stripe fees (made-up numbers). The journal entry in QuickBooks Online:
+
+Account | Debit | Credit | Memo | 
+
+Stripe Clearing | 175.00 |  | Gross Stripe charges | 
+
+Sales |  | 175.00 | Gross Stripe charges | 
+
+Stripe Fees | 5.98 |  | Stripe processing fees | 
+
+Stripe Clearing |  | 5.98 | Stripe processing fees | 
+
+**Total** | **180.98** | **180.98** |  | 
+
+Clearing now holds 169.02 (175.00 − 5.98). When Stripe pays that out, record Dr Bank 169.02 / Cr Stripe Clearing 169.02 and clearing is back to zero.
+
+## Steps in QuickBooks Online
+
+- Choose **+ New → Journal entry**.
+
+- Set the date to the day (or payout date) the fees belong to, and give it a journal number you can find later, for example SC-2026-10-15.
+
+- Add the lines above. Debits must equal credits before QuickBooks will save it.
+
+- Take the fee total from your Stripe balance transactions export (the fee column), not from the bank statement.
+
+If you post many days at once, you can import the entries as a CSV instead. If the import fails, see [QuickBooks journal entry CSV import errors and how to fix them](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/). For refunds, see [how to record Stripe refund fees](https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/).
+
+## FAQ
+
+**Should I record Stripe fees per transaction or per payout?** Either works if you are consistent. Many small businesses post one entry per day or per payout with the fee total, which keeps the ledger readable while still matching Stripe.
+
+**Which account type should Stripe Fees be?** Usually an expense account, for example "Merchant fees" or "Bank charges". Ask your accountant which account fits your chart of accounts.
+
+**Can I just record the net deposit as sales?** You can, but then your income is understated and your fees are invisible. Recording gross sales and fees separately is the usual approach.
+
+**Where do I find the fee amounts?** In the Stripe Dashboard export of balance transactions. Each row has amount, fee and net columns.
+
+
+---
+
+# Does Stripe refund the fee when I refund a customer, and how do I record it?
+
+URL: https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/
+
+**Short answer:** for standard card payments, Stripe generally does *not* return the original processing fee when you refund a charge (check Stripe's current refund documentation for your account and payment method). So the customer gets the full amount back, and the fee you paid on the original sale stays as an expense. Book the refund as Dr Refunds (or Sales returns) / Cr Stripe Clearing for the refunded amount, and leave the original fee entry as it is.
+
+## Why it looks confusing
+
+The refund row in the Stripe export usually shows a fee of zero, while the original charge row still shows its fee. If you only look at the payout, you see less money than "sale minus refund" and it can look like Stripe charged you extra. It did not; it kept the fee from the original charge.
+
+## Worked example (illustrative numbers only)
+
+*Example:* a customer pays 50.00, the fee is 1.75 (made-up number), and you later refund the full 50.00.
+
+Event | Journal | Effect on clearing | 
+
+Original charge | Dr Clearing 50.00 / Cr Sales 50.00 | +50.00 | 
+
+Fee on charge | Dr Stripe Fees 1.75 / Cr Clearing 1.75 | −1.75 | 
+
+Full refund | Dr Refunds 50.00 / Cr Clearing 50.00 | −50.00 | 
+
+**Net** |  | **−1.75** | 
+
+Net result: sales and refunds cancel out, and you have a 1.75 fee expense. Stripe takes the 1.75 from your balance, so a later payout is 1.75 lower. If your Stripe balance is too low to cover a refund, Stripe may debit your bank account instead.
+
+## Booking tips
+
+- Pick one policy for refunds: a contra-income account (Sales returns) or an expense account. Use it every month.
+
+- Refunds often land in a later payout than the sale. Book them on the refund date, not the original sale date.
+
+- Treat disputes like refunds, but note them separately; disputes can carry their own fee.
+
+Related: [why your Stripe payout doesn't match the bank deposit](https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/) and [how to record Stripe fees in a QuickBooks journal entry](https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/).
+
+## FAQ
+
+**Does Stripe give back the fee on a refund?** For standard card payments, Stripe generally keeps the original processing fee when you refund. Check Stripe's refund documentation for the current rules for your payment methods.
+
+**Do I reverse the fee entry when I refund?** No. The fee was really paid and is not returned, so it stays as an expense. You only book the refunded amount.
+
+**What about partial refunds?** Book the refunded amount only, for example Dr Refunds 20.00 / Cr Clearing 20.00. The original fee entry stays as it is.
+
+**Where do refunds show up in the Stripe export?** As separate rows with a refund type or reporting category, usually with a negative amount, in the payout where they were deducted.
+
+
+---
+
+# Why does my QuickBooks journal entry CSV import fail, and how do I fix it?
+
+URL: https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/
+
+**Short answer:** most QuickBooks Online journal entry imports fail for one of five reasons: an entry whose debits and credits don't balance, an account name that doesn't exactly match your chart of accounts, a date in the wrong format, amounts with currency symbols or thousand separators, or missing or misnamed columns. Check each journal number balances on its own, copy account names exactly from QuickBooks, and use plain numbers.
+
+## The common errors and fixes
+
+Problem | Fix | 
+
+Debits ≠ credits for a journal | Group by journal number and sum debits and credits. Every journal must balance on its own, not just the whole file. | 
+
+Account not found | Copy names exactly from the chart of accounts, including spelling and sub-account format (Parent:Child). Create missing accounts first. | 
+
+Date not recognised | Use one date format that matches your QuickBooks region settings throughout the file. | 
+
+Amount not a number | Remove currency symbols and thousand separators. Use a dot or comma decimal consistently with your settings. Watch for amounts in cents (10000 instead of 100.00). | 
+
+Columns not mapped | Include at least journal number, date, account, debit and credit columns, and map them in the import screen. | 
+
+Both debit and credit on one line | Put each amount on its own line: one line debit, another line credit. | 
+
+## Worked example (illustrative numbers only)
+
+*Example:* this file fails because journal SC-2026-10-15 is off by 0.01 and the fee account is misspelled:
+
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+SC-2026-10-15,10/15/2026,Stripe Clearing,Gross charges,175.00,
+SC-2026-10-15,10/15/2026,Sales,Gross charges,,175.00
+SC-2026-10-15,10/15/2026,Stripe Fee,Fees,5.98,
+SC-2026-10-15,10/15/2026,Stripe Clearing,Fees,,5.97
+Fixed: rename Stripe Fee to the exact account name (Stripe Fees) and change 5.97 to 5.98. Debits 180.98 = credits 180.98, so it imports.
+
+## Prevent it next month
+
+- Round each amount to two decimals *before* totalling, so rounding can't unbalance a journal.
+
+- Keep a fixed list of account names and reuse it.
+
+- Test with one small journal before importing a whole month.
+
+For Stripe data specifically, see [how to record Stripe fees in a journal entry](https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/) and the [full Stripe reconciliation guide](https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/).
+
+## FAQ
+
+**Why does QuickBooks say my journal entry is not balanced?** At least one journal number has debits that do not equal credits, often by a rounding cent. Sum debits and credits per journal number to find it.
+
+**Why does QuickBooks not find my account?** The account name in the CSV must match the chart of accounts exactly. Sub-accounts usually need the Parent:Child form.
+
+**Which date format should I use?** Use one format consistently that matches your QuickBooks company region settings.
+
+**Can I import Stripe data straight into QuickBooks as journal entries?** Not from the raw Stripe export; it has to be grouped into balanced journals first. You can do that in a spreadsheet, or use a tool that outputs a journal CSV.
+

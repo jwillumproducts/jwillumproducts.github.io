@@ -41,6 +41,10 @@
 ## Free guides
 
 - [How to reconcile Stripe payouts into a bookkeeping journal (QuickBooks-ready)](https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/)
+- [Why doesn't my Stripe payout match my bank deposit?](https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/)
+- [How do I record Stripe fees in a QuickBooks journal entry?](https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/)
+- [Does Stripe refund the fee when I refund a customer, and how do I record it?](https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/)
+- [Why does my QuickBooks journal entry CSV import fail, and how do I fix it?](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/)
 - [How to make QR code name badges for an event from a spreadsheet](https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/)
 - [Etsy listing CSV errors: how to check and clean your listings export](https://jwillumproducts.github.io/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/)
 - [How to calculate your real profit per Whatnot sale after fees](https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/)
