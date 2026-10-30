@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/stripeclear-journal/</loc>
@@ -70,7 +70,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/</loc>
@@ -118,10 +118,26 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/</loc>
+    <lastmod>2026-10-30</lastmod>
   </url>
 </urlset>

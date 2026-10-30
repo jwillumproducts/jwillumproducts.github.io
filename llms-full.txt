@@ -222,7 +222,7 @@ To be clear about what it isn't: it doesn't upload, create or publish anything o
 
 ---
 
-# How to calculate your real profit per Whatnot sale after fees
+# Whatnot fee calculator: your real profit per sale after fees
 
 URL: https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/
 
@@ -1084,7 +1084,7 @@ If you post many days at once, you can import the entries as a CSV instead. If t
 
 ---
 
-# Does Stripe refund the fee when I refund a customer, and how do I record it?
+# Stripe refund fees: how to record them in QuickBooks
 
 URL: https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/
 
@@ -1186,3 +1186,205 @@ For Stripe data specifically, see [how to record Stripe fees in a journal entry]
 
 **Can I import Stripe data straight into QuickBooks as journal entries?** Not from the raw Stripe export; it has to be grouped into balanced journals first. You can do that in a spreadsheet, or use a tool that outputs a journal CSV.
 
+---
+
+# How to export Stripe to QuickBooks as journal entries (one per payout or day)
+
+URL: https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/
+
+**Short answer:** download the *balance* (balance transactions) report from Stripe, not just the payments list, because it holds charges, fees, refunds, disputes and payouts on separate rows. Group those rows per payout (or per day), turn each group into one balanced journal entry that runs through a **Stripe Clearing** account, save it as a journal entry CSV and import it in QuickBooks Online.
+
+## Steps
+
+- **Create the accounts once:** Stripe Clearing (asset), Sales (income), Stripe Fees (expense), Refunds or Sales returns, and your real bank account.
+
+- **Export from Stripe:** in the Stripe Dashboard, go to Reports → Balance (or Balance → export balance transactions) and download a CSV for the period. Keep the gross, fee, net, type or reporting category and payout columns.
+
+- **Group the rows** per payout or per day, and total each category: charges, fees, refunds, disputes, payout.
+
+- **Write one journal per group:** charges Dr Clearing / Cr Sales; fees Dr Stripe Fees / Cr Clearing; refunds Dr Refunds / Cr Clearing; payout Dr Bank / Cr Clearing.
+
+- **Save as CSV** with Journal No., Journal Date, Account Name, Description, Debits, Credits, and check each journal number balances on its own.
+
+- **Import** in QuickBooks Online (Settings → Import data → Journal entries), map the columns, and test with one journal first.
+
+## Worked example (illustrative numbers only)
+
+*Example:* one payout made of 300.00 of charges, 9.00 of fees (made-up number) and a 40.00 refund, paid out as 251.00.
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+PO-2026-10-15,10/15/2026,Stripe Clearing,Gross charges,300.00,
+PO-2026-10-15,10/15/2026,Sales,Gross charges,,300.00
+PO-2026-10-15,10/15/2026,Stripe Fees,Stripe fees,9.00,
+PO-2026-10-15,10/15/2026,Stripe Clearing,Stripe fees,,9.00
+PO-2026-10-15,10/15/2026,Refunds,Refunds,40.00,
+PO-2026-10-15,10/15/2026,Stripe Clearing,Refunds,,40.00
+PO-2026-10-15,10/15/2026,Business Checking,Payout,251.00,
+PO-2026-10-15,10/15/2026,Stripe Clearing,Payout,,251.00
+```
+Debits 600.00 = credits 600.00, and Stripe Clearing nets to zero (300 − 9 − 40 − 251 = 0). The 251.00 bank line then matches the deposit on your bank feed, so you match it instead of adding it again.
+
+## Common mistakes
+
+- Booking the bank deposit as sales: income is understated and fees disappear.
+
+- Using the payments export only: it misses fees, refunds and disputes as separate lines.
+
+- Recording the payout twice: once from the journal and once from the bank feed. Match the feed to the journal line.
+
+- Account names that don't match your chart of accounts exactly; see [the account not found fix](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/).
+
+## FAQ
+
+**Which Stripe export should I use for QuickBooks?** The balance transactions (balance) report, because it lists charges, fees, refunds, disputes and payouts as separate rows that tie to each payout.
+
+**Should I make one journal per payout or per day?** Either works. Per payout ties straight to the bank deposit; per day is simpler when payouts cover several days. Pick one and stick to it.
+
+**Do I need a Stripe Clearing account?** It is the usual approach: everything flows through it and it should return to zero when each payout lands, which shows you anything left unexplained.
+
+---
+
+# Stripe refunds and chargebacks: how to book them
+
+URL: https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/
+
+**Short answer:** a refund is money you chose to give back: Dr Refunds / Cr Stripe Clearing, and the original processing fee generally stays an expense. A chargeback (Stripe calls it a *dispute*) is money the card network pulls back: Stripe takes the disputed amount and usually a dispute fee from your balance. Book the amount to a separate Disputes or Chargebacks account and the fee to Stripe Fees. If you win, Stripe returns the disputed amount and you reverse the first line.
+
+## Steps
+
+- **Find the rows** in your Stripe balance export: refunds, disputes (the amount withdrawn), dispute fees, and dispute reversals (funds returned when you win).
+
+- **Refund:** Dr Refunds (or Sales returns) / Cr Stripe Clearing for the refunded amount. Leave the original fee entry alone.
+
+- **Dispute opened:** Dr Chargebacks / Cr Stripe Clearing for the disputed amount; Dr Stripe Fees / Cr Stripe Clearing for the dispute fee.
+
+- **Dispute won:** Dr Stripe Clearing / Cr Chargebacks for the amount returned. Whether the dispute fee comes back depends on Stripe's current rules for your country, so book only what the export shows.
+
+- **Dispute lost:** nothing more to book; the chargeback and fee stay as losses.
+
+- **Check** that Stripe Clearing is back to zero after each payout.
+
+## Worked example (illustrative numbers only)
+
+| Event | Journal | Effect on clearing |
+
+| Partial refund | Dr Refunds 20.00 / Cr Clearing 20.00 | −20.00 |
+
+| Dispute opened on an 80.00 sale | Dr Chargebacks 80.00 / Cr Clearing 80.00 | −80.00 |
+
+| Dispute fee (made-up 15.00) | Dr Stripe Fees 15.00 / Cr Clearing 15.00 | −15.00 |
+
+| Dispute won, amount returned | Dr Clearing 80.00 / Cr Chargebacks 80.00 | +80.00 |
+
+Use the real fee shown in your own export; Stripe's dispute fee varies by country.
+
+## Tips
+
+- Book each event on the date it hits your Stripe balance, which is often a later payout than the sale.
+
+- Keep chargebacks out of your Refunds account so you can see dispute losses separately.
+
+- If your Stripe balance can't cover a refund or dispute, Stripe may debit your bank; book that as Dr Stripe Clearing / Cr Bank.
+
+More on refund fees: [Stripe refund fees: how to record them in QuickBooks](https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/).
+
+## FAQ
+
+**Is a chargeback the same as a refund in the books?** No. Both reduce income, but keep chargebacks in a separate account so dispute losses and dispute fees stay visible.
+
+**Does Stripe charge a fee for disputes?** Usually yes, a dispute fee per dispute. The amount and whether it is returned when you win depend on your country; check Stripe's disputes documentation and your export.
+
+**Where do disputes show up in the Stripe export?** As separate rows with a dispute type or reporting category, plus a dispute reversal row if funds come back.
+
+---
+
+# Whatnot fee calculator: how Whatnot fees are calculated
+
+URL: https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/
+
+**Short answer:** Whatnot takes two fees per sale. **Commission** is a percentage of the item's sale price only. **Payment processing** is a percentage of the whole order (item plus buyer-paid shipping, plus tax where applicable) plus a fixed amount per order. Published US/Canada/Australia defaults: 8% commission in most categories and 2.9% + $0.30 processing. UK/EU defaults: 6.67% commission and 2.42% + £/€0.25 processing, with VAT on fees.
+*Figures are Whatnot's published defaults as checked on 2026-09-13. Rates, category exceptions and promos change, so confirm in the Whatnot Help Center and your Seller Hub, which is the source of truth for payouts. Not affiliated with Whatnot.*
+
+## Fee formula
+
+- **Commission** = commission rate × item sale price.
+
+- **Processing** = processing rate × (sale price + buyer shipping + buyer tax where applicable) + fixed fee.
+
+- **UK/EU only:** add VAT on the fees (commonly 20%).
+
+- **Net payout** = sale price − commission − processing (− VAT on fees).
+
+- **Profit** = net payout − cost of goods − supplies − any shipping you pay yourself.
+
+## Default rates (as published, checked 2026-09-13)
+
+| Region | Commission | Processing |
+
+| US / Canada / Australia | 8% most categories; 4% Coins & Money and pallets; 0% above $1,500 on eligible high-value collectibles | 2.9% + $0.30 per order |
+
+| UK / EU | 6.67% | 2.42% + £/€0.25, plus VAT on fees |
+
+## Worked examples (illustrative)
+
+**US:** $20 sale, buyer pays $5 shipping (order value $25). Commission 8% × $20 = $1.60. Processing 2.9% × $25 + $0.30 = $1.03. Total fees $2.63, net payout $17.37.
+**UK:** £20 sale, buyer pays £4 shipping (order value £24). Commission 6.67% × £20 = £1.33. Processing 2.42% × £24 + £0.25 = £0.83. Fees £2.16 plus 20% VAT £0.43 = £2.59, net payout about £17.41.
+Note that a higher buyer shipping charge raises your processing fee but not your commission.
+For profit after cost of goods and supplies, see [Whatnot fee calculator: real profit per sale](https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/).
+
+## FAQ
+
+**How much does Whatnot take per sale?** With US defaults, 8% commission on the sale price plus 2.9% + $0.30 processing on the order total. Some categories and regions differ; check Whatnot's fee page.
+
+**Does Whatnot charge commission on shipping?** No, commission is on the item sale price. Processing is charged on the order total, which includes buyer-paid shipping.
+
+**Is there a free Whatnot fee calculator?** The free Marketplace Fee Calculator spreadsheet compares Whatnot, Etsy and Faire fees with editable rates; the paid Whatnot Seller Profit Calculator adds bulk CSV and show summaries.
+
+---
+
+# QuickBooks journal entry import: "account not found" and how to fix it
+
+URL: https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/
+
+**Short answer:** QuickBooks Online matches the *Account Name* column against your chart of accounts by text. If a name differs at all (spelling, extra spaces, a sub-account without its parent, or an account that doesn't exist yet), that line can't be mapped. Copy names exactly from the chart of accounts, write sub-accounts as `Parent:Child`, and create any missing account before importing.
+
+## Steps
+
+- **Export or view your chart of accounts** (Settings → Chart of accounts) and copy the exact names you need.
+
+- **List the unique account names in your CSV** (a pivot table or a UNIQUE() formula in a spreadsheet) and compare them one by one.
+
+- **Fix sub-accounts:** if Stripe Fees sits under Bank Charges, write `Bank Charges:Stripe Fees`.
+
+- **Remove stray spaces** with TRIM() and check for look-alike characters such as non-breaking spaces or curly quotes.
+
+- **Create missing accounts** in QuickBooks first, with the right account type.
+
+- **Re-import one journal** to test, then the full file.
+
+## Worked example (illustrative)
+
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+SC-2026-10-15,10/15/2026,Stripe Fees ,Fees,5.98,
+SC-2026-10-15,10/15/2026,Stripe Clearing,Fees,,5.98
+```
+In this company file, Stripe Fees is a sub-account of Bank Charges, and the CSV has a trailing space. Fixed line: `SC-2026-10-15,10/15/2026,Bank Charges:Stripe Fees,Fees,5.98,`
+
+## Other causes worth checking
+
+- The account is inactive (deleted accounts in QuickBooks Online are made inactive). Reactivate it or use another one.
+
+- The CSV uses an account number while your file is set up to show names, or the other way round. Use the name.
+
+- Bank and A/R or A/P accounts may need extra columns (such as a customer or vendor name). Keep those lines out of the import if you don't have them.
+
+Other errors (unbalanced entries, dates, amounts): see [QuickBooks journal entry CSV import errors](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/).
+
+## FAQ
+
+**Why does QuickBooks say my account does not exist?** The name in the CSV doesn't exactly match an active account in your chart of accounts, often because of a typo, a trailing space or a missing parent account.
+
+**How do I write a sub-account in the import CSV?** Use the full path with a colon, for example Bank Charges:Stripe Fees.
+
+**Can the import create accounts for me?** Create them in the chart of accounts first so you control the account type, then import.
