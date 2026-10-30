@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stripe Refunds and Chargebacks: Bookkeeping Entries | JWillum</title>
+<meta name="description" content="How to book Stripe refunds and chargebacks (disputes): journal entries for the refund, the disputed amount, the dispute fee, and a won or lost dispute.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#F2F2F7">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/">
+<meta property="og:url" content="https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="JWillum products">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Stripe Refunds and Chargebacks: Bookkeeping Entries | JWillum">
+<meta property="og:description" content="How to book Stripe refunds and chargebacks (disputes): journal entries for the refund, the disputed amount, the dispute fee, and a won or lost dispute.">
+<meta property="og:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JWillum products: offline browser tools for messy CSV exports, $8 one-time">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stripe Refunds and Chargebacks: Bookkeeping Entries | JWillum">
+<meta name="twitter:description" content="How to book Stripe refunds and chargebacks (disputes): journal entries for the refund, the disputed amount, the dispute fee, and a won or lost dispute.">
+<meta name="twitter:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta name="twitter:image:alt" content="JWillum products: offline browser tools for messy CSV exports, $8 one-time">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://jwillumproducts.github.io/#org",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://jwillumproducts.github.io/favicon.png",
+    "width": 256,
+    "height": 256
+   },
+   "email": "jwillum.products@gmail.com",
+   "sameAs": [
+    "https://willumsen4.gumroad.com/"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://jwillumproducts.github.io/#website",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "inLanguage": "en",
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://jwillumproducts.github.io/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://jwillumproducts.github.io/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Stripe Refunds and Chargebacks Bookkeeping",
+     "item": "https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "@id": "https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/#article",
+   "headline": "Stripe refunds and chargebacks: how to book them",
+   "description": "How to book Stripe refunds and chargebacks (disputes): journal entries for the refund, the disputed amount, the dispute fee, and a won or lost dispute.",
+   "url": "https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/",
+   "mainEntityOfPage": "https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/",
+   "datePublished": "2026-10-30",
+   "dateModified": "2026-10-30",
+   "inLanguage": "en",
+   "author": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "image": "https://jwillumproducts.github.io/og-image.png"
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is a chargeback the same as a refund in the books?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Both reduce income, but keep chargebacks in a separate account so dispute losses and dispute fees stay visible."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does Stripe charge a fee for disputes?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Usually yes, a dispute fee per dispute. The amount and whether it is returned when you win depend on your country; check Stripe's disputes documentation and your export."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where do disputes show up in the Stripe export?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "As separate rows with a dispute type or reporting category, plus a dispute reversal row if funds come back."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "HowTo",
+   "name": "Stripe refunds and chargebacks: how to book them",
+   "description": "How to book Stripe refunds and chargebacks (disputes): journal entries for the refund, the disputed amount, the dispute fee, and a won or lost dispute.",
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Find refund and dispute rows"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Book refunds"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Book disputes and dispute fees"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Reverse won disputes"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Leave lost disputes as losses"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 6,
+     "name": "Check clearing returns to zero"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>:root{--bg:#F2F2F7;--card:#fff;--text:#1C1C1E;--muted:#636366;--blue:#007AFF;--border:rgba(60,60,67,.12);--r:16px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 20px 56px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text)}
+.brand img{width:36px;height:36px;border-radius:9px}
+.links a{margin-left:16px;font-size:15px;font-weight:500}
+.hero{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 32px;text-align:center;margin-bottom:40px}
+.hero>img{width:72px;height:72px;border-radius:16px;margin-bottom:14px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.03em;margin:0 0 14px}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:36em;margin:0 auto 24px}
+.btn{display:inline-block;background:var(--blue);color:#fff!important;font-weight:600;padding:13px 22px;border-radius:12px;text-decoration:none!important;margin:4px}
+.btn.ghost{background:var(--bg);color:var(--blue)!important}
+.pills{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pills li{background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--muted);font-weight:500}
+h2{font-size:26px;letter-spacing:-.02em;margin:48px 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.group>h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column}
+.card .eyebrow{margin:0 0 4px;font-size:12px;font-weight:600;color:var(--blue);flex:0}
+.card h4{margin:0 0 8px;font-size:16px;line-height:1.3;letter-spacing:-.01em}
+.card p{margin:0 0 14px;color:var(--muted);font-size:15px;flex:1}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;font-weight:600;flex-wrap:wrap}
+.qa{padding:16px 0;border-bottom:1px solid var(--border)}.qa:last-child{border:0}
+.qa h3{margin:0 0 6px;font-size:17px;letter-spacing:-.01em}.qa p{margin:0;color:var(--muted)}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+figure img{width:100%;height:180px;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--border)}
+figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:4px 20px}
+.why{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.why div{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.why h3{margin:0 0 4px;font-size:16px}.why p{margin:0;color:var(--muted);font-size:15px}
+.guides{list-style:none;margin:0;padding:0}
+.guides li{padding:12px 0;border-bottom:1px solid var(--border)}.guides li:last-child{border:0}
+details{padding:14px 0;border-bottom:1px solid var(--border)}details:last-child{border:0}
+summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--muted)}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:14px;text-align:center}
+footer p{margin:6px 0}
+@media(max-width:640px){.hero{padding:32px 18px}.grid{grid-template-columns:1fr}}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 12px;border-radius:8px;z-index:9}.skip:focus{left:12px;top:12px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.links{display:flex;align-items:center;gap:16px}.links a{margin:0;font-size:15px;font-weight:500}
+.navbtn{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:10px}
+.hero.left{text-align:left}.hero.left .lede{margin-left:0}.hero.left .pills{justify-content:flex-start}
+.hero .eyebrow{color:var(--blue);font-weight:600;font-size:14px;margin:0 0 8px}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.crumbs li+li::before{content:"›";margin-right:6px}
+.prose{padding:6px 22px}.prose p,.prose li{color:#3A3A3C}.prose li{margin:6px 0}
+.prose h2{font-size:21px;margin:26px 0 8px}.prose h3{font-size:17px;margin:20px 0 6px}
+.prose code{background:var(--bg);padding:1px 5px;border-radius:5px;font-size:.92em;word-break:break-word}
+.prose table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto}.prose th,.prose td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+.prose blockquote{margin:12px 0;padding:4px 14px;border-left:3px solid var(--blue);background:var(--bg);border-radius:6px}
+.long{padding:10px 26px 18px}.long p,.long li{font-size:16.5px;line-height:1.65}
+.steps li{margin:10px 0}
+.dates{color:var(--muted);font-size:14px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--card);border:2px solid var(--blue);border-radius:var(--r);padding:18px 20px;margin:40px 0 0}
+.cta strong{display:block;font-size:17px}.cta span{color:var(--muted);font-size:14px}
+.ext li{margin:8px 0}
+.shots.big{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.shots.big figure img{height:220px}
+.card{position:relative}.card h4 a,.card h2.h4 a{color:var(--text)}.card .meta a,.card .meta{position:relative;z-index:2}
+.stretch::after{content:"";position:absolute;inset:0;z-index:1}
+h2.h4{margin:0 0 8px;font-size:16px;line-height:1.3}
+.group>h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.fnav{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:24px}
+.fnav h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;color:var(--text)}
+.fnav ul{list-style:none;padding:0;margin:0}.fnav li{margin:5px 0;font-size:14px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+@media(max-width:640px){.links a:not(.navbtn){display:none}.links{display:flex}.two,.fnav{grid-template-columns:1fr}.long{padding:6px 16px 14px}.cta{flex-direction:column;align-items:stretch;text-align:center}}
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+.tbl table{border-collapse:collapse;width:100%;font-size:15px}.tbl th,.tbl td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl tfoot th{border-bottom:0}.lock td{filter:blur(4px);user-select:none}
+.ok{color:#1E8E3E;font-weight:600}.bad{color:#D70015;font-weight:600}
+.drop{background:var(--card);border:2px dashed var(--border);border-radius:var(--r);padding:28px 20px;text-align:center}
+.drop label{font-weight:600;display:block;margin-bottom:10px}.drop input{max-width:100%}
+.free{display:inline-block;background:#E8F5EC;color:#1E8E3E;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:600}
+.tryfree{margin:0 0 8px}
+details{padding:14px 0;border-bottom:1px solid var(--border)}
+details:last-child{border:0}
+summary{font-weight:600;cursor:pointer}
+details p{margin:8px 0 0;color:var(--muted)}
+pre{overflow-x:auto;background:#f7f7fa;padding:12px;border-radius:10px;font-size:13px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top"><a class="brand" href="/"><img src="/favicon.png" alt="" width="36" height="36">JWillum products</a>
+<nav class="links" aria-label="Main"><a href="/tools/">Tools</a><a href="/guides/">Guides</a><a href="/#faq">FAQ</a><a class="navbtn" href="https://willumsen4.gumroad.com/?utm_source=jwillum-site&amp;utm_campaign=stripe-refunds-and-chargebacks-bookkeeping">Gumroad</a></nav></header>
+<main id="main"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/guides/">Guides</a></li><li aria-current="page">Stripe Refunds and Chargebacks Bookkeeping</li></ol></nav>
+<article class="guide"><header class="hero left"><p class="eyebrow">Free guide · JWillum products</p><h1>Stripe refunds and chargebacks: how to book them</h1><p class="lede">How to book Stripe refunds and chargebacks (disputes): journal entries for the refund, the disputed amount, the dispute fee, and a won or lost dispute.</p>
+<p class="dates">Published <time datetime="2026-10-30">30 October 2026</time></p></header>
+<div class="panel prose long"><p><strong>Short answer:</strong> a refund is money you chose to give back: Dr Refunds / Cr Stripe Clearing, and the original processing fee generally stays an expense. A chargeback (Stripe calls it a <em>dispute</em>) is money the card network pulls back: Stripe takes the disputed amount and usually a dispute fee from your balance. Book the amount to a separate Disputes or Chargebacks account and the fee to Stripe Fees. If you win, Stripe returns the disputed amount and you reverse the first line.</p>
+<h2>Steps</h2>
+<ol class="steps">
+<li><strong>Find the rows</strong> in your Stripe balance export: refunds, disputes (the amount withdrawn), dispute fees, and dispute reversals (funds returned when you win).</li>
+<li><strong>Refund:</strong> Dr Refunds (or Sales returns) / Cr Stripe Clearing for the refunded amount. Leave the original fee entry alone.</li>
+<li><strong>Dispute opened:</strong> Dr Chargebacks / Cr Stripe Clearing for the disputed amount; Dr Stripe Fees / Cr Stripe Clearing for the dispute fee.</li>
+<li><strong>Dispute won:</strong> Dr Stripe Clearing / Cr Chargebacks for the amount returned. Whether the dispute fee comes back depends on Stripe's current rules for your country, so book only what the export shows.</li>
+<li><strong>Dispute lost:</strong> nothing more to book; the chargeback and fee stay as losses.</li>
+<li><strong>Check</strong> that Stripe Clearing is back to zero after each payout.</li>
+</ol>
+<h2>Worked example (illustrative numbers only)</h2>
+<table><thead><tr><th>Event</th><th>Journal</th><th>Effect on clearing</th></tr></thead><tbody>
+<tr><td>Partial refund</td><td>Dr Refunds 20.00 / Cr Clearing 20.00</td><td>−20.00</td></tr>
+<tr><td>Dispute opened on an 80.00 sale</td><td>Dr Chargebacks 80.00 / Cr Clearing 80.00</td><td>−80.00</td></tr>
+<tr><td>Dispute fee (made-up 15.00)</td><td>Dr Stripe Fees 15.00 / Cr Clearing 15.00</td><td>−15.00</td></tr>
+<tr><td>Dispute won, amount returned</td><td>Dr Clearing 80.00 / Cr Chargebacks 80.00</td><td>+80.00</td></tr>
+</tbody></table>
+<p>Use the real fee shown in your own export; Stripe's dispute fee varies by country.</p>
+<h2>Tips</h2>
+<ul>
+<li>Book each event on the date it hits your Stripe balance, which is often a later payout than the sale.</li>
+<li>Keep chargebacks out of your Refunds account so you can see dispute losses separately.</li>
+<li>If your Stripe balance can't cover a refund or dispute, Stripe may debit your bank; book that as Dr Stripe Clearing / Cr Bank.</li>
+</ul>
+<p>More on refund fees: <a href="/guides/stripe-refund-fees-how-to-record-them/">Stripe refund fees: how to record them in QuickBooks</a>.</p>
+<h2>Doing it faster: StripeClear Journal</h2><p><strong><a href="/tools/stripeclear-journal/">StripeClear Journal</a></strong> is a single offline HTML file ($8 one-time). Drop in your Stripe balance transactions CSV and it builds one balanced QuickBooks Online journal per day, with a payout summary and an audit file. It runs in your browser; nothing is uploaded. It is a reconciliation helper, not accounting advice. Want to look at your data first? Try the free <a href="/tools/stripeclear-journal/check/">Stripe Payout Check</a>.</p>
+<h2>Related guides</h2><ul><li><a href="/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/">Why does my QuickBooks journal entry CSV import fail, and how do I fix it?</a></li><li><a href="/guides/stripe-payout-does-not-match-bank-deposit/">Why doesn&#x27;t my Stripe payout match my bank deposit?</a></li><li><a href="/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/">How do I record Stripe fees in a QuickBooks journal entry?</a></li><li><a href="/guides/stripe-refund-fees-how-to-record-them/">Stripe refund fees: how to record them in QuickBooks</a></li><li><a href="/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/">How to export Stripe to QuickBooks as journal entries (one per payout or day)</a></li><li><a href="/guides/whatnot-fee-calculator-fees-breakdown/">Whatnot fee calculator: how Whatnot fees are calculated</a></li><li><a href="/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/">QuickBooks journal entry import: &quot;account not found&quot; and how to fix it</a></li></ul></div>
+<section aria-labelledby="h-faq"><h2 id="h-faq">FAQ</h2><div class="panel"><details open><summary>Is a chargeback the same as a refund in the books?</summary><p>No. Both reduce income, but keep chargebacks in a separate account so dispute losses and dispute fees stay visible.</p></details><details><summary>Does Stripe charge a fee for disputes?</summary><p>Usually yes, a dispute fee per dispute. The amount and whether it is returned when you win depend on your country; check Stripe&#x27;s disputes documentation and your export.</p></details><details><summary>Where do disputes show up in the Stripe export?</summary><p>As separate rows with a dispute type or reporting category, plus a dispute reversal row if funds come back.</p></details></div></section>
+<section aria-labelledby="h-try"><h2 id="h-try">Check your own export for free</h2><div class="panel prose"><p>Drop a Stripe balance CSV into the free <a href="/tools/stripeclear-journal/check/">Stripe Payout Check</a> to see per-category totals and whether every row ties out (gross − fee = net). It runs in your browser and nothing is uploaded.</p></div></section>
+<div class="cta"><div><strong>StripeClear Journal</strong><span>$8 one-time · runs offline in your browser · no account</span></div><a class="btn" href="https://willumsen4.gumroad.com/l/stripeclear-journal?utm_source=jwillum-site&amp;utm_campaign=stripe-refunds-and-chargebacks-bookkeeping">Get it on Gumroad — $8</a></div>
+<section aria-labelledby="h-docs"><h2 id="h-docs">Official documentation</h2><div class="panel prose"><ul class="ext"><li><a href="https://docs.stripe.com/disputes">Stripe: Disputes</a></li><li><a href="https://docs.stripe.com/refunds">Stripe: Refunds</a></li></ul></div></section>
+</article></main>
+<footer>
+<nav class="fnav" aria-label="Footer"><div><h2>Tools</h2><ul><li><a href="/tools/stripeclear-journal/">StripeClear Journal</a></li><li><a href="/tools/books-export-clean/">BooksExport Clean</a></li><li><a href="/tools/tracker-invoice-lines/">Tracker Invoice Lines</a></li><li><a href="/tools/shopify-csv-densifier/">Shopify CSV Densifier</a></li><li><a href="/tools/shopify-customers-mailmerge/">Shopify Customers MailMerge</a></li><li><a href="/tools/etsy-listing-csv-fixer/">Etsy Listing CSV Fixer</a></li><li><a href="/tools/faire-profit-calculator/">Faire Wholesale Fee & Profit Calculator</a></li><li><a href="/tools/whatnot-profit-calculator/">Whatnot Seller Profit Calculator</a></li><li><a href="/tools/event-qr-badges/">Event QR Badges</a></li><li><a href="/tools/marketplace-fee-calculator/">Marketplace Fee Calculator (free)</a></li><li><a href="/tools/stripeclear-journal/check/">Stripe Payout Check (free)</a></li></ul></div>
+<div><h2>Guides</h2><ul><li><a href="/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/">Export Stripe to QuickBooks as Journal Entries</a></li><li><a href="/guides/stripe-refunds-and-chargebacks-bookkeeping/">Stripe Refunds and Chargebacks Bookkeeping</a></li><li><a href="/guides/whatnot-fee-calculator-fees-breakdown/">Whatnot Fee Calculator: Fees Breakdown</a></li><li><a href="/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/">QuickBooks Import: Account Not Found</a></li><li><a href="/guides/stripe-payout-does-not-match-bank-deposit/">Stripe Payout Doesn&#x27;t Match Bank Deposit</a></li><li><a href="/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/">Record Stripe Fees in a QuickBooks Journal Entry</a></li><li><a href="/guides/stripe-refund-fees-how-to-record-them/">Stripe Refund Fees: How to Record Them</a></li><li><a href="/guides/stripe-refunds-and-chargebacks-bookkeeping/">Stripe Refunds and Chargebacks Bookkeeping</a></li><li><a href="/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/">Reconcile Stripe Payouts into a QuickBooks Journal</a></li><li><a href="/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/">Make QR Code Name Badges from a Spreadsheet</a></li><li><a href="/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/">Etsy Listing CSV Errors: How to Check and Clean</a></li><li><a href="/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/">Calculate Real Profit per Whatnot Sale After Fees</a></li><li><a href="/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/">Fill Blank Rows in a Shopify Orders CSV Export</a></li><li><a href="/guides/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant/">Clean a QuickBooks or Xero Export for Your Accountant</a></li><li><a href="/guides/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list/">Shopify Customer Export to a Mail Merge Address List</a></li><li><a href="/guides/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines/">Toggl, Clockify or Harvest Time to Xero or Wave Invoices</a></li><li><a href="/guides/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order/">Faire Wholesale Fees and Real Profit per Order</a></li><li><a href="/guides/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0/">Get Bandcamp Sales into Xero or Wave</a></li><li><a href="/guides/how-to-reconcile-shopify-payments-payouts-to-bank-deposits/">Reconcile Shopify Payments Payouts to Bank Deposits</a></li><li><a href="/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/">Convert Toggl or Clockify Time to Decimal Hours</a></li><li><a href="/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/">Bill Flat-Fee Plus Hourly Work from Toggl</a></li></ul></div>
+<div><h2>JWillum products</h2><ul><li><a href="/">Home</a></li><li><a href="/tools/">All tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="https://willumsen4.gumroad.com/?utm_source=jwillum-site&amp;utm_campaign=stripe-refunds-and-chargebacks-bookkeeping">Store on Gumroad</a></li><li><a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></li></ul></div></nav>
+<p><strong>JWillum products</strong> · sold on <a href="https://willumsen4.gumroad.com/?utm_source=jwillum-site&amp;utm_campaign=stripe-refunds-and-chargebacks-bookkeeping">Gumroad</a> · Contact: <a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></p>
+<p>Independent tools. Not affiliated with, endorsed by or sponsored by Stripe, Shopify, Intuit (QuickBooks), Xero, Wave, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify, Harvest or Avery. All trademarks belong to their respective owners.</p>
+<p>We count visits with GoatCounter, cookie-free, no personal data.</p>
+</footer>
+</div>
+<script data-goatcounter="https://jwillum.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+(function(){
+function ev(p){if(window.goatcounter&&goatcounter.count)goatcounter.count({path:p,title:p,event:true})}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="gumroad.com"]');if(a)ev('gumroad-stripe-refunds-and-chargebacks-bookkeeping')},true);
+var seen={};window.jwDemo=function(n){if(seen[n])return;seen[n]=1;ev('demo-'+n)};
+})();
+</script>
+</body>
+</html>
