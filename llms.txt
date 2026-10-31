@@ -47,6 +47,8 @@
 - [Why does my QuickBooks journal entry CSV import fail, and how do I fix it?](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/)
 - [How to export Stripe to QuickBooks as journal entries (one per payout or day)](https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/)
 - [Stripe refunds and chargebacks: how to book them](https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/)
+- [Stripe dispute fee and chargeback: the journal entries in QuickBooks (won and lost)](https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/)
+- [How to set up a Stripe clearing account in QuickBooks Online](https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/)
 - [Whatnot fee calculator: how Whatnot fees are calculated](https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/)
 - [QuickBooks journal entry import: "account not found" and how to fix it](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/)
 - [How to make QR code name badges for an event from a spreadsheet](https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/)

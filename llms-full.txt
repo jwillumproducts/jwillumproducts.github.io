@@ -1388,3 +1388,143 @@ Other errors (unbalanced entries, dates, amounts): see [QuickBooks journal entry
 **How do I write a sub-account in the import CSV?** Use the full path with a colon, for example Bank Charges:Stripe Fees.
 
 **Can the import create accounts for me?** Create them in the chart of accounts first so you control the account type, then import.
+
+---
+
+# Stripe dispute fee and chargeback: the journal entries in QuickBooks (won and lost)
+
+URL: https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/
+
+**Short answer:** when a card dispute opens, Stripe takes the disputed amount *and* a dispute received fee from your balance. Book Dr Chargebacks / Cr Stripe Clearing for the amount and Dr Stripe Fees (or Dispute Fees) / Cr Stripe Clearing for the fee. If you counter the dispute, a separate dispute countered fee is also taken. **If you win**, Stripe returns the disputed amount and the countered fee, so you reverse those two. **If you lose**, you book nothing more. Outside Mexico, Stripe says the dispute received fee is not returned unless your contract says otherwise.
+*Fee rules summarised from Stripe's [How disputes work](https://docs.stripe.com/disputes/how-disputes-work) page as checked on 31 October 2026. Fee amounts vary by country; use the figures in your own export.*
+
+## What leaves your Stripe balance
+
+| Moment | What Stripe does | Typical balance rows |
+
+| Dispute opens | Withdraws the disputed amount and charges the dispute received fee | A dispute row (negative amount, with the fee in the fee column or on its own row) |
+
+| You counter (submit evidence) | Charges a dispute countered fee (not in Mexico or Japan) | A fee row linked to the dispute |
+
+| You win | Returns the disputed amount and the countered fee | A dispute reversal row (positive) |
+
+| You lose or accept | Keeps everything already withdrawn | No new row |
+
+The exact columns depend on which export you use. In the balance report, look at the `reporting_category` (for example `dispute` and `dispute_reversal`) or `type` column, and the `fee` column.
+
+## Steps
+
+- **Create the accounts once:** Chargebacks (an income-reducing account, or an expense if your accountant prefers) and Stripe Fees or a Dispute Fees sub-account. Stripe Clearing should already exist; see [how to set up a Stripe clearing account](https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/).
+
+- **Dispute opens:** Dr Chargebacks / Cr Stripe Clearing for the disputed amount; Dr Dispute Fees / Cr Stripe Clearing for the dispute received fee.
+
+- **If you counter:** Dr Dispute Fees / Cr Stripe Clearing for the dispute countered fee, on the date it hits your balance.
+
+- **If you win:** Dr Stripe Clearing / Cr Chargebacks for the returned amount, and Dr Stripe Clearing / Cr Dispute Fees for the returned countered fee. Leave the received fee as an expense.
+
+- **If you lose:** book nothing more. The chargeback and the fees stay where they are.
+
+- **Check** that Stripe Clearing returns to zero when the payout that contains these rows lands.
+
+## Worked example (illustrative numbers only)
+
+*Example:* a 120.00 sale is disputed. The fee amounts below are made up for the example (15.00 received fee, 15.00 countered fee); your real fees are in your Stripe export and on Stripe's pricing page for your country.
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+DSP-OPEN,10/05/2026,Chargebacks,Dispute opened,120.00,
+DSP-OPEN,10/05/2026,Stripe Clearing,Dispute opened,,120.00
+DSP-OPEN,10/05/2026,Dispute Fees,Dispute received fee,15.00,
+DSP-OPEN,10/05/2026,Stripe Clearing,Dispute received fee,,15.00
+DSP-CNTR,10/09/2026,Dispute Fees,Dispute countered fee,15.00,
+DSP-CNTR,10/09/2026,Stripe Clearing,Dispute countered fee,,15.00
+```
+**If you win** (amount and countered fee returned):
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+DSP-WON,12/01/2026,Stripe Clearing,Dispute won - amount returned,120.00,
+DSP-WON,12/01/2026,Chargebacks,Dispute won - amount returned,,120.00
+DSP-WON,12/01/2026,Stripe Clearing,Countered fee returned,15.00,
+DSP-WON,12/01/2026,Dispute Fees,Countered fee returned,,15.00
+```
+Net effect after a win: only the 15.00 received fee stays as a cost. **If you lose**, there is no further entry: 120.00 stays in Chargebacks and 30.00 in Dispute Fees.
+
+## Common mistakes
+
+- Booking the dispute as a refund. It works numerically, but you lose sight of dispute losses. Keep a separate Chargebacks account.
+
+- Reversing the dispute received fee after a win. Outside Mexico, Stripe doesn't return it unless your contract says so; book only what your export shows.
+
+- Booking the win on the original sale date. Book it on the date the reversal hits your Stripe balance, which can be months later.
+
+- Forgetting that the dispute row reduces a later payout, so the deposit looks short. See [why your Stripe payout doesn't match your bank deposit](https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/).
+
+For refunds (which work differently from disputes), see [Stripe refunds and chargebacks: how to book them](https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/) and [Stripe refund fees](https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/).
+
+## FAQ
+
+**Does Stripe refund the dispute fee if I win?** Stripe returns the dispute countered fee if you win. Unless your Stripe contract says otherwise, it does not return the dispute received fee, except that businesses in Mexico might get it back. Check Stripe's disputes documentation for your country.
+
+**Should chargebacks go to an expense or a contra-income account?** Either is common. Many bookkeepers use a contra-income account (like Refunds) so sales show net, with dispute fees under fees. Agree the choice with your accountant and keep it consistent.
+
+**What is a dispute reversal in the Stripe export?** The row that returns funds to your balance when you win a dispute. Book it as Dr Stripe Clearing and credit the accounts you debited when the dispute opened.
+
+**Can I import these entries as a CSV?** Yes. QuickBooks Online imports journal entries from CSV as long as each journal number balances and the account names match your chart of accounts exactly.
+
+---
+
+# How to set up a Stripe clearing account in QuickBooks Online
+
+URL: https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/
+
+**Short answer:** create a balance sheet account called **Stripe Clearing** (account type Other Current Assets, or Bank if you want to use QuickBooks' reconcile screen on it). Post gross sales into it, post fees, refunds and disputes out of it, and when the payout lands, move the money from Stripe Clearing to your real bank account. That bank line is a transfer, not income. At any point, the Stripe Clearing balance should equal your Stripe balance (money Stripe holds for you).
+
+## Steps
+
+- **Create the account:** in QuickBooks Online, go to the Chart of accounts and choose New. Pick *Other Current Assets* as the account type (a common choice is the "Other current assets" detail type) and name it Stripe Clearing. Some bookkeepers use the *Bank* type instead so they can reconcile it against Stripe statements; both work. Don't use Undeposited Funds for this.
+
+- **Create the other accounts** if you don't have them: Sales (income), Stripe Fees (expense), Refunds or Sales returns, Chargebacks and Dispute Fees.
+
+- **Money in:** gross charges go Dr Stripe Clearing / Cr Sales (or Cr Accounts Receivable if the sale was already invoiced).
+
+- **Money out:** fees go Dr Stripe Fees / Cr Stripe Clearing; refunds Dr Refunds / Cr Stripe Clearing; disputes Dr Chargebacks / Cr Stripe Clearing.
+
+- **Payout:** Dr Business Checking / Cr Stripe Clearing. In the bank feed, match the deposit to this line instead of adding it as a new deposit, or record the deposit as a transfer from Stripe Clearing.
+
+- **Month-end check:** compare the Stripe Clearing balance with your Stripe balance on the same date and time zone. If they differ, look for missing rows or a timing cutoff.
+
+## Worked example (illustrative numbers only)
+
+*Example:* a month with 1,000.00 of charges, 32.00 of fees (made-up), a 50.00 refund and one payout of 868.00. 50.00 is still in Stripe at month end, waiting for the next payout.
+| Entry | Journal | Stripe Clearing balance |
+
+| Gross charges | Dr Stripe Clearing 1,000.00 / Cr Sales 1,000.00 | 1,000.00 |
+
+| Fees | Dr Stripe Fees 32.00 / Cr Stripe Clearing 32.00 | 968.00 |
+
+| Refund | Dr Refunds 50.00 / Cr Stripe Clearing 50.00 | 918.00 |
+
+| Payout to bank | Dr Business Checking 868.00 / Cr Stripe Clearing 868.00 | 50.00 |
+
+The 50.00 left in Stripe Clearing should match the Stripe balance on the last day of the month. If it does, the books tie out even though the bank received less than sales.
+
+## Common mistakes
+
+- Booking the bank deposit as income. Sales are understated and fees vanish; see [why your Stripe payout doesn't match your bank deposit](https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/).
+
+- Double counting: a connector, POS or invoice payment already records the sale, and you add it again from a journal. Pick one source for revenue.
+
+- Using an income or expense type for the clearing account. It must be a balance sheet account, or the month-end check doesn't work.
+
+- Account names in your import CSV that differ from the chart of accounts; see [the "account not found" fix](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/).
+
+Next step: [export Stripe to QuickBooks as journal entries](https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/) that post through this account.
+
+## FAQ
+
+**What account type should a Stripe clearing account be in QuickBooks Online?** A balance sheet account: usually Other Current Assets, or Bank if you want to use the reconcile screen. Not income, expense or Undeposited Funds.
+
+**How do I record the Stripe payout in QuickBooks?** As a transfer from Stripe Clearing to your bank account (Dr Bank / Cr Stripe Clearing). Match the bank feed deposit to that entry instead of adding it as income.
+
+**Should the Stripe clearing account be zero at month end?** Not necessarily. It should equal the money Stripe still holds for you on that date. It returns to zero only if everything has been paid out.
+
+**Can I use the same approach in Xero?** The idea is the same (a clearing account that gross sales go into and payouts come out of), but the setup screens differ. This guide covers QuickBooks Online.

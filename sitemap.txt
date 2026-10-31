@@ -33,3 +33,5 @@ https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-
 https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/
 https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/
 https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/
+https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/
+https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/

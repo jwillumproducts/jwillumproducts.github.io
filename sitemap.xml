@@ -10,11 +10,11 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/stripeclear-journal/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/books-export-clean/</loc>
@@ -110,7 +110,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/</loc>
@@ -118,11 +118,11 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/</loc>
@@ -130,7 +130,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-10-31</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/</loc>
@@ -139,5 +139,13 @@
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/</loc>
     <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/</loc>
+    <lastmod>2026-10-31</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/</loc>
+    <lastmod>2026-10-31</lastmod>
   </url>
 </urlset>
