@@ -1528,3 +1528,160 @@ Next step: [export Stripe to QuickBooks as journal entries](https://jwillumprodu
 **Should the Stripe clearing account be zero at month end?** Not necessarily. It should equal the money Stripe still holds for you on that date. It returns to zero only if everything has been paid out.
 
 **Can I use the same approach in Xero?** The idea is the same (a clearing account that gross sales go into and payouts come out of), but the setup screens differ. This guide covers QuickBooks Online.
+
+---
+
+# Stripe deposits double counted in QuickBooks Online: why it happens and how to fix it
+
+URL: https://jwillumproducts.github.io/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/
+
+**Short answer:** Stripe income gets counted twice when a sale is already recorded in QuickBooks Online (by an invoice payment, a sales receipt, an app or connector, or a journal entry through a Stripe clearing account) *and* the Stripe payout that later lands in your bank feed is added as new income too. A payout is not new income: it is money moving from Stripe to your bank. Undo the added deposit in Bank transactions, then either match it to the record you already have or post it to Stripe Clearing so it becomes a transfer. Then pick one source of revenue and stick to it.
+
+## How to tell your Stripe income is double counted
+
+- Income on the Profit and Loss report for a month is far above the **gross charges** Stripe shows for the same dates, often close to sales plus payouts.
+
+- In the bank account register, Stripe payouts are posted to an **income account** (such as Sales) while the same sales are also recorded somewhere else.
+
+- Your Stripe Clearing account (if you use one) keeps growing month after month instead of staying close to your Stripe balance.
+
+Compare like with like: use the same date range and time zone in Stripe and QuickBooks. Stripe's [payout reconciliation report](https://docs.stripe.com/reports/payout-reconciliation) shows which charges, fees and refunds make up each payout.
+
+## Where the first copy of the sale comes from
+
+| How the sale is already recorded | What double counts it | The fix |
+
+| An invoice, with the payment received in QuickBooks | The payout is also added from the bank feed as a new deposit to Sales | Undo the added deposit. Record a bank deposit that holds the payment plus a negative Stripe fee line, then match the bank line to that deposit. |
+
+| An app or connector that posts Stripe sales (and sometimes the payouts too) | The bank feed line is added as income on top | Undo it. If the connector already records the payout, match the bank line to that record. If not, post the bank line to the account the connector uses for Stripe money. |
+
+| Journal entries through a Stripe Clearing account | The payout is categorised as Sales instead of Stripe Clearing | Undo it and post the bank line to Stripe Clearing (Dr Bank / Cr Stripe Clearing). |
+
+| Sales receipts from a shop or POS | The payout is added as a deposit to Sales | Undo it and match it to the deposit of those sales receipts, or post it to the account the receipts were deposited to. |
+
+QuickBooks' own help article also lists a sale recorded as both an invoice and a sales receipt as a cause of doubled income. Keep the one with the payment attached.
+
+## Steps to fix it
+
+- **Pick one month** and note Stripe's gross charges, fees, refunds and payouts for it.
+
+- **Find the added payouts:** go to Bank transactions and open the Categorized tab (newer screens call it Posted). Look for Stripe payouts that went to an income account.
+
+- **Undo each one.** The transaction goes back to the For review (or Pending) tab. Nothing is deleted from your bank feed.
+
+- **Post it the right way:** match it to the record you already have (use Find match or Find other match), or, if you book Stripe through journal entries, categorise it to Stripe Clearing.
+
+- **Re-run the Profit and Loss** for the month. Income should now tie to Stripe's gross charges (and refunds, depending on how you book them). If you use a clearing account, its balance should be close to your Stripe balance.
+
+- **Stop it recurring:** turn off auto-add on any bank rule that catches Stripe deposits, so they wait in For review, and use one source of revenue per sale.
+
+## Worked example (illustrative numbers only)
+
+*Example:* one month with 1,000.00 of Stripe charges, 32.00 of fees (made-up figure) and one payout of 968.00. The sales and fees are booked by journal entry through Stripe Clearing, and the bank feed line for the payout was added to Sales by mistake.
+| Account | Before the fix | After the fix |
+
+| Sales | 1,968.00 | 1,000.00 |
+
+| Stripe Fees | 32.00 | 32.00 |
+
+| Stripe Clearing | 968.00 | 0.00 |
+
+| Business Checking | 968.00 | 968.00 |
+
+The fix is to undo the bank line and post it to Stripe Clearing instead. In journal form, the payout becomes:
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+PO-2026-11-03,11/03/2026,Business Checking,Stripe payout,968.00,
+PO-2026-11-03,11/03/2026,Stripe Clearing,Stripe payout,,968.00
+```
+Sales drops back to 1,000.00, and Stripe Clearing returns to zero because all the money has now left Stripe.
+
+## Common mistakes when fixing it
+
+- **Deleting the journal entry instead of the extra deposit.** That removes the fee and refund detail. Keep the record that has the detail, and fix the bank line.
+
+- **Excluding the bank line when nothing else records the payout.** If no other transaction moves that money into the bank account, the bank account in QuickBooks won't reconcile. Exclude only real duplicates.
+
+- **Matching a net payout to a gross invoice payment.** The amounts differ by the Stripe fee, so QuickBooks won't suggest the match. Add the fee as a negative line on the bank deposit first.
+
+- **Changing transactions in a period that is already reconciled or filed.** Talk to your accountant first.
+
+Other reasons the payout and your sales differ (fees, refunds, timing) are in [why your Stripe payout doesn't match your bank deposit](https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/). To set up the clearing account itself, see [how to set up a Stripe clearing account in QuickBooks Online](https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/).
+
+## FAQ
+
+**Why is my Stripe income doubled in QuickBooks?** Usually because the sale is already recorded (invoice payment, sales receipt, connector or journal entry) and the Stripe payout in the bank feed was added again as income. Undo the added deposit and match it or post it as a transfer.
+
+**Should a Stripe payout be categorised as income?** Not if the sale is already recorded elsewhere. A payout moves money from Stripe to your bank, so it belongs against the account that holds the Stripe money (for example Stripe Clearing) or should be matched to the existing deposit.
+
+**Can I just exclude the Stripe deposits in the bank feed?** Only if another transaction already records that same money arriving in the bank account. Otherwise your bank account in QuickBooks will not reconcile.
+
+**What if the month is already reconciled?** Undoing reconciled transactions changes balances you have already signed off. Check with your accountant before you change a reconciled or filed period.
+
+---
+
+# QuickBooks journal entry import: debits and credits not equal, and how to fix it
+
+URL: https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/
+
+**Short answer:** QuickBooks Online checks each journal entry in your CSV on its own, grouped by the Journal No. column. The whole file can balance and one journal can still be off. Sum debits and credits per journal number, find the ones that differ, and fix the cause. The usual causes are amounts with more than two decimals, a negative number in the wrong column, a missing second line, two entries sharing one journal number, or amounts in cents. The exact wording of the error varies, but it always comes down to one journal whose debits and credits are not equal.
+
+## Find the journal that doesn't balance
+
+- **Open the CSV in a spreadsheet.** Assume Journal No. is in column A, Debits in E and Credits in F.
+
+- **Add a check column:** in G2 enter `=ROUND(SUMIF(A:A,A2,E:E)-SUMIF(A:A,A2,F:F),2)` and fill it down. Any row that is not 0 belongs to a journal that is out of balance.
+
+- **Or use a pivot table:** rows = Journal No., values = Sum of Debits and Sum of Credits. Compare the two columns.
+
+- **Look for amounts with more than two decimals:** `=E2<>ROUND(E2,2)` shows TRUE on lines that will cause rounding drift.
+
+- **Fix the cause** (see the table below), save as CSV again and re-import one journal first.
+
+## Causes and fixes
+
+| Cause | What it looks like | Fix |
+
+| Rounding | Fees calculated with a percentage formula (for example 5.075) while the other line uses 5.08 or 5.07 | Round every amount to two decimals before totalling. With Stripe, use the fee column from the export instead of recalculating it. |
+
+| Negative amounts | A refund entered as −20.00 in the Debits column | Use positive amounts only and put the amount in the opposite column (a credit instead of a negative debit). |
+
+| Missing second line | A fee debited to Stripe Fees with no matching credit | Every amount needs its other side, here Cr Stripe Clearing for the same amount. |
+
+| Shared journal numbers | Two days or two payouts use the same Journal No. | Give each entry a unique number, such as SC-2026-11-02, and one date per journal. |
+
+| Amounts in cents | 10000 on one line and 100.00 on another | Stripe API data uses the smallest currency unit. Divide by 100 for two-decimal currencies. Zero-decimal currencies such as JPY are not divided. |
+
+| Text in amount cells | Currency symbols, thousand separators or spaces | Use plain numbers such as 1000.00. See [the other import errors](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/). |
+
+## Worked example (illustrative numbers only)
+
+*Example:* the fee line was calculated with a spreadsheet formula instead of taken from the export. The fee figure is made up for the example.
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+SC-2026-11-02,11/02/2026,Stripe Clearing,Gross charges,175.00,
+SC-2026-11-02,11/02/2026,Sales,Gross charges,,175.00
+SC-2026-11-02,11/02/2026,Stripe Fees,Fees,5.975,
+SC-2026-11-02,11/02/2026,Stripe Clearing,Fees,,5.98
+```
+On screen both columns may show 180.98, but the debits are really 180.975, so the journal is 0.005 off. Fixed: use the fee from the Stripe export (5.98 here) on both fee lines. Debits 180.98 = credits 180.98.
+
+## Stripe-specific causes
+
+- **Refund and dispute rows** have negative amounts in the Stripe export. Turn them into positive amounts on the opposite side (Dr Refunds / Cr Stripe Clearing) instead of copying the minus sign. See [Stripe refunds and chargebacks: how to book them](https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/).
+
+- **Fees booked from a different report** than the charges, so the totals come from different date ranges or time zones. Build each journal from one export.
+
+- **Each Stripe balance row should tie out** (gross − fee = net). If a row doesn't, the journal built from it won't either. The free payout check shows this per category.
+
+If QuickBooks complains about account names rather than amounts, see [the "account not found" fix](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/).
+
+## FAQ
+
+**Why does QuickBooks say my journal is not balanced when the file totals match?** QuickBooks checks each journal number on its own. One journal can be off by a cent while another is off by the same cent the other way, so the file total still matches.
+
+**Can I use negative numbers in a journal entry import?** The safest choice is positive amounts only, with each amount in the Debits or the Credits column. A refund becomes a credit to Stripe Clearing and a debit to Refunds.
+
+**How do I find a one-cent difference?** Sum debits and credits per journal number with SUMIF or a pivot table, and check for amounts with more than two decimals. Fees recalculated with a percentage formula are the usual source.
+
+**Should I import the whole file at once?** Import one journal first. When that works, import the rest, so a single bad journal does not block a whole month.

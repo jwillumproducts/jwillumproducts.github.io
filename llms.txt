@@ -49,6 +49,8 @@
 - [Stripe refunds and chargebacks: how to book them](https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/)
 - [Stripe dispute fee and chargeback: the journal entries in QuickBooks (won and lost)](https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/)
 - [How to set up a Stripe clearing account in QuickBooks Online](https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/)
+- [Stripe deposits double counted in QuickBooks Online: why it happens and how to fix it](https://jwillumproducts.github.io/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/)
+- [QuickBooks journal entry import: debits and credits not equal, and how to fix it](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/)
 - [Whatnot fee calculator: how Whatnot fees are calculated](https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/)
 - [QuickBooks journal entry import: "account not found" and how to fix it](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/)
 - [How to make QR code name badges for an event from a spreadsheet](https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/)

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jwillumproducts.github.io/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/stripeclear-journal/</loc>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/</loc>
@@ -110,27 +110,27 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-refund-fees-how-to-record-them/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-refunds-and-chargebacks-bookkeeping/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/</loc>
@@ -138,14 +138,22 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/</loc>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/</loc>
+    <lastmod>2026-11-09</lastmod>
   </url>
 </urlset>

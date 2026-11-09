@@ -857,9 +857,9 @@ a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offs
 <script data-goatcounter="https://jwillum.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
 (function(){
-function ev(p){if(window.goatcounter&&goatcounter.count)goatcounter.count({path:p,title:p,event:true})}
-document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="gumroad.com"]');if(a)ev('gumroad-home')},true);
-var seen={};window.jwDemo=function(n){if(seen[n])return;seen[n]=1;ev('demo-'+n)};
+var seen={},q=[],tries=0;function flush(){if(window.goatcounter&&goatcounter.count){while(q.length){var p=q.shift();goatcounter.count({path:p,title:p,event:true})}}else if(q.length&&tries++<40)setTimeout(flush,250)}function ev(p){if(seen[p])return;seen[p]=1;q.push(p);flush()}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href')||'';if(h.indexOf('gumroad.com')>-1)ev('gumroad-home');else if(h.indexOf('/tools/stripeclear-journal/check/')===0)ev('check-click-home')},true);
+window.jwDemo=function(n){ev('demo-'+n)};
 })();
 </script>
 </body>
