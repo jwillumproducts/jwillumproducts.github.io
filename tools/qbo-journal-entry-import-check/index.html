@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free QuickBooks Journal Entry Import Checker (CSV) | JWillum</title>
+<meta name="description" content="Check a QuickBooks Online journal entry import CSV before you upload it: unbalanced entries, account names, date and amount formats, missing columns. Runs in your browser.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#F2F2F7">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/">
+<meta property="og:url" content="https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JWillum products">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Free QuickBooks Journal Entry Import Checker (CSV) | JWillum">
+<meta property="og:description" content="Check a QuickBooks Online journal entry import CSV before you upload it: unbalanced entries, account names, date and amount formats, missing columns. Runs in your browser.">
+<meta property="og:image" content="https://jwillumproducts.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free QuickBooks Journal Entry Import Checker (CSV) | JWillum">
+<meta name="twitter:description" content="Check a QuickBooks Online journal entry import CSV before you upload it: unbalanced entries, account names, date and amount formats, missing columns. Runs in your browser.">
+<meta name="twitter:image" content="https://jwillumproducts.github.io/og-image.png">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://jwillumproducts.github.io/#org",
+   "name": "JWillum products",
+   "url": "https://jwillumproducts.github.io/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://jwillumproducts.github.io/favicon.png",
+    "width": 256,
+    "height": 256
+   },
+   "email": "jwillum.products@gmail.com",
+   "sameAs": [
+    "https://willumsen4.gumroad.com/"
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://jwillumproducts.github.io/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Tools",
+     "item": "https://jwillumproducts.github.io/tools/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "QBO Journal Entry Import Check",
+     "item": "https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/"
+    }
+   ]
+  },
+  {
+   "@type": "WebApplication",
+   "name": "QuickBooks Journal Entry Import Check",
+   "url": "https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Any (web browser)",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "publisher": {
+    "@id": "https://jwillumproducts.github.io/#org"
+   },
+   "description": "Check a QuickBooks Online journal entry import CSV before you upload it: unbalanced entries, account names, date and amount formats, missing columns. Runs in your browser."
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is my file uploaded?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. The file is read in this browser tab. The page sends no data anywhere; you can confirm it in your browser's developer tools (Network tab)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the free check show?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "How many errors and warnings your file has, its totals, and the full detail for the first 3 problems. The $8 template includes the offline checker that shows every problem and downloads a clean CSV."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which columns does QuickBooks Online need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Journal No., Journal Date, Account Name, Debits and Credits. Description, Name (customer/vendor), Class and Location are optional. Lines with the same Journal No. form one entry, and each entry must balance."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does QuickBooks say an account is invalid?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The name must match your chart of accounts exactly. Sub-accounts must be written Parent:Sub; using only the sub-account name gives a 'Line Account Invalid' error. Paste your account list above to check every line."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "My QuickBooks only offers Spreadsheet Sync for journal entries. Does this help?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Intuit says some accounts only get Spreadsheet Sync, which is part of QuickBooks Online Advanced and Accountant. The same rules apply there: balanced entries, exact account names and real dates. Check your lines here first, then paste them into Spreadsheet Sync's Journal Entries template."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is this affiliated with Intuit?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. It is an independent tool. QuickBooks is a trademark of Intuit Inc."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>:root{--bg:#F2F2F7;--card:#fff;--text:#1C1C1E;--muted:#636366;--blue:#007AFF;--border:rgba(60,60,67,.12);--r:16px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 20px 56px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--text)}
+.brand img{width:36px;height:36px;border-radius:9px}
+.links a{margin-left:16px;font-size:15px;font-weight:500}
+.hero{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 32px;text-align:center;margin-bottom:40px}
+.hero>img{width:72px;height:72px;border-radius:16px;margin-bottom:14px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.03em;margin:0 0 14px}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:36em;margin:0 auto 24px}
+.btn{display:inline-block;background:var(--blue);color:#fff!important;font-weight:600;padding:13px 22px;border-radius:12px;text-decoration:none!important;margin:4px}
+.btn.ghost{background:var(--bg);color:var(--blue)!important}
+.pills{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pills li{background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--muted);font-weight:500}
+h2{font-size:26px;letter-spacing:-.02em;margin:48px 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.group>h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column}
+.card .eyebrow{margin:0 0 4px;font-size:12px;font-weight:600;color:var(--blue);flex:0}
+.card h4{margin:0 0 8px;font-size:16px;line-height:1.3;letter-spacing:-.01em}
+.card p{margin:0 0 14px;color:var(--muted);font-size:15px;flex:1}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;font-weight:600;flex-wrap:wrap}
+.qa{padding:16px 0;border-bottom:1px solid var(--border)}.qa:last-child{border:0}
+.qa h3{margin:0 0 6px;font-size:17px;letter-spacing:-.01em}.qa p{margin:0;color:var(--muted)}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+figure img{width:100%;height:180px;object-fit:cover;object-position:top;display:block;border-bottom:1px solid var(--border)}
+figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:4px 20px}
+.why{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.why div{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.why h3{margin:0 0 4px;font-size:16px}.why p{margin:0;color:var(--muted);font-size:15px}
+.guides{list-style:none;margin:0;padding:0}
+.guides li{padding:12px 0;border-bottom:1px solid var(--border)}.guides li:last-child{border:0}
+details{padding:14px 0;border-bottom:1px solid var(--border)}details:last-child{border:0}
+summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--muted)}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:14px;text-align:center}
+footer p{margin:6px 0}
+@media(max-width:640px){.hero{padding:32px 18px}.grid{grid-template-columns:1fr}}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 12px;border-radius:8px;z-index:9}.skip:focus{left:12px;top:12px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.links{display:flex;align-items:center;gap:16px}.links a{margin:0;font-size:15px;font-weight:500}
+.navbtn{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:10px}
+.hero.left{text-align:left}.hero.left .lede{margin-left:0}.hero.left .pills{justify-content:flex-start}
+.hero .eyebrow{color:var(--blue);font-weight:600;font-size:14px;margin:0 0 8px}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.crumbs li+li::before{content:"›";margin-right:6px}
+.prose{padding:6px 22px}.prose p,.prose li{color:#3A3A3C}.prose li{margin:6px 0}
+.prose h2{font-size:21px;margin:26px 0 8px}.prose h3{font-size:17px;margin:20px 0 6px}
+.prose code{background:var(--bg);padding:1px 5px;border-radius:5px;font-size:.92em;word-break:break-word}
+.prose table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto}.prose th,.prose td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+.prose blockquote{margin:12px 0;padding:4px 14px;border-left:3px solid var(--blue);background:var(--bg);border-radius:6px}
+.long{padding:10px 26px 18px}.long p,.long li{font-size:16.5px;line-height:1.65}
+.steps li{margin:10px 0}
+.dates{color:var(--muted);font-size:14px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--card);border:2px solid var(--blue);border-radius:var(--r);padding:18px 20px;margin:40px 0 0}
+.cta strong{display:block;font-size:17px}.cta span{color:var(--muted);font-size:14px}
+.ext li{margin:8px 0}
+.shots.big{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.shots.big figure img{height:220px}
+.card{position:relative}.card h4 a,.card h2.h4 a{color:var(--text)}.card .meta a,.card .meta{position:relative;z-index:2}
+.stretch::after{content:"";position:absolute;inset:0;z-index:1}
+h2.h4{margin:0 0 8px;font-size:16px;line-height:1.3}
+.group>h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:28px 0 10px}
+.fnav{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:24px}
+.fnav h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;color:var(--text)}
+.fnav ul{list-style:none;padding:0;margin:0}.fnav li{margin:5px 0;font-size:14px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+@media(max-width:640px){.links a:not(.navbtn){display:none}.links{display:flex}.two,.fnav{grid-template-columns:1fr}.long{padding:6px 16px 14px}.cta{flex-direction:column;align-items:stretch;text-align:center}}
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+.tbl table{border-collapse:collapse;width:100%;font-size:15px}.tbl th,.tbl td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl tfoot th{border-bottom:0}.lock td{filter:blur(4px);user-select:none}
+.ok{color:#1E8E3E;font-weight:600}.bad{color:#D70015;font-weight:600}
+.drop{background:var(--card);border:2px dashed var(--border);border-radius:var(--r);padding:28px 20px;text-align:center}
+.drop label{font-weight:600;display:block;margin-bottom:10px}.drop input{max-width:100%}
+.free{display:inline-block;background:#E8F5EC;color:#1E8E3E;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:600}
+.tryfree{margin:0 0 8px}
+details{padding:14px 0;border-bottom:1px solid var(--border)}
+details:last-child{border:0}
+summary{font-weight:600;cursor:pointer}
+details p{margin:8px 0 0;color:var(--muted)}
+pre{overflow-x:auto;background:#f7f7fa;padding:12px;border-radius:10px;font-size:13px}
+</style>
+<style>textarea{width:100%;min-height:150px;font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid var(--border);border-radius:10px;padding:10px;background:#fff}select{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:#fff}.inrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}@media(max-width:640px){.inrow{grid-template-columns:1fr}}.lock td{filter:blur(4px);user-select:none}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="top"><a class="brand" href="/"><img src="/favicon.png" alt="" width="36" height="36">JWillum products</a>
+<nav class="links" aria-label="Main"><a href="/tools/">Tools</a><a href="/guides/">Guides</a><a href="/#faq">FAQ</a><a class="navbtn" href="https://willumsen4.gumroad.com/?utm_source=jwillum-site&amp;utm_campaign=qbo-je-check">Gumroad</a></nav></header>
+<main id="main"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/tools/">Tools</a></li><li aria-current="page">QBO Journal Entry Import Check</li></ol></nav>
+<header class="hero left"><p class="eyebrow">Free · runs in your browser</p><h1>Free QuickBooks journal entry import checker</h1><p class="lede">Find out why your journal entry CSV won't import into QuickBooks Online before you upload it: unbalanced entries, account names, dates, amounts and columns. Your file never leaves this tab.</p>
+<ul class="pills" aria-label="Key facts"><li>Free</li><li>No upload</li><li>No account</li><li>No QuickBooks login</li></ul></header>
+<section aria-labelledby="h-run"><h2 id="h-run">Check your journal CSV</h2><p class="sub">Use the CSV you plan to import (Journal No., Journal Date, Account Name, Debits, Credits…), or try the sample with typical mistakes.</p><div class="drop"><label for="je-file">Choose a journal entry CSV</label><input type="file" id="je-file" accept=".csv,.txt,text/csv"><p class="sub" style="margin:12px 0 0">or <button type="button" id="je-sample" class="btn ghost">Try a sample with errors</button></p></div><div class="inrow"><div><label for="je-paste"><strong>…or paste CSV text</strong></label><textarea id="je-paste" spellcheck="false" placeholder="Journal No.,Journal Date,Account Name,Description,Debits,Credits"></textarea><button type="button" class="btn" id="je-go">Check pasted CSV</button></div><div><label for="je-coa"><strong>Optional: your account names</strong> (one per line, sub-accounts as Parent:Sub)</label><textarea id="je-coa" spellcheck="false" placeholder="Checking&#10;Sales&#10;Utilities:Electric"></textarea><p class="sub" style="margin:6px 0 0">Or load an Account List export (CSV): <input type="file" id="je-coafile" accept=".csv,.txt,text/csv"></p></div></div><p style="margin:14px 0 0"><label for="je-fmt"><strong>Your QuickBooks date format</strong></label> <select id="je-fmt"><option value="auto">Detect from the file</option><option value="MDY">MM/DD/YYYY (US)</option><option value="DMY">DD/MM/YYYY (UK, CA, AU)</option><option value="YMD">YYYY-MM-DD</option></select></p><div id="je-out" aria-live="polite" data-buy="https://willumsen4.gumroad.com/l/qbo-journal-entry-template?utm_source=jwillum-site&amp;utm_campaign=qbo-je-check"></div></section><section aria-labelledby="h-what"><h2 id="h-what">What it checks</h2><div class="panel prose"><ul><li>Required columns present (Journal No., Journal Date, Account Name, Debits, Credits) and a real header row (QuickBooks uses row 1 for mapping)</li><li>Every journal number balances on its own, to the cent, and has at least 2 lines and one date</li><li>Lines with both a debit and a credit, no amount, negative amounts, or more than 2 decimals</li><li>Amounts with $ signs, thousand separators or decimal commas; unquoted commas that shift columns</li><li>Dates: empty, text, spreadsheet serial numbers, impossible dates, mixed day-first and month-first formats</li><li>Account names: extra spaces, account numbers in front, sub-accounts without Parent:, names not in your account list (with "did you mean")</li><li>A/R and A/P lines without a customer or vendor in Name</li><li>Blank rows, duplicate header rows and files of 1,000 rows or more (QuickBooks imports less than 1,000 rows per file)</li></ul></div></section><section aria-labelledby="h-faq"><h2 id="h-faq">FAQ</h2><div class="panel"><details open><summary>Is my file uploaded?</summary><p>No. The file is read in this browser tab. The page sends no data anywhere; you can confirm it in your browser's developer tools (Network tab).</p></details><details><summary>What does the free check show?</summary><p>How many errors and warnings your file has, its totals, and the full detail for the first 3 problems. The $8 template includes the offline checker that shows every problem and downloads a clean CSV.</p></details><details><summary>Which columns does QuickBooks Online need?</summary><p>Journal No., Journal Date, Account Name, Debits and Credits. Description, Name (customer/vendor), Class and Location are optional. Lines with the same Journal No. form one entry, and each entry must balance.</p></details><details><summary>Why does QuickBooks say an account is invalid?</summary><p>The name must match your chart of accounts exactly. Sub-accounts must be written Parent:Sub; using only the sub-account name gives a 'Line Account Invalid' error. Paste your account list above to check every line.</p></details><details><summary>My QuickBooks only offers Spreadsheet Sync for journal entries. Does this help?</summary><p>Intuit says some accounts only get Spreadsheet Sync, which is part of QuickBooks Online Advanced and Accountant. The same rules apply there: balanced entries, exact account names and real dates. Check your lines here first, then paste them into Spreadsheet Sync's Journal Entries template.</p></details><details><summary>Is this affiliated with Intuit?</summary><p>No. It is an independent tool. QuickBooks is a trademark of Intuit Inc.</p></details></div></section><div class="cta"><div><strong>QuickBooks Journal Entry Import Template + Checker</strong><span>$8 one-time · Excel and Google Sheets template with checks on every line · full offline checker with clean-CSV export · no account</span></div><a class="btn" href="https://willumsen4.gumroad.com/l/qbo-journal-entry-template?utm_source=jwillum-site&amp;utm_campaign=qbo-je-check&amp;utm_content=bottom">Get the template — $8</a></div><section aria-labelledby="h-guide"><h2 id="h-guide">Free guides</h2><div class="panel prose"><ul><li><a href="/guides/import-journal-entries-into-quickbooks-online-from-excel/">Import journal entries into QuickBooks Online from Excel (template + checklist)</a></li><li><a href="/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/">QuickBooks journal entry CSV import errors and how to fix them</a></li><li><a href="/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/">QuickBooks journal entry import: "account not found" and how to fix it</a></li><li><a href="/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/">QuickBooks import: debits and credits not equal</a></li></ul></div></section><section aria-labelledby="h-docs"><h2 id="h-docs">Official documentation</h2><div class="panel prose"><ul class="ext"><li><a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/import-export-data-files/import-journal-entries-quickbooks-online/L4tQBwbs7_US_en_US">QuickBooks: Import journal entries</a></li><li><a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/import-export-data-files/common-questions-importing-data-quickbooks-online/L4OYJRFdj_US_en_US">QuickBooks: Common questions about importing data</a></li><li><a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/invoicing/using-spreadsheet-sync-templates/L0uPf2fZs_US_en_US">QuickBooks: Import data using Spreadsheet Sync</a></li></ul></div></section>
+</main>
+<footer>
+<nav class="fnav" aria-label="Footer"><div><h2>Tools</h2><ul><li><a href="/tools/stripeclear-journal/">StripeClear Journal</a></li><li><a href="/tools/books-export-clean/">BooksExport Clean</a></li><li><a href="/tools/tracker-invoice-lines/">Tracker Invoice Lines</a></li><li><a href="/tools/shopify-csv-densifier/">Shopify CSV Densifier</a></li><li><a href="/tools/shopify-customers-mailmerge/">Shopify Customers MailMerge</a></li><li><a href="/tools/etsy-listing-csv-fixer/">Etsy Listing CSV Fixer</a></li><li><a href="/tools/faire-profit-calculator/">Faire Wholesale Fee & Profit Calculator</a></li><li><a href="/tools/whatnot-profit-calculator/">Whatnot Seller Profit Calculator</a></li><li><a href="/tools/event-qr-badges/">Event QR Badges</a></li><li><a href="/tools/marketplace-fee-calculator/">Marketplace Fee Calculator (free)</a></li><li><a href="/tools/stripeclear-journal/check/">Stripe Payout Check (free)</a></li><li><a href="/tools/qbo-journal-entry-import-check/">QBO Journal Entry Import Check (free)</a></li></ul></div>
+<div><h2>Guides</h2><ul><li><a href="/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/">Stripe Deposits Double Counted in QuickBooks</a></li><li><a href="/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/">QuickBooks Import: Debits and Credits Not Equal</a></li><li><a href="/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/">Stripe Dispute Fee Journal Entry in QuickBooks</a></li><li><a href="/guides/stripe-clearing-account-quickbooks-online-setup/">Set Up a Stripe Clearing Account in QuickBooks Online</a></li><li><a href="/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/">Export Stripe to QuickBooks as Journal Entries</a></li><li><a href="/guides/stripe-refunds-and-chargebacks-bookkeeping/">Stripe Refunds and Chargebacks Bookkeeping</a></li><li><a href="/guides/whatnot-fee-calculator-fees-breakdown/">Whatnot Fee Calculator: Fees Breakdown</a></li><li><a href="/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/">QuickBooks Import: Account Not Found</a></li><li><a href="/guides/stripe-payout-does-not-match-bank-deposit/">Stripe Payout Doesn&#x27;t Match Bank Deposit</a></li><li><a href="/guides/how-to-record-stripe-fees-in-a-quickbooks-journal-entry/">Record Stripe Fees in a QuickBooks Journal Entry</a></li><li><a href="/guides/stripe-refund-fees-how-to-record-them/">Stripe Refund Fees: How to Record Them</a></li><li><a href="/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/">QuickBooks Journal Entry CSV Import Errors</a></li><li><a href="/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/">Reconcile Stripe Payouts into a QuickBooks Journal</a></li><li><a href="/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/">Make QR Code Name Badges from a Spreadsheet</a></li><li><a href="/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/">Etsy Listing CSV Errors: How to Check and Clean</a></li><li><a href="/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/">Calculate Real Profit per Whatnot Sale After Fees</a></li><li><a href="/guides/how-to-fill-the-blank-rows-in-a-shopify-orders-csv-export-for-pick-and-pack-lists/">Fill Blank Rows in a Shopify Orders CSV Export</a></li><li><a href="/guides/how-to-clean-a-quickbooks-online-or-xero-export-before-sending-it-to-your-accountant/">Clean a QuickBooks or Xero Export for Your Accountant</a></li><li><a href="/guides/how-to-turn-a-shopify-customer-export-into-a-mail-merge-address-list/">Shopify Customer Export to a Mail Merge Address List</a></li><li><a href="/guides/how-to-turn-toggl-clockify-or-harvest-time-entries-into-xero-or-wave-invoice-lines/">Toggl, Clockify or Harvest Time to Xero or Wave Invoices</a></li><li><a href="/guides/how-to-calculate-your-faire-wholesale-fees-and-real-profit-per-order/">Faire Wholesale Fees and Real Profit per Order</a></li><li><a href="/guides/how-to-get-bandcamp-sales-into-xero-or-wave-and-why-amount-you-received-shows-0/">Get Bandcamp Sales into Xero or Wave</a></li><li><a href="/guides/how-to-reconcile-shopify-payments-payouts-to-bank-deposits/">Reconcile Shopify Payments Payouts to Bank Deposits</a></li><li><a href="/guides/how-to-convert-toggl-or-clockify-durations-to-decimal-hours-for-invoicing/">Convert Toggl or Clockify Time to Decimal Hours</a></li><li><a href="/guides/how-to-bill-flat-fee-plus-hourly-work-from-toggl-time-entries/">Bill Flat-Fee Plus Hourly Work from Toggl</a></li></ul></div>
+<div><h2>JWillum products</h2><ul><li><a href="/">Home</a></li><li><a href="/tools/">All tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="https://willumsen4.gumroad.com/?utm_source=jwillum-site&amp;utm_campaign=quickbooks-journal-entry-csv-import-errors-how-to-fix">Store on Gumroad</a></li><li><a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></li></ul></div></nav>
+<p><strong>JWillum products</strong> · sold on <a href="https://willumsen4.gumroad.com/?utm_source=jwillum-site&amp;utm_campaign=quickbooks-journal-entry-csv-import-errors-how-to-fix">Gumroad</a> · Contact: <a href="mailto:jwillum.products@gmail.com">jwillum.products@gmail.com</a></p>
+<p>Independent tools. Not affiliated with, endorsed by or sponsored by Stripe, Shopify, Intuit (QuickBooks), Xero, Wave, Etsy, Faire, Whatnot, Bandcamp, Toggl, Clockify, Harvest or Avery. All trademarks belong to their respective owners.</p>
+<p>We count visits with GoatCounter, cookie-free, no personal data.</p>
+</footer>
+</div>
+<script data-goatcounter="https://jwillum.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+(function(){
+var seen={},q=[],tries=0;function flush(){if(window.goatcounter&&goatcounter.count){while(q.length){var p=q.shift();goatcounter.count({path:p,title:p,event:true})}}else if(q.length&&tries++<40)setTimeout(flush,250)}function ev(p){if(seen[p])return;seen[p]=1;q.push(p);flush()}
+window.jwEv=ev;
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href')||'';if(h.indexOf('gumroad.com/l/qbo-journal-entry-template')>-1)ev('gumroad-qbo-je-check');else if(h.indexOf('gumroad.com')>-1)ev('gumroad-other-qbo-je-check')},true);
+})();
+</script>
+<script>
+/* JWillum products · QBO journal entry import check engine v1.0 · runs locally, no network */
+var JE=(function(){
+"use strict";
+function delim(t){var l=t.slice(0,t.search(/\r|\n|$/));var c=(l.match(/,/g)||[]).length,sc=(l.match(/;/g)||[]).length,tb=(l.match(/\t/g)||[]).length;return tb>c&&tb>sc?'\t':sc>c?';':','}
+function parse(t){t=String(t||'').replace(/^\uFEFF/,'');var d=delim(t),rows=[],r=[],c='',q=false;for(var i=0;i<t.length;i++){var ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"'&&c==='')q=true;else if(ch==d){r.push(c);c=''}else if(ch=='\r'){if(t[i+1]=='\n')i++;r.push(c);rows.push(r);r=[];c=''}else if(ch=='\n'){r.push(c);rows.push(r);r=[];c=''}else c+=ch}if(c!==''||r.length){r.push(c);rows.push(r)}return {rows:rows,delim:d}}
+var MAP={jn:['journalno','journalnumber','journal','journalnum','jeno','jenumber','entryno','entrynumber','journalid','refno','no','number'],date:['journaldate','date','entrydate','txndate','transactiondate'],acct:['accountname','account','accountfullname','fullyqualifiedname','glaccount'],desc:['journaldescription','description','memo','journaldesc','linedescription','journaldescriptions'],dr:['debits','debit','debitamount','dr'],cr:['credits','credit','creditamount','cr'],name:['name','customervendor','customer','vendor','entity','payee'],cls:['class'],loc:['location','department']};
+var LABEL={jn:'Journal No.',date:'Journal Date',acct:'Account Name',desc:'Description',dr:'Debits',cr:'Credits',name:'Name',cls:'Class',loc:'Location'};
+function norm(h){return String(h||'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+function mapHeader(h){var m={},used={};for(var k in MAP){for(var i=0;i<h.length;i++){if(used[i])continue;if(MAP[k].indexOf(norm(h[i]))>-1){m[k]=i;used[i]=1;break}}}return m}
+function isBlank(r){for(var i=0;i<r.length;i++)if(String(r[i]).trim()!=='')return false;return true}
+/* amounts -> {cents, raw, err, warn} */
+function amt(s){s=String(s==null?'':s);var raw=s,t=s.trim();if(t==='')return {cents:null,raw:raw};var w=[],neg=false;
+ if(/^\(.*\)$/.test(t)){neg=true;t=t.slice(1,-1).trim();w.push('parentheses')}
+ if(/[$€£¥]|USD|EUR|GBP|CAD|AUD/i.test(t)){t=t.replace(/[$€£¥]|USD|EUR|GBP|CAD|AUD/ig,'').trim();w.push('currency symbol')}
+ if(/^-/.test(t)){neg=!neg;t=t.slice(1).trim()}else if(/-$/.test(t)){neg=!neg;t=t.slice(0,-1).trim()}
+ t=t.replace(/[\s\u00a0']/g,function(){w.push('spaces');return ''});
+ var v;
+ if(/^\d+(\.\d+)?$/.test(t))v=t;
+ else if(/^\d{1,3}(,\d{3})+(\.\d+)?$/.test(t)){v=t.replace(/,/g,'');w.push('thousand separators')}
+ else if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t)){v=t.replace(/\./g,'').replace(',','.');w.push('decimal comma')}
+ else if(/^\d+,\d{1,2}$/.test(t)){v=t.replace(',','.');w.push('decimal comma')}
+ else if(/^\.\d+$/.test(t))v='0'+t;
+ else return {cents:null,raw:raw,err:'not a number'};
+ var dec=(v.split('.')[1]||'');var f=parseFloat(v);if(!isFinite(f))return {cents:null,raw:raw,err:'not a number'};
+ if(dec.length>2)w.push('more than 2 decimals');
+ var c=Math.round(f*100);if(neg)c=-c;
+ var uw=[];w.forEach(function(x){if(uw.indexOf(x)<0)uw.push(x)});
+ return {cents:c,raw:raw,warn:uw};}
+function money(c){var s=c<0?'-':'';c=Math.abs(c);return s+Math.floor(c/100)+'.'+('0'+(c%100)).slice(-2)}
+/* dates */
+function dparts(s){var t=String(s||'').trim(),m,time=false;if(/\d{1,2}:\d{2}/.test(t)){time=true;t=t.replace(/[T\s]+\d{1,2}:\d{2}(:\d{2})?(\.\d+)?\s*(am|pm)?(z|[+-]\d{2}:?\d{2})?$/i,'').trim()}
+ if((m=t.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})$/)))return {kind:'ymd',y:+m[1],a:+m[2],b:+m[3],time:time,sep:t.replace(/\d/g,'')[0]};
+ if((m=t.match(/^(\d{1,2})([-\/.])(\d{1,2})\2(\d{2}|\d{4})$/)))return {kind:'xy',a:+m[1],b:+m[3],y:+m[4],y2:m[4].length==2,time:time,sep:m[2]};
+ if(/^\d{5}(\.\d+)?$/.test(t))return {kind:'serial',v:+t};
+ if(/[a-z]{3}/i.test(t)&&!isNaN(Date.parse(t)))return {kind:'text'};
+ return null}
+function valid(y,mo,d){if(mo<1||mo>12||d<1)return false;var dim=[31,(y%4==0&&(y%100!=0||y%400==0))?29:28,31,30,31,30,31,31,30,31,30,31];return d<=dim[mo-1]}
+function fmtDate(y,mo,d,out){var M=('0'+mo).slice(-2),D=('0'+d).slice(-2);return out=='DMY'?D+'/'+M+'/'+y:out=='YMD'?y+'-'+M+'-'+D:M+'/'+D+'/'+y}
+/* accounts */
+function lev(a,b){if(Math.abs(a.length-b.length)>3)return 9;var p=[],i,j;for(j=0;j<=b.length;j++)p[j]=j;for(i=1;i<=a.length;i++){var c=[i];for(j=1;j<=b.length;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]==b[j-1]?0:1));p=c}return p[b.length]}
+function acctList(text){if(!text)return null;var out=[],seen={};var P=parse(text).rows;if(!P.length)return null;var h=P[0].map(norm),ci=-1;
+ ['fullname','accountfullname','fullyqualifiedname','accountname','account','name'].some(function(k){var i=h.indexOf(k);if(i>-1){ci=i;return true}});
+ var start=ci>-1?1:0;if(ci<0)ci=0;
+ for(var i=start;i<P.length;i++){var v=String(P[i][ci]||'').trim();if(v&&!seen[v]){seen[v]=1;out.push(v)}}return out.length?out:null}
+function acctCheck(a,list){var t=a.trim().replace(/\s*:\s*/g,':').replace(/\s{2,}/g,' ');if(list.indexOf(a)>-1)return {ok:true};
+ if(list.indexOf(t)>-1)return {fix:t,why:'extra spaces'};
+ var lc=t.toLowerCase(),hits=list.filter(function(x){return x.toLowerCase()==lc});if(hits.length==1)return {fix:hits[0],why:'capitalisation differs'};
+ var sub=list.filter(function(x){return x.toLowerCase().slice(-(lc.length+1))==':'+lc});if(sub.length==1)return {fix:sub[0],why:'sub-account needs the Parent:Sub form'};if(sub.length>1)return {sugg:sub,why:'sub-account name exists under more than one parent'};
+ var best=[],bd=3;list.forEach(function(x){var d=lev(lc,x.toLowerCase());if(d<bd){bd=d;best=[x]}else if(d==bd)best.push(x)});
+ if(best.length&&bd<=2)return {sugg:best.slice(0,3),why:'not in your chart of accounts'};return {sugg:[],why:'not in your chart of accounts'}}
+/* main check */
+function check(text,opts){opts=opts||{};var P=parse(text),R=P.rows,issues=[],res={issues:issues,rows:[],journals:{},order:[],map:{},header:null,dateFmt:null,accounts:null};
+ function add(sev,line,code,msg,fix,jn){issues.push({sev:sev,line:line,code:code,msg:msg,fix:fix||null,jn:jn||null})}
+ var hi=-1;for(var i=0;i<R.length;i++){if(!isBlank(R[i])){hi=i;break}}
+ if(hi<0){add('error',0,'empty','The file is empty.');return fin(res)}
+ if(hi>0)add('warn',hi+1,'lead-blank','The file starts with '+hi+' blank row(s). QuickBooks reads the first row as the header.',true);
+ var H=R[hi];res.header=H;var m=mapHeader(H);res.map=m;
+ var looksData=H.some(function(x){return amt(x).cents!=null&&String(x).trim()!==''})&&!('acct' in m);
+ if(looksData){add('error',hi+1,'no-header','Row '+(hi+1)+' looks like data, not a header. QuickBooks uses the first row for column mapping, so the first journal line would be lost. Add a header row: Journal No., Journal Date, Account Name, Description, Debits, Credits.');return fin(res)}
+ var amtIdx=H.map(norm).indexOf('amount');
+ ['jn','date','acct','dr','cr'].forEach(function(k){if(!(k in m)){var extra=(k=='dr'||k=='cr')&&amtIdx>-1?' Your file has one signed Amount column; QuickBooks journal import needs separate Debits and Credits columns (positive numbers).':'';add('error',hi+1,'missing-col','Required column missing: '+LABEL[k]+'.'+extra)}});
+ if(!('desc' in m))add('warn',hi+1,'no-desc','No Description/Memo column. Optional, but it makes entries much easier to find later.');
+ H.forEach(function(h,i){var used=false;for(var k in m)if(m[k]===i)used=true;if(!used&&String(h).trim()!=='')add('info',hi+1,'extra-col','Column "'+String(h).trim()+'" will not map to a journal field (QuickBooks ignores or asks you to skip it).')});
+ if(issues.some(function(x){return x.code=='missing-col'}))return fin(res);
+ var list=opts.accounts?acctList(opts.accounts):null;res.accounts=list;
+ /* rows */
+ var dataN=0,blankN=0,dps=[],lens={};for(i=hi+1;i<R.length;i++)if(!isBlank(R[i]))lens[R[i].length]=(lens[R[i].length]||0)+1;var modeLen=+Object.keys(lens).sort(function(a,b){return lens[b]-lens[a]})[0]||H.length;
+ for(i=hi+1;i<R.length;i++){var r=R[i],line=i+1;if(isBlank(r)){blankN++;continue}
+  if(norm(r[m.acct])=='accountname'||norm(r[m.jn])=='journalno'){add('error',line,'dup-header','A second header row was found inside the data. Delete it.',true);continue}
+  dataN++;var g=function(k){return k in m?String(r[m[k]]==null?'':r[m[k]]):''};
+  var row={line:line,jn:g('jn').trim(),dateRaw:g('date'),acct:g('acct'),desc:g('desc'),name:g('name'),cls:g('cls'),loc:g('loc'),drA:amt(g('dr')),crA:amt(g('cr'))};
+  if(r.length>H.length&&(r.slice(H.length).some(function(x){return String(x).trim()!==''})||(modeLen==H.length&&r.length>modeLen)))add('error',line,'extra-fields','This line has more fields than the header. An unquoted comma inside a description or amount (like 1,250.00) usually causes this. Quote that field or remove the comma.',false,row.jn);
+  res.rows.push(row);
+  if(!row.jn)add('error',line,'no-jn','Journal No. is empty. Every line needs the journal number of the entry it belongs to.',false);
+  if(g('jn')!==row.jn)add('warn',line,'jn-space','Journal No. has leading/trailing spaces.',true,row.jn);
+  /* date */
+  var dp=dparts(row.dateRaw);row.dp=dp;
+  if(!String(row.dateRaw).trim())add('error',line,'no-date','Journal Date is empty.',false,row.jn);
+  else if(!dp)add('error',line,'bad-date','Date "'+row.dateRaw+'" is not a date QuickBooks can read. Use one numeric format, e.g. 10/15/2026 (US) or 15/10/2026 (UK/CA/AU), matching your company region.',false,row.jn);
+  else if(dp.kind=='serial')add('error',line,'serial-date','Date "'+row.dateRaw+'" is a spreadsheet serial number, not a date. Format the column as a date before saving as CSV.',false,row.jn);
+  else if(dp.kind=='text')add('error',line,'text-date','Date "'+row.dateRaw+'" uses month names. Use a numeric date like 10/15/2026 so the import reads it reliably.',false,row.jn);
+  else{dps.push(dp);if(dp.time)add('warn',line,'date-time','Date includes a time. Remove the time part.',true,row.jn);if(dp.y2)add('warn',line,'year2','Two-digit year. Use four digits (2026) to avoid the wrong century.',true,row.jn)}
+  /* amounts */
+  [['drA','Debits'],['crA','Credits']].forEach(function(p){var a=row[p[0]];if(a.err)add('error',line,'bad-amt',p[1]+' value "'+a.raw+'" is '+a.err+'.',false,row.jn);else if(a.cents!=null){if(a.cents<0)add('error',line,'neg-amt',p[1]+' is negative ('+a.raw.trim()+'). Journal import needs positive amounts: move it to the other column as a positive number.',false,row.jn);if(a.warn&&a.warn.length){var fx=a.warn.filter(function(x){return x!='more than 2 decimals'});if(fx.length)add('error',line,'amt-format',p[1]+' "'+a.raw.trim()+'" contains '+fx.join(', ')+'. Use plain numbers like 1250.00.',true,row.jn);if(a.warn.indexOf('more than 2 decimals')>-1)add('warn',line,'amt-dec',p[1]+' "'+a.raw.trim()+'" has more than 2 decimals. Round each line to cents before totalling, or the entry can be off by 0.01.',true,row.jn)}}});
+  var dc=row.drA.cents,cc=row.crA.cents;
+  if(!row.drA.err&&!row.crA.err){if((dc||0)!==0&&(cc||0)!==0)add('error',line,'both','Line has both a debit and a credit. Put each amount on its own line.',false,row.jn);else if(!dc&&!cc)add('error',line,'no-amt','Line has no debit or credit amount (or zero). Delete it or add the amount.',false,row.jn)}
+  /* account */
+  if(!row.acct.trim())add('error',line,'no-acct','Account Name is empty.',false,row.jn);
+  else{if(row.acct!==row.acct.trim()||/\s{2,}/.test(row.acct))add('warn',line,'acct-space','Account "'+row.acct+'" has extra spaces; QuickBooks matches names exactly.',true,row.jn);
+   if(/\s:|:\s/.test(row.acct))add('warn',line,'acct-colon','Account "'+row.acct.trim()+'": no spaces around the colon. Use Parent:Sub.',true,row.jn);
+   if(/^\d{3,}[\s\-·]+\S/.test(row.acct.trim()))add('warn',line,'acct-num','Account "'+row.acct.trim()+'" starts with an account number. Intuit recommends turning account numbers off before importing and using the account name only.',false,row.jn);
+   if(list){var ac=acctCheck(row.acct,list);row.acctFix=ac.fix||null;if(!ac.ok&&!(ac.fix&&ac.why=='extra spaces')){if(ac.fix)add('error',line,'acct-fix','Account "'+row.acct.trim()+'": '+ac.why+'. Use "'+ac.fix+'".',true,row.jn);else add('error',line,'acct-missing','Account "'+row.acct.trim()+'" is '+ac.why+'.'+(ac.sugg&&ac.sugg.length?' Did you mean: '+ac.sugg.map(function(x){return '"'+x+'"'}).join(', ')+'?':' Create it in QuickBooks first, or fix the spelling.'),false,row.jn)}}
+   if(/accounts\s*(receivable|payable)|^a\/[rp]\b|\(a\/[rp]\)/i.test(row.acct)){if(!('name' in m))add('error',line,'arap-noname-col','Line posts to '+row.acct.trim()+', which needs a customer/vendor in a Name column. Add a Name column.',false,row.jn);else if(!row.name.trim())add('error',line,'arap-name','Line posts to '+row.acct.trim()+' but Name is empty. QuickBooks needs the customer (A/R) or vendor (A/P).',false,row.jn)}}
+  if(row.jn){var J=res.journals[row.jn];if(!J){J=res.journals[row.jn]={jn:row.jn,dr:0,cr:0,lines:0,dates:{},first:line,last:line,gap:false};res.order.push(row.jn)}else if(J.lastIdx!=null&&res.rows.length-1!=J.lastIdx+1)J.gap=true;J.lastIdx=res.rows.length-1;J.lines++;J.last=line;J.dr+=(dc>0?dc:0);J.cr+=(cc>0?cc:0);J.dates[String(row.dateRaw).trim()]=1}
+ }
+ if(blankN)add('warn',0,'blank-rows',blankN+' blank row(s) inside or after the data. Delete them (delete the rows, not just their contents).',true);
+ if(!dataN)add('error',hi+1,'no-data','The file has a header but no journal lines.');
+ if(dataN>=1000)add('error',0,'too-many','The file has '+dataN+' data rows. QuickBooks Online imports files with less than 1,000 rows. Split it into smaller files without splitting a journal.',true);
+ /* date format consensus */
+ var xy=dps.filter(function(d){return d.kind=='xy'}),dmy=xy.some(function(d){return d.a>12}),mdy=xy.some(function(d){return d.b>12});var want=opts.dateFmt&&opts.dateFmt!='auto'?opts.dateFmt:null,fmt;
+ if(want)fmt=want;else if(dmy&&mdy)fmt='mixed';else if(dmy)fmt='DMY';else if(mdy)fmt='MDY';else fmt=xy.length?'MDY?':(dps.length?'YMD':null);
+ res.dateFmt=fmt;
+ if(fmt=='mixed')add('error',0,'mixed-dates','Dates mix day-first (e.g. 15/10) and month-first (e.g. 10/15) formats. Pick one format that matches your QuickBooks region.');
+ var kinds={};dps.forEach(function(d){kinds[d.kind+(d.sep||'')]=1});if(Object.keys(kinds).length>1&&fmt!='mixed')add('warn',0,'mixed-styles','Dates use more than one style ('+Object.keys(kinds).length+' different separators or orders). Use one format throughout.',true);
+ res.rows.forEach(function(row){var d=row.dp;if(!d||(d.kind!='xy'&&d.kind!='ymd'))return;var y,mo,dd;if(d.kind=='ymd'){y=d.y;mo=d.a;dd=d.b}else{y=d.y2?2000+d.y:d.y;if(fmt=='DMY'){dd=d.a;mo=d.b}else{mo=d.a;dd=d.b}}
+  if(fmt=='mixed'){row.ymd=null;return}
+  if(!valid(y,mo,dd)){add('error',row.line,'invalid-date','Date "'+row.dateRaw+'" does not exist'+(fmt?' when read as '+(fmt=='DMY'?'day/month/year':fmt=='YMD'?'year-month-day':'month/day/year'):'')+'.',false,row.jn);row.ymd=null}else{row.ymd=[y,mo,dd];if(y<1990||y>2100)add('warn',row.line,'odd-year','Year '+y+' looks wrong.',false,row.jn)}});
+ if(fmt=='MDY?')add('info',0,'ambiguous-dates','All dates have day and month 12 or less, so they could be read either way. They are treated as month/day/year (US). If your QuickBooks region is UK/CA/AU, choose day/month/year.');
+ /* journals */
+ res.order.forEach(function(jn){var J=res.journals[jn];if(J.dr!==J.cr)add('error',J.first,'unbalanced','Journal '+jn+' does not balance: debits '+money(J.dr)+' vs credits '+money(J.cr)+' (difference '+money(J.dr-J.cr)+'). Each journal number must balance on its own.',false,jn);
+  if(J.lines<2)add('error',J.first,'one-line','Journal '+jn+' has only one line. A journal entry needs at least one debit and one credit line.',false,jn);
+  if(Object.keys(J.dates).length>1)add('error',J.first,'jn-dates','Journal '+jn+' has more than one date ('+Object.keys(J.dates).join(', ')+'). All lines of one journal must share one date.',false,jn);
+  if(J.gap)add('warn',J.first,'jn-gap','Journal '+jn+' appears in separate blocks of the file. If these are two different entries, give them different numbers; QuickBooks combines lines with the same number.',false,jn)});
+ res.stats={dataRows:dataN,journals:res.order.length,blank:blankN,dr:res.order.reduce(function(s,j){return s+res.journals[j].dr},0),cr:res.order.reduce(function(s,j){return s+res.journals[j].cr},0)};
+ return fin(res)}
+function fin(res){var rank={error:0,warn:1,info:2};res.issues.sort(function(a,b){return (a.line||0)-(b.line||0)||rank[a.sev]-rank[b.sev]});res.errors=res.issues.filter(function(x){return x.sev=='error'}).length;res.warnings=res.issues.filter(function(x){return x.sev=='warn'}).length;res.blocking=res.issues.filter(function(x){return x.sev=='error'&&!x.fix}).length;res.ok=res.errors===0;return res}
+function q(v){v=String(v==null?'':v);return /[",\r\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+/* export: returns [{name,csv,rows}] or {error} */
+function exportCsv(res,opts){opts=opts||{};if(!res.rows||!res.rows.length)return {error:'Nothing to export.'};if(res.blocking)return {error:res.blocking+' problem(s) must be fixed in your file first (they cannot be fixed automatically).'};
+ if(res.rows.some(function(r){return !r.ymd}))return {error:'Some dates could not be read. Fix the dates marked above first.'};var out=opts.outFmt||(res.dateFmt=='DMY'?'DMY':'MDY');var m=res.map,cols=['Journal No.','Journal Date','Account Name','Description','Debits','Credits'];function any(k){return res.rows.some(function(r){return String(r[k]||'').trim()!==''})}var hasN=('name' in m)&&any('name'),hasC=('cls' in m)&&any('cls'),hasL=('loc' in m)&&any('loc');if(hasN)cols.push('Name');if(hasC)cols.push('Class');if(hasL)cols.push('Location');
+ var lines=res.rows.map(function(r){var a=(r.acctFix||r.acct).trim().replace(/\s*:\s*/g,':').replace(/\s{2,}/g,' ');var v=[r.jn,fmtDate(r.ymd[0],r.ymd[1],r.ymd[2],out),a,r.desc.trim(),r.drA.cents?money(r.drA.cents):'',r.crA.cents?money(r.crA.cents):''];if(hasN)v.push(r.name.trim());if(hasC)v.push(r.cls.trim());if(hasL)v.push(r.loc.trim());return {jn:r.jn,t:v.map(q).join(',')}});
+ /* group by journal, keep order of first appearance */
+ var groups={},ord=[];lines.forEach(function(l){if(!groups[l.jn]){groups[l.jn]=[];ord.push(l.jn)}groups[l.jn].push(l.t)});
+ var max=opts.maxRows||999,files=[],cur=[];ord.forEach(function(j){var g=groups[j];if(g.length>max)return files.push({tooBig:j});if(cur.length+g.length>max){files.push(cur);cur=[]}cur=cur.concat(g)});if(cur.length)files.push(cur);
+ if(files.some(function(f){return f.tooBig}))return {error:'A single journal has more than '+max+' lines; split it in QuickBooks terms first.'};
+ var head=cols.join(',');return files.map(function(f,i){return {name:'qbo-journal-import'+(files.length>1?'-part'+(i+1):'')+'.csv',csv:head+'\r\n'+f.join('\r\n')+'\r\n',rows:f.length}})}
+return {parse:parse,check:check,exportCsv:exportCsv,amt:amt,money:money,acctList:acctList,version:'1.0'};
+})();
+if(typeof module!=='undefined')module.exports=JE;
+
+</script>
+<script>
+(function(){
+var FULL=window.JE_FULL===true, LIMIT=FULL?1e9:3;
+var BUY=document.getElementById('je-out').getAttribute('data-buy')||'';
+function ev(p){if(window.jwEv)window.jwEv(p)}
+var SAMPLE="Journal No.,Journal Date,Account Name,Description,Debits,Credits,Name\n"+
+"PR-1031,10/31/2026,Payroll Expenses:Wages,October payroll,4200.00,,\n"+
+"PR-1031,10/31/2026,Payroll Expenses:Taxes,October payroll,321.30,,\n"+
+"PR-1031,10/31/2026,Payroll Liabilities,October payroll,,642.60,\n"+
+"PR-1031,10/31/2026,Checking,October payroll,,3878.70,\n"+
+"ST-1015,10/15/2026,Stripe Fees,Stripe fees,5.98,,\n"+
+"ST-1015,10/15/2026,Stripe Clearing,Stripe fees,,5.97,\n"+
+"AR-1020,10/20/2026,Accounts Receivable (A/R),Invoice 1043 write-off,,250.00,\n"+
+"AR-1020,10/20/2026,Bad Debt,Invoice 1043 write-off,250.00,,\n"+
+"UT-1021,10/21/2026,Electric,October power,\"$1,080.00\",,\n"+
+"UT-1021,10/22/2026,Checking ,October power,,1080.00,\n";
+var SAMPLE_COA="Checking\nSales\nStripe Clearing\nStripe Fees\nPayroll Expenses:Wages\nPayroll Expenses:Taxes\nPayroll Liabilities\nAccounts Receivable (A/R)\nBad Debt\nUtilities:Electric\n";
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var last=null,lastText='';
+function run(text,src){lastText=text;var opts={dateFmt:$('je-fmt').value,accounts:$('je-coa').value.trim()||null};var r;try{r=JE.check(text,opts)}catch(e){$('je-out').innerHTML='<div class="panel prose"><p class="bad">Could not read this file: '+esc(e.message)+'</p></div>';return}
+ last=r;render(r);ev('qbo-check-run');if(src)ev('qbo-check-'+src);ev(r.errors?'qbo-check-result-errors':'qbo-check-result-clean');if(!FULL&&r.issues.filter(function(i){return i.sev!='info'}).length>LIMIT)ev('qbo-check-locked')}
+function render(r){var o=$('je-out'),st=r.stats||{dataRows:0,journals:0,dr:0,cr:0};
+ var list=r.issues.filter(function(i){return i.sev!='info'}),info=r.issues.filter(function(i){return i.sev=='info'});
+ var h='<div class="panel prose" style="margin-top:18px"><h2 style="margin-top:18px">'+(FULL&&r.errors&&!r.blocking?'<span class="ok">'+r.errors+' error'+(r.errors>1?'s':'')+', all fixed automatically in the clean CSV</span>':r.errors?'<span class="bad">'+r.errors+' error'+(r.errors>1?'s':'')+'</span> to fix before importing':'<span class="ok">No blocking errors found</span>')+(r.warnings?' · '+r.warnings+' warning'+(r.warnings>1?'s':''):'')+'</h2>';
+ h+='<p>'+st.dataRows+' line(s) · '+st.journals+' journal(s) · debits '+JE.money(st.dr||0)+' · credits '+JE.money(st.cr||0)+(r.accounts?' · checked against '+r.accounts.length+' account names':' · account names not checked (paste your account list above to check them)')+(r.dateFmt&&r.dateFmt!='mixed'?' · dates read as '+({MDY:'MM/DD/YYYY','MDY?':'MM/DD/YYYY (assumed)',DMY:'DD/MM/YYYY',YMD:'YYYY-MM-DD'}[r.dateFmt]||r.dateFmt):'')+'</p>';
+ if(list.length){h+='<div class="tbl"><table><thead><tr><th>Line</th><th style="text-align:left">Problem and fix</th></tr></thead><tbody>';
+  list.forEach(function(i,k){var lock=k>=LIMIT;h+='<tr'+(lock?' class="lock" aria-hidden="true"':'')+'><td>'+(i.line||'file')+'</td><td style="text-align:left;white-space:normal"><span class="'+(i.sev=='error'?'bad':'')+'">'+(i.sev=='error'?'Error':'Warning')+'</span> · '+(lock?'Locked detail. Get the full checker to see every problem.':esc(i.msg))+(FULL&&i.fix?' <span class="free">fixed in export</span>':'')+'</td></tr>'});
+  h+='</tbody></table></div>'}
+ if(!FULL&&list.length>LIMIT){h+='<div class="cta" style="margin:18px 0 8px"><div><strong>'+(list.length-LIMIT)+' more problem'+(list.length-LIMIT>1?'s':'')+' in this file</strong><span>The free check shows the first '+LIMIT+'. The QuickBooks Journal Entry Import Template ($8 one-time) includes the full offline checker. It shows every problem, fixes formats automatically and downloads a clean CSV, split into parts under 1,000 rows. You also get the Excel/Google Sheets template with built-in checks.</span></div><a class="btn" href="'+esc(BUY)+'&amp;utm_content=locked">Get the full checker + template ($8)</a></div>'}
+ else if(!FULL){h+='<p style="margin-top:14px">Want this check while you type, inside Excel or Google Sheets? The <a href="'+esc(BUY)+'&amp;utm_content=result">QBO Journal Entry Import Template</a> ($8) flags each line as OK or FIX and includes the offline checker with clean-CSV export.</p>'}
+ if(info.length)h+='<details><summary>Notes ('+info.length+')</summary>'+info.map(function(i){return '<p>'+esc(i.msg)+'</p>'}).join('')+'</details>';
+ if(FULL){h+='<div style="margin:16px 0"><label for="je-outfmt"><strong>Date format in the clean CSV</strong></label> <select id="je-outfmt"><option value="">Same as input</option><option value="MDY">MM/DD/YYYY (US)</option><option value="DMY">DD/MM/YYYY (UK, CA, AU)</option><option value="YMD">YYYY-MM-DD</option></select> <button type="button" class="btn" id="je-dl">Download clean CSV</button><p id="je-dlmsg" class="sub" style="margin:8px 0 0"></p></div>'}
+ h+='</div>';o.innerHTML=h;
+ if(FULL){$('je-dl').onclick=function(){var f=JE.exportCsv(last,{outFmt:$('je-outfmt').value||null});if(f.error){$('je-dlmsg').innerHTML='<span class="bad">'+esc(f.error)+'</span>';return}f.forEach(function(x,i){setTimeout(function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([x.csv],{type:'text/csv'}));a.download=x.name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},i*400)});$('je-dlmsg').textContent='Downloaded '+f.map(function(x){return x.name+' ('+x.rows+' lines)'}).join(', ')+'. Import each file separately in QuickBooks: Settings → Import Data → Journal Entries.'}}
+}
+function readFile(inp,cb){var f=inp.files&&inp.files[0];if(!f)return;if(f.size>20*1024*1024){$('je-out').innerHTML='<div class="panel prose"><p class="bad">That file is over 20 MB, so it is probably not a journal CSV.</p></div>';return}var rd=new FileReader();rd.onload=function(){cb(String(rd.result))};rd.readAsText(f)}
+$('je-file').addEventListener('change',function(){readFile(this,function(t){$('je-paste').value='';run(t,'file')})});
+$('je-coafile').addEventListener('change',function(){readFile(this,function(t){$('je-coa').value=t;if(lastText)run(lastText)})});
+$('je-go').addEventListener('click',function(){var t=$('je-paste').value;if(!t.trim()){$('je-paste').focus();return}run(t,'paste')});
+$('je-sample').addEventListener('click',function(){$('je-paste').value=SAMPLE;$('je-coa').value=SAMPLE_COA;run(SAMPLE,'sample')});
+$('je-fmt').addEventListener('change',function(){if(lastText)run(lastText)});
+})();
+
+</script>
+</body>
+</html>
