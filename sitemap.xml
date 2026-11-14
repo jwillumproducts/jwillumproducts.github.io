@@ -6,11 +6,11 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-14</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-14</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/tools/stripeclear-journal/</loc>
@@ -122,7 +122,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-14</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/export-stripe-to-quickbooks-payouts-as-journal-entries/</loc>
@@ -138,7 +138,7 @@
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-14</lastmod>
   </url>
   <url>
     <loc>https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/</loc>
@@ -155,5 +155,21 @@
   <url>
     <loc>https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/</loc>
     <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/stripe-payout-timezone-utc-month-end-quickbooks/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/how-to-record-stripe-reserves-and-held-funds-in-quickbooks/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
+    <loc>https://jwillumproducts.github.io/guides/import-journal-entries-into-quickbooks-online-from-excel/</loc>
+    <lastmod>2026-11-14</lastmod>
   </url>
 </urlset>

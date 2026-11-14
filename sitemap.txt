@@ -37,3 +37,7 @@ https://jwillumproducts.github.io/guides/stripe-dispute-fee-chargeback-journal-e
 https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/
 https://jwillumproducts.github.io/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/
 https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/
+https://jwillumproducts.github.io/guides/stripe-payout-timezone-utc-month-end-quickbooks/
+https://jwillumproducts.github.io/guides/how-to-record-stripe-reserves-and-held-funds-in-quickbooks/
+https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/
+https://jwillumproducts.github.io/guides/import-journal-entries-into-quickbooks-online-from-excel/

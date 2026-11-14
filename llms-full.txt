@@ -1685,3 +1685,277 @@ If QuickBooks complains about account names rather than amounts, see [the "accou
 **How do I find a one-cent difference?** Sum debits and credits per journal number with SUMIF or a pivot table, and check for amounts with more than two decimals. Fees recalculated with a percentage formula are the usual source.
 
 **Should I import the whole file at once?** Import one journal first. When that works, import the rest, so a single bad journal does not block a whole month.
+
+---
+
+# Stripe UTC vs local time at month end: how to date payouts in QuickBooks
+
+URL: https://jwillumproducts.github.io/guides/stripe-payout-timezone-utc-month-end-quickbooks/
+
+**Short answer:** Stripe's financial reports can be viewed in your Stripe account's time zone or in Coordinated Universal Time (UTC). That choice changes both which rows fall inside a date range and how dates are shown. If your QuickBooks books use a local time zone and the Stripe export is in UTC, a charge or payout near midnight on the last day of the month can land in the "wrong" month. Pick one time zone, use it for the Stripe report and for the journal date, and leave anything not yet paid out in Stripe Clearing so the clearing balance equals Stripe's ending balance for that same date and zone.
+
+## Why the month-end numbers disagree
+
+A Stripe payout is a net figure: charges, minus fees, minus refunds and disputes, plus or minus adjustments. Even when that arithmetic is right, the *dates* on the export may not be the dates your books use.
+
+Stripe's own docs on [report configuration](https://docs.stripe.com/reports/options) say you can view financial reports in your account time zone or in UTC, and that a day's data runs from 12:00 am through 11:59 pm in the time zone you selected. The [payout reconciliation report](https://docs.stripe.com/reports/payout-reconciliation) groups automatic payouts by estimated arrival date, not by the date your bank posts the deposit, and the report data can arrive after the money does.
+
+Three different dates show up in Stripe exports, and they answer different questions:
+
+| Date | What it means | Use it for |
+| --- | --- | --- |
+| Charge or refund `created` (or the report date of the balance transaction) | When the payment activity happened, in the report's time zone | When revenue, refunds or fees hit the Profit and Loss, if you book by activity date |
+| `available_on` | When those funds become available in your Stripe balance | Understanding pending vs available; not usually the bank date |
+| Payout arrival date (estimated arrival on the payout reconciliation report) | When Stripe expects the payout to arrive at your bank | Dating the transfer from Stripe Clearing to the bank, then matching the bank-feed line (whose posted date may be a day later) |
+
+If you mix these — for example, dating sales on UTC `created` dates and dating the payout on the bank's local posting date — month-end will almost always be off, even when every amount is correct.
+
+## A worked example (illustrative times only)
+
+*Example:* a charge is created at 23:30 UTC on 31 October 2026. The clocks have already changed in the EU (the last Sunday of October), so Central European Time is UTC+1. In the US, Eastern Daylight Time is still in effect until the first Sunday of November, so it is UTC−4.
+
+| Time zone | Local date and time | Month it falls in |
+| --- | --- | --- |
+| UTC | 31 October 2026, 23:30 | October |
+| US Eastern Daylight Time (UTC−4) | 31 October 2026, 19:30 | October |
+| Central European Time (UTC+1) | 1 November 2026, 00:30 | November |
+
+A European seller who downloads an October Balance report in UTC will include this charge. The same seller, with books in CET, would put it in November. Neither is "wrong"; they are two different cut-offs. The error is using both in the same close.
+
+The same split happens on the payout side. A payout with an estimated arrival of 1 November 00:15 UTC may post to a US bank on 31 October local time, or the other way around. Match the bank-feed line by amount and payout id, not by assuming the dates are identical.
+
+## How to set a cut-off policy and stick to it
+
+- **Write down one time zone** for Stripe reporting. In the Stripe Dashboard, open a financial report (Balance or Payout reconciliation) and select either your account time zone or UTC. Use the same choice every month.
+
+- **Download the report for the month in that zone.** Stripe treats the selected dates as inclusive, from 12:00 am on the start date through 11:59 pm on the end date in that zone. For automatic payouts, the itemized payout reconciliation CSV lists every charge, refund, dispute, fee and other balance transaction in each payout. If you use manual payouts, or instant payouts, Stripe says the payout reconciliation report may not apply in the same way — use the [Balance report](https://docs.stripe.com/reports/balance) instead. Stripe also notes that it cannot identify which transactions are inside an instant payout, so you reconcile those against your transaction history yourself.
+
+- **Date the settlement journal on the payout's arrival date** (the date the report uses for that payout), and put the payout id in the journal number or memo. The journal should contain only the balance transactions that belong to that payout. Revenue can still follow the charge date if that is your policy; the settlement entry is what has to match the bank.
+
+- **Do not force the clearing account to zero at month end.** Money that is still pending or available in Stripe, or a payout that has not yet arrived at the bank, should remain in Stripe Clearing. That leftover is a timing balance, not an error.
+
+- **Run the month-end check:** Stripe Clearing in QuickBooks, on the last day of the month in your chosen time zone, should equal Stripe's ending balance (available plus pending) for the same date and zone. If you also have funds held in reserve, keep those on a separate reserve account — see [how to record a Stripe reserve or held funds in QuickBooks](/guides/how-to-record-stripe-reserves-and-held-funds-in-quickbooks/) — and include them in the balance-sheet check.
+
+- **If the numbers still differ,** look for a payout in transit (arrived in Stripe's report in one month and in the bank feed in the next), a refund or dispute booked on a `created` date that sits in a different month from the payout, or a bank rule that added the deposit as income. The last of those is covered in [Stripe deposits double counted in QuickBooks](/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/).
+
+This is a reconciliation method, not accounting or tax advice. If a period is already reconciled or filed, check with your accountant before you change dates.
+
+## Common mistakes
+
+- **Comparing a UTC report with a local-time Profit and Loss.** Change one of them so both use the same zone, then compare again.
+
+- **Dating the journal on the bank posting date while building it from a report grouped by estimated arrival date.** The amounts should still match; the months may not. Use the report's arrival date on the journal and match the later (or earlier) bank line by amount.
+
+- **Booking "charges in transit" as a plug to income.** If the charge has already been recorded, the gap is on the balance sheet (Stripe Clearing or undeposited funds), not on the Profit and Loss.
+
+- **Using instant or manual payouts with a payout reconciliation workflow.** Switch to the Balance report and reconcile like a bank account, instead of expecting a batch for each payout.
+
+Other reasons a payout does not equal sales (fees, refunds, disputes) are in [why your Stripe payout doesn't match your bank deposit](/guides/stripe-payout-does-not-match-bank-deposit/). To set up the clearing account, see [how to set up a Stripe clearing account in QuickBooks Online](/guides/stripe-clearing-account-quickbooks-online-setup/).
+
+---
+
+# How to record a Stripe reserve or held funds in QuickBooks
+
+URL: https://jwillumproducts.github.io/guides/how-to-record-stripe-reserves-and-held-funds-in-quickbooks/
+
+**Short answer:** A Stripe reserve or hold is still your money. It is not a fee and it is not lost income. When Stripe holds funds to mitigate risk, your payout is smaller than gross charges minus fees, but the held amount should sit on the balance sheet (for example, a Stripe Reserve or Stripe held funds account) until Stripe releases it. In the balance transactions export you may see types such as `reserved_funds`, `reserve_hold` and later `reserve_release` (and sometimes `payment_network_reserve_hold` / `payment_network_reserve_release` or `payout_minimum_balance_hold` / `payout_minimum_balance_release`). Move the hold out of Stripe Clearing into the reserve account; when it is released, move it back so it can go out in a later payout.
+
+## How to tell a reserve from a fee
+
+Stripe's [balance transaction types](https://docs.stripe.com/reports/balance-transaction-types) describe reserve activity separately from fees:
+
+- `reserved_funds` — Stripe holds funds from your payments balance and later credits them back when the reserve period ends.
+
+- `reserve_hold` and `reserve_release` — counterpart rows that credit or debit the reserve balance itself.
+
+- `payment_network_reserve_hold` and `payment_network_reserve_release` — a payment network (not Stripe's own rolling reserve) holds or releases funds.
+
+- `payout_minimum_balance_hold` and `payout_minimum_balance_release` — a minimum balance held back from a payout and later released.
+
+- Fee types such as the fee on a charge, `stripe_fee` or `stripe_fx_fee` — these *are* expenses, and they should go to a fees account, not to the reserve account.
+
+You will also see the effect on the payout: the net deposit is lower while funds are held, and a later payout is higher when they are released. That pattern looks like a mystery "short" deposit if you only compare gross minus fees with the bank line. Stripe's [payout reconciliation report](https://docs.stripe.com/reports/payout-reconciliation) (for automatic payouts) lists the reserve rows inside the payout, which is how you prove the difference.
+
+This guide is about holds on a standard Stripe balance. Platforms using Stripe Connect can also set settlement reserves on connected accounts; the journal idea is the same (a balance-sheet hold, not an expense), but the Dashboard and transaction types follow Stripe's Connect reserve docs.
+
+## The accounts to use
+
+| Account | Type in QuickBooks Online | What it holds |
+| --- | --- | --- |
+| Stripe Clearing | Other Current Asset | Gross charges, fees, refunds and payouts that are available or pending in Stripe |
+| Stripe Reserve (or Stripe held funds) | Other Current Asset | Amounts Stripe or a payment network is currently holding |
+| Stripe Fees (or Merchant fees) | Expense | Processing fees and other Stripe fees only — not reserves |
+| Business Checking | Bank | The net payout when it arrives |
+
+You can use sub-accounts under one Stripe asset if you prefer (Stripe:Available and Stripe:Reserve). The important split is that held funds stay on the balance sheet. To create the clearing account itself, see [how to set up a Stripe clearing account in QuickBooks Online](/guides/stripe-clearing-account-quickbooks-online-setup/).
+
+## Steps to record a hold and a later release
+
+- **Export the payout or the Balance report** and find rows whose type or reporting category is a reserve hold or reserved funds. Note the amount and the payout they sit in. The free [Stripe Payout Check](/tools/stripeclear-journal/check/) is useful for seeing that gross − fee does not equal the payout when another category (such as a reserve) is present.
+
+- **Book the sale and the fee as usual** through Stripe Clearing: debit Clearing and credit Sales for the gross charge; debit Stripe Fees and credit Clearing for the fee.
+
+- **Record the hold as a transfer between asset accounts,** not as an expense: debit Stripe Reserve and credit Stripe Clearing for the held amount. Clearing is now lower, which is why the payout can leave Clearing and still land on zero for that batch.
+
+- **Record the payout as a transfer** from Stripe Clearing to the bank for the net amount Stripe actually sent, then match the bank-feed line to that transfer. Do not add the bank line as income.
+
+- **When Stripe releases the reserve,** you will see a `reserve_release` (and the matching `reserved_funds` credit) in a later period. Debit Stripe Clearing and credit Stripe Reserve. The released amount then goes out in a later payout, the same way other available funds do.
+
+- **At month end,** Stripe Reserve should equal the amount Stripe is still holding, and Stripe Clearing should equal the rest of the Stripe balance (available plus pending, if that is how you book unsettled charges). Together they should tie to Stripe's total balance on the same date and time zone. Time-zone cut-off is covered in [Stripe UTC vs local time at month end](/guides/stripe-payout-timezone-utc-month-end-quickbooks/).
+
+This is a reconciliation method, not accounting or tax advice. If a period is already reconciled or filed, check with your accountant before you change it.
+
+## Worked example (illustrative numbers only)
+
+*Example:* one charge of 1,000.00, an illustrative fee of 29.30, and a 100.00 reserve hold. Stripe pays out 870.70. Later, in a following period, the 100.00 is released and included in a later payout (other activity in that later payout is omitted here).
+
+When the charge, fee, hold and payout are booked:
+
+`Journal No.,Journal Date,Account Name,Description,Debits,Credits
+PO-2026-11-03,11/03/2026,Stripe Clearing,Stripe charge,1000.00,
+PO-2026-11-03,11/03/2026,Sales,Stripe charge,,1000.00
+PO-2026-11-03,11/03/2026,Stripe Fees,Stripe processing fee,29.30,
+PO-2026-11-03,11/03/2026,Stripe Clearing,Stripe processing fee,,29.30
+PO-2026-11-03,11/03/2026,Stripe Reserve,Reserve hold,100.00,
+PO-2026-11-03,11/03/2026,Stripe Clearing,Reserve hold,,100.00
+PO-2026-11-03,11/03/2026,Business Checking,Stripe payout,870.70,
+PO-2026-11-03,11/03/2026,Stripe Clearing,Stripe payout,,870.70`
+
+After this journal, Stripe Clearing is 0.00 for this payout, Stripe Reserve is 100.00, Sales is 1,000.00 and Stripe Fees is 29.30. Income is not understated, and the 100.00 was not expensed.
+
+When the reserve is released:
+
+`Journal No.,Journal Date,Account Name,Description,Debits,Credits
+REL-2026-12-02,12/02/2026,Stripe Clearing,Reserve release,100.00,
+REL-2026-12-02,12/02/2026,Stripe Reserve,Reserve release,,100.00`
+
+Stripe Reserve returns to 0.00. The 100.00 now sits in Clearing until the payout that includes the release is recorded as a transfer to the bank.
+
+## Common mistakes
+
+- **Debiting Stripe Fees (or Sales) for the reserve.** That understates profit while the money is only being held. A reserve is an asset reclassification.
+
+- **Ignoring the hold and plugging the short payout to income or "uncategorised expense".** The next payout will then be too high, and you will chase the same gap again.
+
+- **Treating a reserve release as new income.** The sale was already recorded. The release only moves money from Stripe Reserve back to Stripe Clearing (and then to the bank).
+
+- **Expecting Stripe Clearing alone to equal the full Stripe Dashboard balance** while a reserve is outstanding. Add the reserve account to the check.
+
+- **Confusing a reserve with a dispute or refund.** A lost dispute or a refund reduces income (and often includes a fee). Those are covered in [Stripe refunds and chargebacks bookkeeping](/guides/stripe-refunds-and-chargebacks-bookkeeping/) and [the dispute fee journal entry](/guides/stripe-dispute-fee-chargeback-journal-entry-quickbooks/).
+
+If the remaining gap is fees, refunds or timing rather than a hold, see [why your Stripe payout doesn't match your bank deposit](/guides/stripe-payout-does-not-match-bank-deposit/).
+
+---
+
+# How to import journal entries into QuickBooks Online from Excel (template + checklist)
+
+URL: https://jwillumproducts.github.io/guides/import-journal-entries-into-quickbooks-online-from-excel/
+
+**Short answer:** put one journal line per row with the columns `Journal No.`, `Journal Date`, `Account Name`, `Description`, `Debits` and `Credits`. Lines that share a Journal No. form one entry, and each entry must balance. Save the sheet as CSV, then in QuickBooks Online go to **Settings ⚙ → Import Data → Journal Entries**. Most failed imports come from an unbalanced entry, an account name that doesn't match exactly, or a date stored as text, so check those three first.
+
+## 1. Set up the columns
+
+These are the fields Intuit lists for journal entry imports. The column names in your file don't have to match exactly, because you map them on the import screen, but keeping these names makes mapping a one-click job.
+
+ColumnRequired?What goes in it
+- Journal No. | Yes | The entry number. Every line of the same entry gets the same number, e.g. `PR-2026-10`.
+
+- Journal Date | Yes | One date per entry, in your company's format (US: `10/31/2026`; UK, CA, AU: `31/10/2026`).
+
+- Account Name | Yes | Exactly as in your chart of accounts. Sub-accounts as `Parent:Sub`.
+
+- Description | Recommended | Memo for the line. Makes the entry easy to find later.
+
+- Debits | Yes | Positive number, plain digits: `1250.00`. Leave empty on credit lines.
+
+- Credits | Yes | Positive number. Leave empty on debit lines.
+
+- Name | For A/R and A/P lines | The customer (Accounts Receivable) or vendor (Accounts Payable).
+
+- Class, Location | Optional | Turn on class or location tracking in QuickBooks first.
+
+## 2. Enter one line per row
+
+Example (illustrative numbers): a monthly payroll summary entry has four lines that share one Journal No. and one date:
+
+```
+Journal No.,Journal Date,Account Name,Description,Debits,Credits
+PR-2026-10,10/31/2026,Payroll Expenses:Wages,October payroll,4200.00,
+PR-2026-10,10/31/2026,Payroll Expenses:Taxes,October payroll,321.30,
+PR-2026-10,10/31/2026,Payroll Liabilities,October payroll,,642.60
+PR-2026-10,10/31/2026,Checking,October payroll,,3878.70
+```
+
+Debits 4,521.30 = credits 4,521.30, so the entry balances. Never put a debit and a credit on the same line; give each its own row.
+
+## 3. Pre-import checklist
+
+- **Each Journal No. balances on its own**, to the cent. A file that balances overall can still have one entry that is 0.01 off.
+
+- **Each entry has at least two lines and only one date.**
+
+- **Account names match the chart of accounts exactly**: same spelling, no extra spaces, sub-accounts as `Parent:Sub`. Intuit's help says using only the sub-account name gives a “Line Account Invalid” error.
+
+- **Account numbers are turned off** during the import (Settings → Account and settings → Advanced → Chart of accounts), as Intuit recommends. Turn them back on afterwards.
+
+- **New accounts exist already.** The import doesn't create accounts.
+
+- **A/R and A/P lines have a Name** (customer or vendor).
+
+- **Amounts are plain positive numbers**: no `$`, no thousand separators, at most 2 decimals. Round each line before you total.
+
+- **Dates are real dates in one format**, not text. A date that Excel left-aligns is usually text.
+
+- **Row 1 is the header.** QuickBooks uses the first row for mapping, so data in row 1 is not imported.
+
+- **Less than 1,000 rows** per file, and no empty rows at the end (delete the rows, don't just clear them).
+
+- **Journal numbers aren't already used**, or turn off “Warn if duplicate journal number is used” for the import, as Intuit notes.
+
+## 4. Check it with formulas (free)
+
+Add these helper columns next to your data, with the lines in rows 2–999 and columns A–F as above. They work in Excel, Google Sheets and LibreOffice:
+
+CheckFormula (row 2, fill down)
+- Journal difference (should be 0) | `=ROUND(SUMIF($A$2:$A$999,A2,$E$2:$E$999)-SUMIF($A$2:$A$999,A2,$F$2:$F$999),2)`
+
+- Lines in this journal (should be ≥ 2) | `=COUNTIF($A$2:$A$999,A2)`
+
+- Date is a real date | `=ISNUMBER(B2)`
+
+- Account exists (names pasted on a sheet called Accounts) | `=COUNTIF(Accounts!$A:$A,TRIM(C2))>0`
+
+- Both debit and credit on one line | `=AND(N(E2)<>0,N(F2)<>0)`
+
+A text date can be converted with `=DATEVALUE(B2)` and then formatted as a date.
+
+## 5. Save as CSV
+
+- **Excel:** File → Save As → CSV UTF-8 (Comma delimited). Only the active sheet is saved, so select the sheet with the journal lines first.
+
+- **Google Sheets:** File → Download → Comma-separated values (.csv), also for the current sheet only.
+
+- Open the CSV in a text editor once. Amounts should look like `1250.00`, without quotes around thousand separators.
+
+## 6. Import in QuickBooks Online
+
+- Settings ⚙ → **Import Data** → **Journal Entries**.
+- Select **Browse** and choose your CSV. (The screen also has Download a sample file.)
+- Map your columns to the QuickBooks fields, select **Next**, fix anything it flags, then **Start import**.
+- Start with one small journal. When it imports cleanly, import the rest.
+
+## 7. Check the result
+
+Run the Journal report for the date range and compare the total debits with your spreadsheet. If a line is wrong, open the journal entry and edit it. Imported journal entries are ordinary journal entries in QuickBooks.
+
+## If Import Data only offers Spreadsheet Sync
+
+Intuit's import FAQ now says some accounts are only offered Spreadsheet Sync (“If the only option provided to import with is Spreadsheet Sync…”). Spreadsheet Sync is an Excel and Google Sheets add-in that comes with QuickBooks Online Advanced and Intuit Accountant Suite. Intuit's journal entry import article (updated August 2026) still describes the CSV upload, and users in a [September 2026 thread](https://www.reddit.com/r/quickbooksonline/comments/1wg6uzd/spreadsheet_sync/) said journal CSVs can still be imported without it. Which screen you see seems to depend on your account.
+
+The rules are the same: balanced entries, exact account names and real dates. One [QuickBooks Community thread](https://quickbooks.intuit.com/community/other-questions-9/journal-sync-date-error-88865) traced a Spreadsheet Sync “invalid date” error to dates pasted as text. Run the checklist above, paste the lines into Spreadsheet Sync's Journal Entries template, set Post? to Yes and sync a small batch first.
+
+## A ready-made template (optional, $8)
+
+If you import journals every month (payroll summaries, Stripe or PayPal batches, accruals, year-end adjustments), our **QuickBooks Online Journal Entry Import Template** has everything above built in. You paste lines into an Excel/Google Sheets workbook, and every line shows OK or FIX with the reason: unbalanced journal, text date, account not in your list, sub-account without its parent, both sides on one line, and more. It includes an offline checker that downloads a clean CSV and splits it into parts under 1,000 rows without splitting a journal. It costs $8 one-time, with no account and no add-in. [See it on Gumroad](https://willumsen4.gumroad.com/l/qbo-journal-entry-template?utm_source=jwillum-site&utm_campaign=import-journal-entries-into-quickbooks-online-from-excel&utm_content=body). It checks the file format, not your choice of accounts; it is not accounting advice.
+
+Already have an import error? See [QuickBooks journal entry CSV import errors](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-csv-import-errors-how-to-fix/), [“account not found”](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/) and [debits and credits not equal](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/). Importing Stripe payouts? [StripeClear Journal](https://jwillumproducts.github.io/tools/stripeclear-journal/) builds the balanced journals from a Stripe balance CSV.

@@ -37,8 +37,12 @@
 
 - [Marketplace Fee Calculator](https://jwillumproducts.github.io/tools/marketplace-fee-calculator/): A free spreadsheet that compares fees, profit and margin on Etsy, Whatnot and Faire side by side, with US default rates you can edit. $0+ (pay what you want). Get it: https://willumsen4.gumroad.com/l/marketplace-fee-calculator
 - [Stripe Payout Check](https://jwillumproducts.github.io/tools/stripeclear-journal/check/): free in-browser check that a Stripe balance CSV reconciles (per-category totals, gross − fee = net row check, payout total). No upload, no export.
+- [QBO Journal Entry Import Check](https://jwillumproducts.github.io/tools/qbo-journal-entry-import-check/): free in-browser check of a QuickBooks Online journal entry import CSV (balance per journal, account names incl. Parent:Sub, date and amount formats, required columns, under-1,000-row limit). Nothing is uploaded. Full offline checker + Excel/Google Sheets template: $8 one-time, https://willumsen4.gumroad.com/l/qbo-journal-entry-template
 
 ## Free guides
+- [How to import journal entries into QuickBooks Online from Excel (template + checklist)](https://jwillumproducts.github.io/guides/import-journal-entries-into-quickbooks-online-from-excel/)
+- [Stripe UTC vs local time at month end: how to date payouts in QuickBooks](https://jwillumproducts.github.io/guides/stripe-payout-timezone-utc-month-end-quickbooks/)
+- [How to record a Stripe reserve or held funds in QuickBooks](https://jwillumproducts.github.io/guides/how-to-record-stripe-reserves-and-held-funds-in-quickbooks/)
 
 - [How to reconcile Stripe payouts into a bookkeeping journal (QuickBooks-ready)](https://jwillumproducts.github.io/guides/how-to-reconcile-stripe-payouts-into-a-bookkeeping-journal-quickbooks-ready/)
 - [Why doesn't my Stripe payout match my bank deposit?](https://jwillumproducts.github.io/guides/stripe-payout-does-not-match-bank-deposit/)
