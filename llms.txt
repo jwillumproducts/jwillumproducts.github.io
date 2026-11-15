@@ -27,7 +27,7 @@
 ## Marketplace fees & profit
 
 - [Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/): See what you keep on Faire: compare Marketplace and Direct orders, the new-retailer fee and payout speed, with bulk CSV and break-even pricing. $8 one-time. Buy: https://willumsen4.gumroad.com/l/faire-profit-calculator (Gumroad name: Faire Wholesale Fee & Profit Calculator — Offline Net After Fees)
-- [Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/): See what you keep on Whatnot after category commission and payment processing, with bulk CSV and a show-night print sheet. $8 one-time. Buy: https://willumsen4.gumroad.com/l/whatnot-profit-calculator (Gumroad name: Whatnot Seller Profit Calculator — Offline Net After Fees (Cliff + CSV + Show Print))
+- [Whatnot Seller Spreadsheet](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/): Excel and Google Sheets template for Whatnot sellers: inventory, shows and sales with real profit after commission, processing and VAT on fees, using the 2026 tiered commission rates for 9 markets. $8 one-time. Buy: https://willumsen4.gumroad.com/l/whatnot-profit-calculator . Free one-show Lite sheet: https://jwillumproducts.github.io/tools/whatnot-profit-calculator/Whatnot-Show-Profit-Sheet-Lite.xlsx
 
 ## Events
 
@@ -55,7 +55,7 @@
 - [How to set up a Stripe clearing account in QuickBooks Online](https://jwillumproducts.github.io/guides/stripe-clearing-account-quickbooks-online-setup/)
 - [Stripe deposits double counted in QuickBooks Online: why it happens and how to fix it](https://jwillumproducts.github.io/guides/stripe-deposits-double-counted-in-quickbooks-how-to-fix/)
 - [QuickBooks journal entry import: debits and credits not equal, and how to fix it](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-debits-credits-not-equal-how-to-fix/)
-- [Whatnot fee calculator: how Whatnot fees are calculated](https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/)
+- [Whatnot fees 2026: commission tiers, processing and VAT](https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/)
 - [QuickBooks journal entry import: "account not found" and how to fix it](https://jwillumproducts.github.io/guides/quickbooks-journal-entry-import-account-not-found-how-to-fix/)
 - [How to make QR code name badges for an event from a spreadsheet](https://jwillumproducts.github.io/guides/how-to-make-qr-code-name-badges-for-an-event-from-a-spreadsheet/)
 - [Etsy listing CSV errors: how to check and clean your listings export](https://jwillumproducts.github.io/guides/etsy-listing-csv-errors-how-to-check-and-clean-your-listings-export/)

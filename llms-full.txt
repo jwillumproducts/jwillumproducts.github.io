@@ -218,7 +218,7 @@ To be clear about what it isn't: it doesn't upload, create or publish anything o
 ## Related tools
 
 - Also selling wholesale? **[Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/)** shows what you keep after Faire fees, offline.
-- Also running live shows? **[Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** works out net profit per lot after commission and processing.
+- Also running live shows? **[Whatnot Seller Spreadsheet](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** works out profit per sale and per show after Whatnot fees (free Lite sheet available).
 
 ---
 
@@ -228,29 +228,31 @@ URL: https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-
 
 A card sells for $50 on a Whatnot stream and it feels like a $50 night. It isn't. Commission, payment processing, the cost of the item, shipping supplies and your own label all come out before you see profit. This guide walks through the math by hand so you can price lots with confidence.
 
-*Fee figures below are the defaults from Whatnot's published seller fee schedule as checked on 2026-09-13 (US/Canada/Australia unless noted). Rates change and promos vary, so always confirm against the Whatnot Help Center and your Seller Hub, which is the source of truth for payouts. This guide is not affiliated with Whatnot.*
+*Fee figures below are from Whatnot's [Seller Fees and Commissions Schedule](https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-Seller-Fees-and-Commissions-Schedule) (page updated 1 November 2026, checked 15 November 2026). Since 21 September 2026 commission is tiered: the rate depends on your category and on your total sales in a 4-week period. Promotions and custom terms vary, so confirm in Seller Hub, which is the source of truth for payouts. Not affiliated with Whatnot.*
 
 ## The key point: two fees, two different bases
 
 This is where most spreadsheets go wrong:
 
 - **Commission** is a percentage of the **item's final sale price only**. It doesn't include buyer-paid shipping or tax.
+
 - **Payment processing** is a percentage of the **total order value** (item + buyer shipping, plus buyer tax where applicable) **plus a fixed fee per order**.
 
 So when buyer shipping goes up, your processing fee goes up too, but your commission doesn't.
 
 ## Step 1: Find your commission rate
 
-Published US/CA/AU defaults at the time of writing:
+Whatnot's commission depends on your category and your tier. Everyone starts on **Standard**; your total sales in a 4-week period set the tier for the next period (US Tier 1 starts at $15,000). US Standard-tier rates:
 
-| Category type | Commission |
-|---|---|
-| Most categories ("all other") | 8% |
-| Coins & Money | 4% (up to the threshold, 0% above) |
-| Pallets / wholesale | 4% flat |
-| Eligible high-value collectibles | 8% up to $1,500, **0% above** |
+| Category | US Standard | US Tier 1 | Lowest public rate |
+| Sports | 8.00% | 7.75% | 6.50% |
+| TCG | 8.00% | 7.75% | 6.50% |
+| Fashion | 8.00% | 7.00% | 4.50% |
+| Other Collectibles | 8.00% | 7.25% | 5.00% |
+| Coins | 4.00% | 3.90% | 3.50% |
+| Other | 8.00% | 7.00% | 4.00% |
 
-In the UK and EU the default is 6.67% commission, and **VAT is charged on fees** (commonly 20%). In Japan, 8% plus JCT on fees applies, with a ¥225,000 threshold.
+Canada uses the same rates (C$ thresholds). In the UK, Germany, Austria and the Netherlands Standard is 6.67%, and **VAT is charged on fees**; France and Belgium charge a flat 4% on Sports and TCG. Japan isn't tiered: 8% plus JCT (4% for Coins). The full tier tables are in the [Whatnot fees breakdown](https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/).
 
 ## Step 2: Find your processing fee
 
@@ -258,16 +260,20 @@ US/CA/AU: **2.9% of order value + $0.30** per order. UK/EU: 2.42% + £/€0.25, 
 
 ## Step 3: Do the math for one lot
 
-**Example (US, standard 8% category):** $50 sale, buyer pays $8.70 shipping, so the order value is $58.70.
+**Example (US, Standard tier, 8% category such as TCG):** $50 sale, buyer pays $8.70 shipping, so the order value is $58.70.
 
 - Commission: 8% × $50 = **$4.00**
+
 - Processing: 2.9% × $58.70 + $0.30 = **$2.00**
+
 - Total fees: **$6.00**, so net payout from the sale is **$44.00**
 
 Now take off your own costs to get profit:
 
 - Cost of goods (what you paid for the card), e.g. $25
+
 - Supplies (top loader, team bag, mailer), e.g. $1
+
 - Any shipping cost you pay above what the buyer paid
 
 `Profit = sale − commission − processing − COGS − supplies − your shipping cost`
@@ -275,16 +281,11 @@ Now take off your own costs to get profit:
 
 With $25 COGS and $1 supplies, that $50 sale is $18 profit, a 36% margin, not $25.
 
-## Step 4: Understand the high-value "cliff"
+## Step 4: Use the rate for your tier (and any promotion)
 
-On eligible categories, commission applies only to the part of the sale **up to** the threshold ($1,500 / £/€1,500 / ¥225,000). The part above it is charged 0%. Processing still applies to the whole order value.
+Your rate is locked for the whole 4-week period. If you reached US Tier 1 last period, the same $50 Sports or TCG sale costs 7.75% × $50 ≈ **$3.88** in commission instead of $4.00. Processing doesn't change with your tier.
 
-**Example:** a $2,000 cliff-eligible sale.
-- Commission: 8% × $1,500 = **$120** (not $160, so you save $40)
-- Processing: 2.9% × $2,000 + $0.30 = **$58.30**
-- Net payout: **$1,821.70**
-
-Watch out: at the time of writing, the high-value promo applies to **Sports Singles** only. **Sports breaks and Surprise Products are excluded**, so don't count on the cliff for those.
+Promotional rates (for example new-seller 0% fees or limited-time category promotions) override your tier rate while they run. Whatnot previously ran a reduced-commission promotion on high-value orders; its current fee schedule page doesn't list it, so only count on it if your Seller Hub receipts show it. When in doubt, use the rate shown on the order in Seller Hub.
 
 ## Step 5: Work out break-even before you list
 
@@ -294,18 +295,13 @@ Start from the margin you want and work backwards. Roughly: `minimum price ≈ (
 
 After a stream, put every lot in a sheet with sale, shipping, COGS and supplies, and flag anything under your target margin. A handful of losing lots can cancel out a good night.
 
-## Doing it faster: Whatnot Seller Profit Calculator
+Fees only, with US and UK examples: [how Whatnot fees are calculated](https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/).
 
-**Whatnot Seller Profit Calculator** is a single offline HTML file that does this math for you. Pick a region (US, Canada, Australia, UK, EU, Japan) and a category preset (cliff collectibles, coins, pallets, standard, or a custom %). Enter the sale, shipping and costs, and it shows live commission, processing, VAT/JCT on fees, net payout, profit, margin, ROI and break-even price. It handles the cliff automatically and warns you about sports breaks.
+## Doing it faster: the Whatnot seller spreadsheet
 
-For whole shows, **bulk CSV** mode takes a template with one lot per row and marks each one ok / thin / loss. A **show-night print** sheet summarizes gross, fees, net and losing lots on one page. All fee constants are editable if Whatnot changes its rates. Your costs never leave your device. It's an independent estimate, not a replacement for Seller Hub receipts, and not tax advice.
+The free **[Whatnot Show Profit Sheet (Lite)](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/Whatnot-Show-Profit-Sheet-Lite.xlsx)** does this math for one show of up to 50 orders: type the sale, shipping, tax, item cost and supplies, and it shows commission, processing, VAT on fees, payout, profit and margin, plus the show total after giveaways.
 
-→ **[Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)**
-
-## Related tools
-
-- Also wholesaling? **[Faire Wholesale Fee & Profit Calculator](https://jwillumproducts.github.io/tools/faire-profit-calculator/)** does the same kind of math for Faire orders.
-- Also selling on Etsy? **[Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/)** checks and cleans your listings export offline.
+The full **[Whatnot Seller Spreadsheet](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** ($8 one-time, Excel and Google Sheets) adds inventory with cost of goods pulled in by SKU, any number of shows and marketplace sales, the commission rate for every category at every tier in 9 markets, a 4-week tier tracker and profit by month. It's an independent estimate, not a replacement for Seller Hub, and not tax advice.
 
 ---
 
@@ -673,7 +669,7 @@ It's an independent estimate, not a replacement for your Payout Summary, and it 
 
 ## Related tools
 
-- Selling live too? **[Whatnot Seller Profit Calculator](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** shows net profit per lot after commission and processing.
+- Selling live too? **[Whatnot Seller Spreadsheet](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** shows profit per sale and per show after Whatnot fees (free Lite sheet available).
 - Listing on Etsy as well? **[Etsy Listing CSV Fixer](https://jwillumproducts.github.io/tools/etsy-listing-csv-fixer/)** checks and cleans your listings export offline.
 
 ---
@@ -1302,43 +1298,85 @@ More on refund fees: [Stripe refund fees: how to record them in QuickBooks](http
 
 URL: https://jwillumproducts.github.io/guides/whatnot-fee-calculator-fees-breakdown/
 
-**Short answer:** Whatnot takes two fees per sale. **Commission** is a percentage of the item's sale price only. **Payment processing** is a percentage of the whole order (item plus buyer-paid shipping, plus tax where applicable) plus a fixed amount per order. Published US/Canada/Australia defaults: 8% commission in most categories and 2.9% + $0.30 processing. UK/EU defaults: 6.67% commission and 2.42% + £/€0.25 processing, with VAT on fees.
-*Figures are Whatnot's published defaults as checked on 2026-09-13. Rates, category exceptions and promos change, so confirm in the Whatnot Help Center and your Seller Hub, which is the source of truth for payouts. Not affiliated with Whatnot.*
+**Short answer:** Whatnot takes two fees per sale. **Commission** is a percentage of the item's sale price only. **Payment processing** is a percentage of the whole order (item plus buyer-paid shipping, plus tax where applicable) plus a fixed amount per order. Since 21 September 2026 commission is **tiered**: at the Standard tier it is 8% in most US, Canada and Australia categories (4% for Coins) and 6.67% in the UK and EU, and it drops as your 4-week sales grow. Processing is 2.9% + $0.30 in the US, Canada and Australia and 2.42% + £/€0.25 in the UK and EU, with VAT on fees.
+
+*Fee figures below are from Whatnot's [Seller Fees and Commissions Schedule](https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-Seller-Fees-and-Commissions-Schedule) (page updated 1 November 2026, checked 15 November 2026). Since 21 September 2026 commission is tiered: the rate depends on your category and on your total sales in a 4-week period. Promotions and custom terms vary, so confirm in Seller Hub, which is the source of truth for payouts. Not affiliated with Whatnot.*
 
 ## Fee formula
 
-- **Commission** = commission rate × item sale price.
+- **Commission** = your category's rate at your tier × item sale price.
 
 - **Processing** = processing rate × (sale price + buyer shipping + buyer tax where applicable) + fixed fee.
 
-- **UK/EU only:** add VAT on the fees (commonly 20%).
+- **UK/EU only:** add VAT on the fees (20% in the UK).
 
 - **Net payout** = sale price − commission − processing (− VAT on fees).
 
 - **Profit** = net payout − cost of goods − supplies − any shipping you pay yourself.
 
-## Default rates (as published, checked 2026-09-13)
+## Commission rates by tier (from 21 September 2026)
 
-| Region | Commission | Processing |
+Your tier is set by total sales across all categories in a 4-week period (private shows, local pickup and cancelled orders don't count) and applies to the next period. The rate on each sale follows the show's category for live sales and the product's category for marketplace sales.
 
-| US / Canada / Australia | 8% most categories; 4% Coins & Money and pallets; 0% above $1,500 on eligible high-value collectibles | 2.9% + $0.30 per order |
+### United States
 
-| UK / EU | 6.67% | 2.42% + £/€0.25, plus VAT on fees |
+| Category | Standard | Tier 1 | Tier 2 | Tier 3 | Tier 4 | Tier 5 | Tier 6 |
+| *4-week sales from* | *$0* | *$15,000* | *$35,000* | *$50,000* | *$100,000* | *$250,000* | *$500,000* |
+| Sports | 8.00% | 7.75% | 7.50% | 7.25% | 7.00% | 6.75% | 6.50% |
+| TCG | 8.00% | 7.75% | 7.50% | 7.25% | 7.00% | 6.75% | 6.50% |
+| Fashion | 8.00% | 7.00% | 6.50% | 5.50% | 5.00% | 4.50% | 4.50% |
+| Other Collectibles | 8.00% | 7.25% | 6.50% | 6.00% | 5.00% | 5.00% | 5.00% |
+| Coins | 4.00% | 3.90% | 3.80% | 3.70% | 3.60% | 3.55% | 3.50% |
+| Other | 8.00% | 7.00% | 6.50% | 5.50% | 4.00% | 4.00% | 4.00% |
+
+Canada: same rates, with tiers from C$10,000, 20,000, 35,000, 50,000, 65,000 and 85,000. Australia: Sports and TCG 8.00 / 7.75 / 7.00 / 6.75 / 6.50 / 6.25 / 6.00%, other categories as the US, with tiers from A$10,000, 20,000, 35,000, 70,000, 100,000 and 130,000.
+
+### United Kingdom, Germany, Austria, Netherlands (before VAT)
+
+| Category | Standard | Tier 1 | Tier 2 | Tier 3 | Tier 4 | Tier 5 | Tier 6 |
+| *4-week sales from* | *£0* | *£10,000* | *£20,000* | *£35,000* | *£50,000* | *£65,000* | *£85,000* |
+| Sports | 6.67% | 6.50% | 6.25% | 6.00% | 5.75% | 5.50% | 5.25% |
+| TCG | 6.67% | 6.50% | 6.25% | 6.00% | 5.75% | 5.50% | 5.25% |
+| Fashion | 6.67% | 6.25% | 5.75% | 5.25% | 4.75% | 4.25% | 4.25% |
+| Other Collectibles | 6.67% | 6.50% | 6.25% | 6.00% | 5.25% | 5.25% | 5.25% |
+| Coins | 4.00% | 3.90% | 3.80% | 3.70% | 3.60% | 3.55% | 3.50% |
+| Other | 6.67% | 6.25% | 5.50% | 5.00% | 4.00% | 4.00% | 4.00% |
+
+Germany, Austria and the Netherlands use the same rates with € thresholds. France and Belgium are the same except Sports and TCG, which are a flat 4.00% at every tier. All UK/EU rates are subject to VAT.
+
+### Payment processing
+
+| Region | Processing |
+| US / Canada / Australia | 2.9% of the order total + $0.30 per order |
+| UK / EU | 2.42% of the order total + £/€0.25, plus VAT |
 
 ## Worked examples (illustrative)
 
-**US:** $20 sale, buyer pays $5 shipping (order value $25). Commission 8% × $20 = $1.60. Processing 2.9% × $25 + $0.30 = $1.03. Total fees $2.63, net payout $17.37.
-**UK:** £20 sale, buyer pays £4 shipping (order value £24). Commission 6.67% × £20 = £1.33. Processing 2.42% × £24 + £0.25 = £0.83. Fees £2.16 plus 20% VAT £0.43 = £2.59, net payout about £17.41.
+**US, Standard tier:** $20 sale, buyer pays $5 shipping (order value $25). Commission 8% × $20 = $1.60. Processing 2.9% × $25 + $0.30 = $1.03. Total fees $2.63, net payout $17.37.
+
+**UK, Standard tier:** £20 sale, buyer pays £4 shipping (order value £24). Commission 6.67% × £20 = £1.33. Processing 2.42% × £24 + £0.25 = £0.83. Fees £2.16 plus 20% VAT £0.43 = £2.59, net payout about £17.41.
+
 Note that a higher buyer shipping charge raises your processing fee but not your commission.
+
 For profit after cost of goods and supplies, see [Whatnot fee calculator: real profit per sale](https://jwillumproducts.github.io/guides/how-to-calculate-your-real-profit-per-whatnot-sale-after-fees/).
+
+## Doing it faster: a Whatnot fee calculator spreadsheet
+
+The free **[Whatnot Show Profit Sheet (Lite)](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/Whatnot-Show-Profit-Sheet-Lite.xlsx)** does this math for one show of up to 50 orders: type the sale, shipping, tax, item cost and supplies, and it shows commission, processing, VAT on fees, payout, profit and margin, plus the show total after giveaways.
+
+The full **[Whatnot Seller Spreadsheet](https://jwillumproducts.github.io/tools/whatnot-profit-calculator/)** ($8 one-time, Excel and Google Sheets) adds inventory with cost of goods pulled in by SKU, any number of shows and marketplace sales, the commission rate for every category at every tier in 9 markets, a 4-week tier tracker and profit by month. It's an independent estimate, not a replacement for Seller Hub, and not tax advice.
+
+Comparing marketplaces? The free [Marketplace Fee Calculator](https://jwillumproducts.github.io/tools/marketplace-fee-calculator/) puts Whatnot, Etsy and Faire side by side.
 
 ## FAQ
 
-**How much does Whatnot take per sale?** With US defaults, 8% commission on the sale price plus 2.9% + $0.30 processing on the order total. Some categories and regions differ; check Whatnot's fee page.
+**How much does Whatnot take per sale?** At the US Standard tier, 8% commission on the sale price in most categories (4% for Coins) plus 2.9% + $0.30 processing on the order total. Higher tiers have lower commission. UK/EU Standard is 6.67% plus 2.42% + £/€0.25, with VAT on fees.
 
-**Does Whatnot charge commission on shipping?** No, commission is on the item sale price. Processing is charged on the order total, which includes buyer-paid shipping.
+**What are the Whatnot commission tiers?** Since 21 September 2026 there are seven tiers, Standard and Tiers 1 to 6. Your total sales in a 4-week period set the tier for the next period. In the US, Tier 1 starts at $15,000 and Tier 6 at $500,000; the lowest public rates are 6.50% for Sports and TCG, 4.50% for Fashion and 3.50% for Coins.
 
-**Is there a free Whatnot fee calculator?** The free Marketplace Fee Calculator spreadsheet compares Whatnot, Etsy and Faire fees with editable rates; the paid Whatnot Seller Profit Calculator adds bulk CSV and show summaries.
+**Does Whatnot charge commission on shipping?** No, commission is on the item sale price. Processing is charged on the order total, which includes buyer-paid shipping and tax.
+
+**Is there a free Whatnot fee calculator?** Yes. The free Whatnot Show Profit Sheet (Lite) works out fees and profit for one show, and the free Marketplace Fee Calculator compares Whatnot, Etsy and Faire. The $8 Whatnot Seller Spreadsheet adds inventory, every show, tiered rates for 9 markets and profit by month.
 
 ---
 
